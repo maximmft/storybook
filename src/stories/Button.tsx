@@ -53,12 +53,12 @@ export const Button = ({
     
     if (variant === "tertiary") {
       if (error) {
-        return `text-error-110 px-0 h-[28px] rounded-none border-b border-error-110 
+        return `text-error-110 !px-0 h-[28px] rounded-none border-b border-error-110 
               enabled:hover:border-0 enabled:hover:text-error-100 
               enabled:active:border-b enabled:active:border-error-150 enabled:active:text-error-150 
               disabled:border-0 disabled:text-greyscale-400`;
       }
-      return `text-primary-800 px-0 h-[28px] rounded-none border-b border-primary-800 
+      return `text-primary-800 !px-0 h-[28px] rounded-none border-b border-primary-800 
               enabled:hover:border-0 enabled:hover:text-primary-600 
               enabled:active:border-b enabled:active:border-primary-800 enabled:active:text-primary-800 
               disabled:border-0 disabled:text-greyscale-400`;

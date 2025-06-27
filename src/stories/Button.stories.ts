@@ -81,7 +81,7 @@ export const Tertiary: Story = {
 export const TertiaryWithError: Story = {
   args: {
     variant: "tertiary",
-    label: "Button",
+    label: "Ajout",
     error: true,
   },
 };
