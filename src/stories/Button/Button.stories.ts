@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "./Button.tsx";
 
 const meta: Meta<typeof Button> = {
-  title: "Example/Button",
+  title: "Button",
   component: Button,
   parameters: {
     layout: "centered",
@@ -48,6 +48,16 @@ export const Primary: Story = {
   },
 };
 
+export const PrimaryWithIcon: Story = {
+  args: {
+    variant: "primary",
+    label: "Button",
+    icon: ArrowRight,
+    iconPosition: "right"
+  },
+};
+
+
 export const PrimaryWithError: Story = {
   args: {
     variant: "primary",
@@ -62,6 +72,16 @@ export const Secondary: Story = {
     label: "Button",
   },
 };
+
+export const SecondaryWithIcon: Story = {
+  args: {
+    variant: "secondary",
+    label: "Button",
+    icon: ArrowRight,
+    iconPosition: "right"
+  },
+};
+
 
 export const SecondaryWithError: Story = {
   args: {
@@ -86,20 +106,12 @@ export const TertiaryWithError: Story = {
   },
 };
 
-export const WithLeftIcon: Story = {
+export const TertiaryWithErrorWithIcon: Story = {
   args: {
-    variant: "primary",
-    label: "Button",
+    variant: "tertiary",
+    label: "Ajout",
+    error: true,
     icon: ArrowLeft,
-    iconPosition: "left",
-  },
-};
-
-export const WithRightIcon: Story = {
-  args: {
-    variant: "primary",
-    label: "Button",
-    icon: ArrowRight,
-    iconPosition: "right",
+    iconPosition: "left"
   },
 };

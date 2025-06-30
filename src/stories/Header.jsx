@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
-import { Button } from './Button.tsx';
 import './header.css';
+import { Button } from './Button/Button.tsx';
 
 export const Header = ({ user = null, onLogin, onLogout, onCreateAccount }) => (
   <header>

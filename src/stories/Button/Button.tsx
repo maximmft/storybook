@@ -22,7 +22,7 @@ export const Button = ({
   onClick,
   ...props
 }: ButtonProps) => {
-  const baseClasses = "inline-flex items-center justify-center rounded-full px-4 py-[10px] font-semibold w-full";
+  const baseClasses = "text-[14px] inline-flex items-center justify-center rounded-full px-4 py-[10px] font-regular w-full";
   
   const getVariantClasses = () => {
     if (variant === "primary") {
@@ -63,7 +63,6 @@ export const Button = ({
               enabled:active:border-b enabled:active:border-primary-800 enabled:active:text-primary-800 
               disabled:border-0 disabled:text-greyscale-400`;
     }
-    return "";
   };
 
   return (
