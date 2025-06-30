@@ -29,6 +29,16 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     tabs: tabs,
-    defaultValue: 0
+    defaultValue: 0,
+    variant: "standard"
+
+  },
+};
+
+export const Secondary: Story = {
+  args: {
+    tabs: tabs,
+    defaultValue: 0,
+    variant: "solid"
   },
 };

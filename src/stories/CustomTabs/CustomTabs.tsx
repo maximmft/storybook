@@ -47,6 +47,7 @@ const getTabStyles = (variant: TabVariant): SxProps<Theme> => {
       "& .MuiTabs-list" : {
         display: "flex",
         alignItems: "center",
+        gap: "8px"
       },
       "& .MuiTabs-scroller": {
         display: "flex",
@@ -76,8 +77,6 @@ const getTabStyles = (variant: TabVariant): SxProps<Theme> => {
         borderRadius: "4px",
         height: "37px",
         minHeight: '37px',
-
-        
       },
       "& .MuiTab-root.Mui-disabled": {
         color: "#E3DFDA",
