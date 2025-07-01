@@ -14,6 +14,7 @@ interface SimpleTabsProps {
   defaultValue?: number;
   onChange?: (value: number) => void;
   variant?: TabVariant;
+  centered?: boolean;
 }
 
 const getTabStyles = (variant: TabVariant): SxProps<Theme> => {
@@ -44,10 +45,10 @@ const getTabStyles = (variant: TabVariant): SxProps<Theme> => {
     },
     solid: {
       minHeight: 0,
-      "& .MuiTabs-list" : {
+      "& .MuiTabs-list": {
         display: "flex",
         alignItems: "center",
-        gap: "8px"
+        gap: "8px",
       },
       "& .MuiTabs-scroller": {
         display: "flex",
@@ -65,8 +66,7 @@ const getTabStyles = (variant: TabVariant): SxProps<Theme> => {
         color: "#ffffff",
         borderRadius: "8px",
         fontWeight: "500",
-        minHeight: '37px',
-        
+        minHeight: "37px",
       },
       "& .MuiTab-root": {
         textTransform: "none",
@@ -76,7 +76,7 @@ const getTabStyles = (variant: TabVariant): SxProps<Theme> => {
         marginRight: "4px",
         borderRadius: "4px",
         height: "37px",
-        minHeight: '37px',
+        minHeight: "37px",
       },
       "& .MuiTab-root.Mui-disabled": {
         color: "#E3DFDA",
@@ -85,8 +85,7 @@ const getTabStyles = (variant: TabVariant): SxProps<Theme> => {
         backgroundColor: "#4C574F",
         color: "white",
         borderRadius: "8px",
-        fontWeight: "300"
-
+        fontWeight: "300",
       },
     },
   };
@@ -99,6 +98,7 @@ export default function SimpleTabs({
   defaultValue = 0,
   onChange,
   variant = "standard",
+  centered = false,
 }: SimpleTabsProps) {
   const [value, setValue] = React.useState(defaultValue);
 
@@ -125,6 +125,7 @@ export default function SimpleTabs({
           variant="scrollable"
           scrollButtons={false}
           sx={getTabStyles(variant)}
+          centered={centered}
         >
           {tabs.map((tab, index) => (
             <Tab key={index} label={tab.label} disabled={tab.disabled} />
