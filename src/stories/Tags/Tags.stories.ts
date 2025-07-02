@@ -36,7 +36,7 @@ export const Primary: Story = {
 
 export const Promotion: Story = {
   args: {
-    status: "promotion"
+    status: "promotions"
   },
 };
 
