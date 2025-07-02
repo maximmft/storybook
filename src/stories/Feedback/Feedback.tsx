@@ -1,7 +1,7 @@
 import { CircleCheck, CircleAlert, TriangleAlert } from "lucide-react";
 import * as React from "react";
 
-type TagsPublicationSpaPropsType = {
+type FeedbackPropsType = {
   variant:
     | "published"
     | "NotPublished"
@@ -13,10 +13,10 @@ type TagsPublicationSpaPropsType = {
   label?: string;
 };
 
-export default function TagsPublicationSpa({
+export default function Feedback({
   variant,
   label,
-}: TagsPublicationSpaPropsType) {
+}: FeedbackPropsType) {
   const getStatusStyle = () => {
     if (variant === "published")
       return {

@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
-import TagsPublicationSpa from "./TagsPublicationSpa.tsx";
+import Feedback from "./Feedback.tsx";
 
-const meta: Meta<typeof TagsPublicationSpa> = {
-  title: "TagsPublicationSpa",
-  component: TagsPublicationSpa,
+const meta: Meta<typeof Feedback> = {
+  title: "Feedback",
+  component: Feedback,
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
