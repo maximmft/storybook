@@ -3,7 +3,7 @@ import { fn } from "storybook/test";
 import { AddingButton } from "./AddingButton.tsx";
 
 const meta: Meta<typeof AddingButton> = {
-  title: "AddingButton",
+  title: "Buttons/AddingButton",
   component: AddingButton,
   parameters: {
     layout: "centered",

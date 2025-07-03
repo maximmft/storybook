@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "./Button.tsx";
 
 const meta: Meta<typeof Button> = {
-  title: "Button",
+  title: "Buttons/CustomButton",
   component: Button,
   parameters: {
     layout: "centered",

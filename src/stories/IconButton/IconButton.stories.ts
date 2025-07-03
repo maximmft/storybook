@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { IconButton } from "./IconButton.tsx";
 
 const meta: Meta<typeof IconButton> = {
-  title: "IconButton",
+  title: "Buttons/IconButton",
   component: IconButton,
   parameters: {
     layout: "centered",

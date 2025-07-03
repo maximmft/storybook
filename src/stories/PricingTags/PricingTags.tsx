@@ -8,7 +8,7 @@ type PricingTagsPropsType = {
   initialPrice: number;
   currentPrice: number;
   color: "primary" | "secondary" | "tertiary" | "quaternary" | "quinary";
-  variant: "full" | "short"
+  variant: "full" | "percentage"
 };
 
 const baseTagsStyle =
@@ -57,7 +57,7 @@ export default function PricingTags({
     </div>
   );
 
-  if (variant === "short")
+  if (variant === "percentage")
     return (
       <div className={`${baseTagsStyle} ${getVariantClasses()} `}>
       <div className="flex flex-row items-center justify-center ">

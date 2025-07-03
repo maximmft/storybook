@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import Feedback from "./Feedback.tsx";
 
 const meta: Meta<typeof Feedback> = {
-  title: "Feedback",
+  title: "Statut/Feedback",
   component: Feedback,
   tags: ["autodocs"],
   parameters: {
@@ -11,63 +11,106 @@ const meta: Meta<typeof Feedback> = {
   argTypes: {
     variant: {
       control: { type: "select" },
+      options: ["statut", "modale"],
+    },
+    type: {
+      control: { type: "select" },
       options: [
         "published",
-        "NotPublished",
+        "NotPublished", 
         "modificationSaved",
         "modificationNotPublished",
         "error",
         "warning",
         "lastModification",
+        "question"
       ],
+    },
+    label: {
+      control: { type: "text" },
     },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Feedback>;
 
 export const Published: Story = {
   args: {
-    variant: "published",
+    type: "published",
+    variant: "statut",
   },
 };
 
 export const NotPublished: Story = {
   args: {
-    variant: "NotPublished",
+    type: "NotPublished",
+    variant: "statut",
   },
 };
 
-export const ModificationNotPublished: Story = {
+export const ModificationNotPublishedYet: Story = {
   args: {
-    variant: "modificationNotPublished",
+    type: "modificationNotPublished",
+    variant: "statut",
   },
 };
 
 export const ModificationSaved: Story = {
   args: {
-    variant: "modificationSaved",
+    type: "modificationSaved",
+    variant: "statut",
   },
 };
 
 export const Warning: Story = {
   args: {
-    variant: "warning",
+    type: "warning",
     label: "Attention nananana",
+    variant: "statut",
   },
 };
 
 export const Error: Story = {
   args: {
-    variant: "error",
+    type: "error",
     label: "Erreur de nananana",
+    variant: "statut",
   },
 };
 
 export const LastModification: Story = {
   args: {
-    variant: "lastModification",
+    type: "lastModification",
     label: "Dernière modification 16 décembre 2024 à 16:00",
+    variant: "statut",
+  },
+};
+
+export const PublishedModal: Story = {
+  args: {
+    type: "published",
+    variant: "modale",
+  },
+};
+
+export const WarningModal: Story = {
+  args: {
+    type: "warning",
+    variant: "modale",
+  },
+};
+
+export const QuestionModal: Story = {
+  args: {
+    type: "question",
+    variant: "modale",
+  },
+};
+
+export const MailModal: Story = {
+  args: {
+    type: "mail",
+    variant: "modale",
   },
 };

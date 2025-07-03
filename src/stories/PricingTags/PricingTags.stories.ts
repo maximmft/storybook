@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import PricingTags from "./PricingTags.tsx";
 
 const meta: Meta<typeof PricingTags> = {
-  title: "PricingTags",
+  title: "Statut/PricingTags",
   component: PricingTags,
   tags: ["autodocs"],
   parameters: {
@@ -59,7 +59,7 @@ export const MinorationShort: Story = {
     initialPrice: 130,
     isDecreased: true,
     color: "quaternary",
-    variant: "short"
+    variant: "percentage"
   },
 };
 
