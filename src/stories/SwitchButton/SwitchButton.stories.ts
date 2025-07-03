@@ -28,6 +28,9 @@ const meta: Meta<typeof SwitchButton> = {
     register: {
       table: { disable: true },
       description: "React Hook Form register function"
+    },
+    disabled: {
+      control: {type: "boolean"}
     }
   },
   args: {
@@ -47,6 +50,13 @@ export const Default: Story = {
 export const Checked: Story = {
   args: {
     value: true,
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    value: false,
+    disabled: true
   },
 };
 

@@ -9,6 +9,7 @@ type CustomSwitchPropsType = {
     label: string;
     register: UseFormRegisterReturn;
     value: boolean;
+    disabled?: boolean;
 }
 
 const IOSSwitch = styled((props: SwitchProps) => (
@@ -30,13 +31,23 @@ const IOSSwitch = styled((props: SwitchProps) => (
         border: 0,
       },
     },
+    '&.Mui-disabled': {
+      '& + .MuiSwitch-track': {
+        backgroundColor: '#EFECE9 !important', 
+        opacity: 1,
+      },
+    },
+ 
+    "&:hover:not(.Mui-disabled) + .MuiSwitch-track": {
+      backgroundColor: "#A29D98", 
+    },
   },
   '& .MuiSwitch-thumb': {
     width: 16,
     height: 16,
     backgroundColor: '#FFFFFF',
     borderRadius: "2px",
-    boxShadow: 'none'
+    boxShadow: 'none',
   },
   '& .MuiSwitch-track': {
     borderRadius: "2px",
@@ -44,8 +55,7 @@ const IOSSwitch = styled((props: SwitchProps) => (
     opacity: 1
   },
 }));
-
-export default function SwitchButton({label, register, value} : CustomSwitchPropsType) {
+export default function SwitchButton({label, register, value, disabled} : CustomSwitchPropsType) {
     return (
       <FormGroup>
         <FormControlLabel
@@ -57,12 +67,13 @@ export default function SwitchButton({label, register, value} : CustomSwitchProp
           label={label}
           labelPlacement="start"
           checked={value ?? false}
+          disabled={disabled}
           className="tw-ml-0 tw-w-full tw-justify-between semibold-15"
           sx={{
             '& .MuiFormControlLabel-label': {
               fontFamily: 'Fustat',
               fontSize: '15px',
-              fontWeight: 600,
+              fontWeight: 400,
             }
           }}
         />
