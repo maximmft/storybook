@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Checkbox } from "../Checkbox/Checkbox.tsx";
 
 type DropdownItemProps = {
   label: string;
@@ -12,6 +13,7 @@ type DropdownItemProps = {
   onCheckChange?: (checked: boolean) => void;
   onClick?: () => void;
 };
+
 export const DropdownItem = ({
   label,
   icon: IconComponent,
@@ -57,17 +59,12 @@ export const DropdownItem = ({
       )}
 
       {variant === "checkbox" && (
-        <div
-          className={`
-          ml-auto w-4 h-4 border rounded-[2px] flex items-center justify-center text-xs
-          ${
-            checked
-              ? "bg-black border-black text-white"
-              : "bg-white border-greyscale-400"
-          }
-        `}
-        >
-          {checked && "✓"}
+        <div className="ml-auto">
+          <Checkbox
+            checked={checked}
+            disabled={disabled}
+            onCheckChange={onCheckChange}
+          />
         </div>
       )}
     </div>
