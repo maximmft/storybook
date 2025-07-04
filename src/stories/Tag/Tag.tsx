@@ -1,26 +1,10 @@
-import { Building2, Star, Tag, User, UserRound } from "lucide-react";
+import { Building2, Star, Tag as LucideTag, UserRound } from "lucide-react";
 import * as React from "react";
 
 const baseTagsStyle =
-  "flex flex-row items-center justify-center border rounded-[4px] px-2 py-1 text-[10px] capitalize font-semibold";
+  "flex flex-row fit-content items-center justify-center border rounded-[4px] px-2 py-1 text-[10px] capitalize font-semibold";
 
-const tagsConfig = {
-  "1": {
-    name: "Produit n°1",
-    style: "bg-[#EEF5FB] border-[#98B2CD] text-[#5A6E81]",
-  },
-  "2": {
-    name: "Produit n°2",
-    style: "bg-[#E6F0E7] border-[#A7BEAB] text-[#486060]",
-  },
-  "3": {
-    name: "Produit n°3",
-    style: "bg-[#F7EFE8] border-[#E6D8CC] text-[#796758]",
-  },
-  "4": {
-    name: "Produit n°4",
-    style: "bg-[#FDF8EC] border-[#F3CC72] text-[#8B6309]",
-  },
+export const tagsConfig = {
   active: {
     name: "Actif",
     style: "bg-[#E8F8EC] border-[#4EC06D] text-[#4EC06D]",
@@ -91,15 +75,16 @@ const tagsConfig = {
     style: "bg-[#F7F5F3] border-[#A29D98] text-[#A29D98]",
     icon: "•",
   },
+
   inbound: {
     name: "Inbound",
     style: "bg-[#EEF5FB] border-[#5A6E81] text-[#5A6E81]",
-    icon: <Tag size={8} strokeWidth={3}/>,
+    icon: <LucideTag size={8} strokeWidth={3} />,
   },
   outbound: {
     name: "Outbound",
     style: "bg-[#FDF8EC] border-[#8B6309] text-[#8B6309]",
-    icon: <Tag size={8} strokeWidth={3}/>,
+    icon: <LucideTag size={8} strokeWidth={3} />,
   },
   administrator: {
     name: "Administrateur",
@@ -124,17 +109,17 @@ const tagsConfig = {
   care_category: {
     name: "Catégorie de soin",
     style: "bg-[#E6F0E7] border-[#A7BEAB] text-[#486060]",
-    icon:  <Star size={8} strokeWidth={3} />,
+    icon: <Star size={8} strokeWidth={3} />,
   },
   promotions: {
     name: "Promotions",
     style: "bg-[#FDF8EC] border-[#8B6309] text-[#8B6309]",
-    icon: <Tag size={8} strokeWidth={3}/>,
+    icon: <LucideTag size={8} strokeWidth={3} />,
   },
   vip_client: {
     name: "Client VIP",
     style: "bg-[#FDF8EC] border-[#F3CC72] text-[#8B6309]",
-    icon:  <Star size={8} strokeWidth={3} />,
+    icon: <Star size={8} strokeWidth={3} />,
   },
   undefined: {
     name: "Non défini",
@@ -142,15 +127,40 @@ const tagsConfig = {
   },
 };
 
-export default function Tags({ status }: { status: string }) {
-  const tag = tagsConfig[status];
+export default function Tag({
+  status,
+  variant,
+  label,
+}: {
+  status?: string;
+  variant?: number;
+  label?: string;
+}) {
+  const colorVariants = {
+    1: {
+      style: "bg-[#EEF5FB] border-[#98B2CD] text-[#5A6E81]",
+    },
+    2: {
+      style: "bg-[#E6F0E7] border-[#A7BEAB] text-[#486060]",
+    },
+    3: {
+      style: "bg-[#F7EFE8] border-[#E6D8CC] text-[#796758]",
+    },
+    4: {
+      style: "bg-[#FDF8EC] border-[#F3CC72] text-[#8B6309]",
+    },
+  };
 
-  if (!tag) return null;
+  const tag = status ? tagsConfig[status] : null;
+  const variantConfig = variant ? colorVariants[variant] : null;
+  const style = variantConfig ? variantConfig.style : tag?.style;
+
+  if (!tag && !variant) return null;
 
   return (
-    <div className={`${baseTagsStyle} ${tag.style}`}>
-      <span className="mr-1">{tag.icon}</span>
-      <span>{tag.name}</span>
+    <div className={`${baseTagsStyle} ${style}`}>
+      {tag?.icon && <span className="mr-1">{tag.icon}</span>}
+      <span>{label || tag?.name}</span>
     </div>
   );
 }

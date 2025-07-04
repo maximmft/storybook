@@ -58,7 +58,7 @@ export const PrimaryWithIcon: Story = {
 };
 
 
-export const PrimaryWithError: Story = {
+export const PrimaryAlert: Story = {
   args: {
     variant: "primary",
     label: "Button",
@@ -83,7 +83,7 @@ export const SecondaryWithIcon: Story = {
 };
 
 
-export const SecondaryWithError: Story = {
+export const SecondaryAlert: Story = {
   args: {
     variant: "secondary",
     label: "Button",
@@ -98,7 +98,7 @@ export const Tertiary: Story = {
   },
 };
 
-export const TertiaryWithError: Story = {
+export const TertiaryAlert: Story = {
   args: {
     variant: "tertiary",
     label: "Ajout",

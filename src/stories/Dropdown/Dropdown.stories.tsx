@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
-import { Dropdown } from "../Dropdown/Dropdown.tsx";
+import { Dropdown } from "./Dropdown.tsx";
 
 const meta: Meta<typeof Dropdown> = {
   title: "Components/Dropdown",
