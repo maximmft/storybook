@@ -12,8 +12,6 @@ const meta: Meta<typeof PricingTags> = {
     label: { type: "string" },
     currentPrice: { type: "number" },
     initialPrice: { type: "number" },
-    isIncreased: { type: "boolean" },
-    isDecreased: { type: "boolean" },
     color: {
       control: { type: "select" },
       options: ["primary", "secondary", "tertiary", "quaternary", "quinary"],
@@ -22,9 +20,7 @@ const meta: Meta<typeof PricingTags> = {
       control: { type: "select" },
       options: [ "full", "short"],
     },
-
-   
-    },
+  },
 };
 
 export default meta;
@@ -35,7 +31,6 @@ export const MajorationFull: Story = {
     label: "Majoration soirée",
     currentPrice: 100,
     initialPrice: 80,
-    isIncreased: true,
     color: "primary",
     variant: "full"
   },
@@ -46,7 +41,6 @@ export const MinorationFull: Story = {
     label: "Offre spéciale",
     currentPrice: 100,
     initialPrice: 130,
-    isDecreased: true,
     color: "tertiary",
     variant: "full"
   },
@@ -57,7 +51,6 @@ export const MinorationShort: Story = {
     label: "Offre spéciale",
     currentPrice: 100,
     initialPrice: 130,
-    isDecreased: true,
     color: "quaternary",
     variant: "percentage"
   },

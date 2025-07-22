@@ -3,8 +3,6 @@ import * as React from "react";
 
 type PricingTagsPropsType = {
   label: string;
-  isIncreased?: boolean;
-  isDecreased?: boolean;
   initialPrice: number;
   currentPrice: number;
   color: "primary" | "secondary" | "tertiary" | "quaternary" | "quinary";
@@ -16,14 +14,16 @@ const baseTagsStyle =
 
 export default function PricingTags({
   label,
-  isIncreased,
-  isDecreased,
   initialPrice,
   currentPrice,
   color,
   variant
 
 }: PricingTagsPropsType) {
+
+  const isIncreased = currentPrice - initialPrice > 0;
+  const isDecreased = currentPrice - initialPrice < 0;
+
   const getVariantClasses = () => {
     if (color === "primary") {
       return "bg-[#EEF5FB] text-[#5A6E81]";

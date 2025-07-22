@@ -15,7 +15,7 @@ interface ButtonProps {
   multiple?: boolean;
 }
 
-export const SelectButton = ({
+export const FilterButton = ({
   size = "medium",
   label,
   options = [],

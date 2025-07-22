@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { fn } from "storybook/test";
-import { SelectButton } from "./SelectButton.tsx";
+import { FilterButton } from "./FilterButton.tsx";
 
-const meta: Meta<typeof SelectButton> = {
-  title: "Buttons/SelectButton",
-  component: SelectButton,
+const meta: Meta<typeof FilterButton> = {
+  title: "Buttons/FilterButton",
+  component: FilterButton,
   parameters: {
     layout: "centered",
   },
