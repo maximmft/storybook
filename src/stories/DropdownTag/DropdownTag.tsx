@@ -1,6 +1,6 @@
 import * as React from "react";
+import { ChevronDown, X } from "lucide-react";
 import { DropdownItem } from "../DropdownItem/DropdownItem.tsx";
-import { ChevronDown } from "lucide-react";
 
 type DropdownOption = {
   id: string;
@@ -11,23 +11,25 @@ type DropdownOption = {
   variant?: "default" | "checkbox";
 };
 
-type DropdownItemProps = {
+type DropdownTagProps = {
   options: DropdownOption[];
   placeholder?: string;
   disabled?: boolean;
   onSelectionChange?: (selectedOptions: DropdownOption[]) => void;
   multiSelect?: boolean;
   maxHeight?: number;
+  variant?: "default" | "error";
 };
 
-export const Dropdown = ({
+export const DropdownTag = ({
   options = [],
-  placeholder = "Sélectionner une option",
+  placeholder = "Placeholder",
   disabled = false,
   onSelectionChange,
-  multiSelect = false,
+  multiSelect = true,
   maxHeight = 200,
-}: DropdownItemProps) => {
+  variant = "default",
+}: DropdownTagProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedOptions, setSelectedOptions] = React.useState<DropdownOption[]>([]);
   const dropdownRef = React.useRef<HTMLDivElement>(null);
@@ -38,7 +40,6 @@ export const Dropdown = ({
         setIsOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -60,37 +61,81 @@ export const Dropdown = ({
     onSelectionChange?.(newSelection);
   };
 
-  const getDisplayText = () => {
-    if (selectedOptions.length === 0) return placeholder;
-    if (selectedOptions.length === 1) return selectedOptions[0].label;
-    return `${selectedOptions.length} éléments sélectionnés`;
+  const removeTag = (optionId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const newSelection = selectedOptions.filter(selected => selected.id !== optionId);
+    setSelectedOptions(newSelection);
+    onSelectionChange?.(newSelection);
   };
 
   const hasSelection = selectedOptions.length > 0;
 
+  const getVariantStyles = () => {
+    if (disabled) {
+      return "text-[#D4D0CB] cursor-not-allowed bg-[#F7F5F3] border-[#F7F5F3]";
+    }
+    
+    if (variant === "error") {
+      return "border-[#F03538] text-[#251F19]";
+    }
+    
+    return hasSelection 
+      ? "text-[#251F19] border-[#696663]" 
+      : "text-[#A29D98] border-[#E3DFDA]";
+  };
+
+  const getTagVariantStyles = () => {
+    if (variant === "error") {
+      return "bg-[#F7F5F3] text-[#F03538]";
+    }
+    
+    return "bg-[#F7F5F3] text-[#3C3A37]";
+  };
+
   return (
-    <div className="relative inline-block min-w-[220px] w-full" ref={dropdownRef}>
-      <button
-        type="button"
+    <div className="relative inline-block w-[220px]" ref={dropdownRef}>
+      <div
         onClick={() => !disabled && setIsOpen(!isOpen)}
-        disabled={disabled}
         className={`
-          h-10 px-3 w-full min-w-[200px] flex items-center justify-between
+          h-[40px] px-2 w-full flex items-center gap-2 cursor-pointer overflow-hidden
           border rounded-lg bg-white font-light text-[14px] leading-[20px]
-          ${disabled 
-            ? "text-[#D4D0CB] cursor-not-allowed bg-[#F7F5F3] border-[#F7F5F3]" 
-            : `${hasSelection ? "text-[#251F19] border-[#696663]" : "text-[#A29D98] border-[#E3DFDA]"} hover:border-[#696663] focus:outline-none focus:ring-1 focus:ring-[#2D2A27] focus:border-[#2D2A27]`
-          }
-          ${isOpen ? "border-[#2D2A27] ring-1 ring-[#2D2A27]" : ""}
+          ${getVariantStyles()}
+          ${!disabled && variant !== "error" ? "hover:border-[#696663] focus:outline-none focus:ring-1 focus:ring-[#2D2A27] focus:border-[#2D2A27]" : ""}
+          ${isOpen && variant !== "error" ? "border-[#2D2A27] ring-1 ring-[#2D2A27]" : ""}
         `}
       >
-        <span className="truncate text-left flex-1">
-          {getDisplayText()}
-        </span>
+        <div className="flex gap-1 flex-1 min-w-0 overflow-x-auto scrollbar-hide">
+          {selectedOptions.map((selected) => (
+            <div
+              key={selected.id}
+              className={`
+                flex items-center gap-1 px-2 py-1 rounded-md text-xs flex-shrink-0 whitespace-nowrap
+                ${getTagVariantStyles()}
+              `}
+            >
+              <span>{selected.label}</span>
+              {!disabled && (
+                <button
+                  onClick={(e) => removeTag(selected.id, e)}
+                  className="hover:bg-black/10 rounded-sm p-0.5 transition-colors"
+                  type="button"
+                >
+                 <X size={10}/>
+                 
+                </button>
+              )}
+            </div>
+          ))}
+          
+          {selectedOptions.length === 0 && (
+            <span className="text-[#A29D98] truncate py-1">{placeholder}</span>
+          )}
+        </div>
+
         <ChevronDown 
-            className={`w-4 h-4 transition-transform ml-auto ${isOpen ? "rotate-180" : ""} ${disabled ? "text-[#D4D0CB]" : ""}`}
-          />
-      </button>
+          className={`w-4 h-4 transition-transform flex-shrink-0 ${isOpen ? "rotate-180" : ""} ${disabled ? "text-[#D4D0CB]" : ""}`}
+        />
+      </div>
 
       {isOpen && (
         <div 

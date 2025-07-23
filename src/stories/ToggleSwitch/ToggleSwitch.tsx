@@ -55,7 +55,7 @@ const IOSSwitch = styled((props: SwitchProps) => (
     opacity: 1
   },
 }));
-export default function SwitchButton({label, register, value, disabled} : CustomSwitchPropsType) {
+export default function ToggleSwitch({label, register, value, disabled} : CustomSwitchPropsType) {
     return (
       <FormGroup>
         <FormControlLabel

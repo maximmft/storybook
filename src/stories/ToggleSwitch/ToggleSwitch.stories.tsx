@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
-import SwitchButton from "./SwitchButton.tsx";
 import { UseFormRegisterReturn } from "react-hook-form";
+import ToggleSwitch from "./ToggleSwitch";
 
 const mockRegister: UseFormRegisterReturn = {
-  name: "switchButton",
+  name: "toggleSwitch",
   onChange: async () => true,
   onBlur: async () => true,
   ref: () => {},
 };
 
-const meta: Meta<typeof SwitchButton> = {
-  title: "Buttons/SwitchButton",
-  component: SwitchButton,
+const meta: Meta<typeof ToggleSwitch> = {
+  title: "Inputs/ToggleSwitch",
+  component: ToggleSwitch,
   tags: ["autodocs"],
   parameters: {
     layout: "centered",

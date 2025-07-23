@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
-import React from "react";
 import DayPicker from "./DayPicker.tsx";
 
 const meta: Meta<typeof DayPicker> = {
-  title: "Components/DayPicker",
+  title: "Buttons/DayPicker",
   component: DayPicker,
   tags: ["autodocs"],
   parameters: {

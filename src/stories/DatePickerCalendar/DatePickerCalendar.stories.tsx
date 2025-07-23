@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import DatePickerCalendar from "./DatePickerCalendar.tsx";
 
 const meta: Meta<typeof DatePickerCalendar> = {
-  title: "Components/DatePickerCalendar",
+  title: "Buttons/DatePickerCalendar",
   component: DatePickerCalendar,
   tags: ["autodocs"],
   parameters: {

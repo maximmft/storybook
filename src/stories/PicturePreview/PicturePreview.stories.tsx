@@ -3,7 +3,7 @@ import PicturePreview from "./PicturePreview.tsx";
 import brochure_hotel from "/public/borchure_hotel.png"
 
 const meta: Meta<typeof PicturePreview> = {
-  title: "Components/PicturePreview",
+  title: "Informations/PicturePreview",
   component: PicturePreview,
   tags: ["autodocs"],
   parameters: {

@@ -11,7 +11,7 @@ const tabs = [
 ];
 
 const meta: Meta<typeof CustomTabs> = {
-  title: "Components/CustomTabs",
+  title: "Buttons/CustomTabs",
   component: CustomTabs,
   parameters: {
     layout: "centered",

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import ApiStatut from "./ApiStatut.tsx";
 
 const meta: Meta<typeof ApiStatut> = {
-  title: "Statut/ApiStatut",
+  title: "Informations/ApiStatut",
   component: ApiStatut,
   tags: ["autodocs"],
   parameters: {

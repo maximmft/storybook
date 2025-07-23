@@ -1,11 +1,16 @@
 import { Building2, Star, Tag as LucideTag, UserRound } from "lucide-react";
-import * as React from "react";
+
+type TagsType = {
+  name:string,
+  style: string,
+  icon?: string | React.ReactElement;
+}
 
 const baseTagsStyle =
   "flex flex-row fit-content items-center justify-center border rounded-[4px] px-2 py-1 text-[10px] capitalize font-semibold";
 
-export const tagsConfig = {
-  active: {
+  export const tagsConfig: Record<string, TagsType> = {
+    active: {
     name: "Actif",
     style: "bg-[#E8F8EC] border-[#4EC06D] text-[#4EC06D]",
     icon: "•",
@@ -127,15 +132,15 @@ export const tagsConfig = {
   },
 };
 
-export default function Tag({
-  status,
-  variant,
-  label,
-}: {
-  status?: string;
-  variant?: number;
+type TagStatus = keyof typeof tagsConfig;
+
+interface TagProps {
+  status?: TagStatus;
+  variant?: 1 | 2 | 3 | 4;
   label?: string;
-}) {
+}
+
+export default function Tag({ status, variant, label }: TagProps) {
   const colorVariants = {
     1: {
       style: "bg-[#EEF5FB] border-[#98B2CD] text-[#5A6E81]",

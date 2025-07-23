@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import TimeSlot from "./TimeSlot.tsx";
 
 const meta: Meta<typeof TimeSlot> = {
-  title: "Components/TimeSlot",
+  title: "Buttons/TimeSlot",
   component: TimeSlot,
   tags: ["autodocs"],
   parameters: {

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import Feedback from "./Feedback.tsx";
 
 const meta: Meta<typeof Feedback> = {
-  title: "Statut/Feedback",
+  title: "Informations/Feedback",
   component: Feedback,
   tags: ["autodocs"],
   parameters: {

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import Tag, { tagsConfig } from "./Tag.tsx";
 
 const meta: Meta<typeof Tag> = {
-  title: "Statut/Tag",
+  title: "Informations/Tag",
   component: Tag,
   tags: ["autodocs"],
   parameters: {
@@ -69,7 +69,7 @@ export const AllTagsVariants: Story = {
     return (
       <div className="flex flex-wrap gap-2 ">
         {tagsExemple.map((tag, index) => (
-          <Tag variant={index + 1} label={tag.name} />
+          <Tag variant={(index + 1) as 1 | 2 | 3 | 4} label={tag.name} />
         ))}
       </div>
     );
