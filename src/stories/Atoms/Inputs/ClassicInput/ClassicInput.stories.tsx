@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { ClassicInput } from "./ClassicInput.tsx";
 
 const meta: Meta<typeof ClassicInput> = {
-  title: "Inputs/ClassicInput",
+  title: "Atoms/Inputs/ClassicInput",
   component: ClassicInput,
   tags: ["autodocs"],
   parameters: {

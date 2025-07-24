@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { SearchBar } from "./SearchBar.tsx";
 
 const meta: Meta<typeof SearchBar> = {
-  title: "Inputs/SearchBar",
+  title: "Atoms/Inputs/SearchBar",
   component: SearchBar,
   tags: ["autodocs"],
   parameters: {

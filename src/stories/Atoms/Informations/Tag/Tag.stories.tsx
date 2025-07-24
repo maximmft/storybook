@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import Tag, { tagsConfig } from "./Tag.tsx";
 
 const meta: Meta<typeof Tag> = {
-  title: "Informations/Tag",
+  title: "Atoms/Informations/Tag",
   component: Tag,
   tags: ["autodocs"],
   parameters: {

@@ -3,7 +3,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { LinkButton } from "./LinkButton.tsx";
 
 const meta: Meta<typeof LinkButton> = {
-  title: "Buttons/LinkButton",
+  title: "Atoms/Buttons/LinkButton",
   component: LinkButton,
   parameters: {
     layout: "centered",

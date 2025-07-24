@@ -10,7 +10,7 @@ const mockRegister: UseFormRegisterReturn = {
 };
 
 const meta: Meta<typeof ToggleSwitch> = {
-  title: "Inputs/ToggleSwitch",
+  title: "Atoms/Inputs/ToggleSwitch",
   component: ToggleSwitch,
   tags: ["autodocs"],
   parameters: {

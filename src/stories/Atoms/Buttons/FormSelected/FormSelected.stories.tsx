@@ -3,7 +3,7 @@ import FormSelected from "./FormSelected.tsx";
 import { Grid } from "lucide-react";
 
 const meta: Meta<typeof FormSelected> = {
-  title: "Buttons/FormSelected",
+  title: "Atoms/Buttons/FormSelected",
   component: FormSelected,
   tags: ["autodocs"],
   parameters: {

@@ -31,7 +31,7 @@ const checkboxOptions = [
 
 
 const meta: Meta<typeof Dropdown> = {
-  title: "Inputs/Dropdown",
+  title: "Atoms/Inputs/Dropdown",
   component: Dropdown,
   parameters: {
     layout: "centered",

@@ -3,7 +3,7 @@ import { Command } from 'lucide-react';
 import { DropdownItem } from "./DropdownItem.tsx";
 
 const meta: Meta<typeof DropdownItem> = {
-  title: "Buttons/DropdownItem",
+  title: "Atoms/Buttons/DropdownItem",
   component: DropdownItem,
   parameters: {
     layout: "centered",

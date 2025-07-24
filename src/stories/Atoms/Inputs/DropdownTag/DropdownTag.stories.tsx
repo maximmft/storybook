@@ -28,7 +28,7 @@ const teamOptions = [
 
 
 const meta: Meta<typeof DropdownTag> = {
-  title: "Inputs/DropdownTag",
+  title: "Atoms/Inputs/DropdownTag",
   component: DropdownTag,
   parameters: {
     layout: "centered",

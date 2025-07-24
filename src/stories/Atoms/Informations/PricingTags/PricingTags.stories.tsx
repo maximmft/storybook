@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import PricingTags from "./PricingTags.tsx";
 
 const meta: Meta<typeof PricingTags> = {
-  title: "Informations/PricingTags",
+  title: "Atoms/Informations/PricingTags",
   component: PricingTags,
   tags: ["autodocs"],
   parameters: {

@@ -9,7 +9,7 @@ const teamOptions = [
 ];
 
 const meta: Meta<typeof RadioButton> = {
-  title: "Inputs/RadioButton",
+  title: "Atoms/Inputs/RadioButton",
   component: RadioButton,
   tags: ["autodocs"],
   parameters: {

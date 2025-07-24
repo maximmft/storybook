@@ -3,7 +3,7 @@ import { fn } from "storybook/test";
 import { FilterButton } from "./FilterButton.tsx";
 
 const meta: Meta<typeof FilterButton> = {
-  title: "Buttons/FilterButton",
+  title: "Atoms/Buttons/FilterButton",
   component: FilterButton,
   parameters: {
     layout: "centered",
