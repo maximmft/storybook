@@ -3,7 +3,7 @@ import { ChevronDown, X } from "lucide-react";
 import { Box, Typography } from "@mui/material";
 import { DropdownItem } from "../../../Atoms/Buttons/DropdownItem/DropdownItem";
 import { SearchBar } from "../../../Atoms/Inputs/SearchBar/SearchBar";
-import { useEffect, useState, useRef} from "react";
+import { useEffect, useState, useRef } from "react";
 
 type DropdownOption = {
   id: string;
@@ -68,8 +68,6 @@ export const DropdownSearchSelect = ({
   };
 
   const handleSearch = (value: string) => {
-    console.log("value", value);
-    
     setSearchValue(value);
   };
 
@@ -132,8 +130,6 @@ export const DropdownSearchSelect = ({
     return `${baseStyles} ${rotationStyle} ${colorStyle}`.trim();
   };
 
-  console.log("sear", searchValue);
-  
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
       <Typography
@@ -195,6 +191,7 @@ export const DropdownSearchSelect = ({
                 <SearchBar
                   onSearch={handleSearch}
                   placeholder="Rechercher..."
+                  displayLabel={false}
                 />
               </div>
               {options.length === 0 || filteredOptions.length === 0 ? (
