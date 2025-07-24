@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
-import { DropdownSearchSelect } from "./DropdownSearchSelect.tsx";
+import { DropdownSearchSelect } from "./DropdownSearchSelect";
 import { SettingsIcon, UserIcon } from "lucide-react";
-
 
 const basicOptions = [
   { id: "1", label: "JavaScript" },
@@ -9,7 +8,7 @@ const basicOptions = [
   { id: "3", label: "React" },
   { id: "4", label: "Vue.js" },
   { id: "5", label: "Angular" },
-  { id: "8", label: "Java", disabled: true },
+  { id: "6", label: "Java", disabled: true },
 ];
 
 const categoryOptions = [
@@ -18,14 +17,6 @@ const categoryOptions = [
   { id: "3", label: "DevOps", icon: SettingsIcon, iconPosition: "left" as const },
   { id: "4", label: "Mobile", icon: SettingsIcon, iconPosition: "left" as const },
 ];
-
-const teamOptions = [
-  { id: "1", label: "Alice", icon: UserIcon, iconPosition: "left" as const },
-  { id: "2", label: "Ismail", icon: UserIcon, iconPosition: "left" as const },
-  { id: "3", label: "Abou", icon: UserIcon, iconPosition: "left" as const },
-  { id: "4", label: "Coline", icon: UserIcon, iconPosition: "left" as const },
-];
-
 
 const meta: Meta<typeof DropdownSearchSelect> = {
   title: "Molecules/Inputs/DropdownSearchSelect",
@@ -38,12 +29,11 @@ const meta: Meta<typeof DropdownSearchSelect> = {
     disabled: {
       control: { type: "boolean" },
     },
-    multiSelect: {
+    error: {
       control: { type: "boolean" },
     },
-    variant: {
-      control: { type: "select" },
-      options: ["default", "error"],
+    multiSelect: {
+      control: { type: "boolean" },
     },
   },
 };
@@ -51,55 +41,29 @@ const meta: Meta<typeof DropdownSearchSelect> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
+    label: "Technologies",
     options: basicOptions,
     placeholder: "Sélectionner des technologies",
+    multiSelect: true,
   },
 };
 
 export const WithIcons: Story = {
   args: {
+    label: "Catégories",
     options: categoryOptions,
     placeholder: "Choisir des catégories",
-  },
-};
-
-export const TeamMembers: Story = {
-  args: {
-    options: teamOptions,
-    placeholder: "Assigner à des membres",
-  },
-};
-
-export const ErrorState: Story = {
-  args: {
-    options: basicOptions,
-    placeholder: "Champ requis",
-    variant: "error",
-  },
-};
-
-export const Disabled: Story = {
-  args: {
-    options: basicOptions,
-    placeholder: "Tags désactivés",
-    disabled: true,
+    multiSelect: true,
   },
 };
 
 export const SingleSelect: Story = {
   args: {
-    options: basicOptions,
-    placeholder: "Sélection unique",
-    multiSelect: false,
-  },
-};
-
-export const Empty: Story = {
-  args: {
-    options: [],
-    placeholder: "Sélection unique",
+    label: "Catégorie",
+    options: categoryOptions,
+    placeholder: "Choisir une catégorie",
     multiSelect: false,
   },
 };

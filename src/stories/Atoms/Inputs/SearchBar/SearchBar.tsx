@@ -28,12 +28,11 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarPropsType>(
     ref
   ) => {
     const [value, setValue] = useState(defaultValue);
-    const [isFocused, setIsFocused] = useState(false);
     const hasValue = value.length > 0;
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setValue(e.target.value);
-      onSearch(value)
+      onSearch(e.target.value)
     };
 
     const handleClear = () => {
@@ -41,16 +40,9 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarPropsType>(
       onClear?.();
     };
 
-    const handleKeyPress = (e: React.KeyboardEvent) => {
-      if (e.key === "Enter") {
-        onSearch?.(value);
-      }
-    };
-
     const getFieldsetBorderColor = () => {
       if (error) return "#F03538";
       if (disabled) return "#F7F5F3";
-      if (isFocused) return "#2D2A27";
       if (hasValue) return "#696663";
       return "#E3DFDA";
     };
@@ -64,7 +56,6 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarPropsType>(
     const getIconColor = () => {
       if (error) return "#2D2A27";
       if (disabled) return "#D4D0CB";
-      if (isFocused) return "#2D2A27";
       if (hasValue) return "#696663";
       return "#A29D98";
     };
@@ -77,9 +68,6 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarPropsType>(
         error={error}
         value={value}
         onChange={handleChange}
-        onKeyPress={handleKeyPress}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

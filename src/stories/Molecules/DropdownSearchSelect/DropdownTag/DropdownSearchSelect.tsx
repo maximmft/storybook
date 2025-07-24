@@ -3,6 +3,7 @@ import { ChevronDown, X } from "lucide-react";
 import { Box, Typography } from "@mui/material";
 import { DropdownItem } from "../../../Atoms/Buttons/DropdownItem/DropdownItem";
 import { SearchBar } from "../../../Atoms/Inputs/SearchBar/SearchBar";
+import { useEffect, useState, useRef} from "react";
 
 type DropdownOption = {
   id: string;
@@ -34,31 +35,19 @@ export const DropdownSearchSelect = ({
   multiSelect = true,
   maxHeight = 200,
 }: DropdownTagProps) => {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = React.useState<
     DropdownOption[]
   >([]);
-  const [searchValue, setSearchValue] = React.useState("");
+  const [searchValue, setSearchValue] = useState("");
 
-  const dropdownRef = React.useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {   setSearchValue("");
-      document.removeEventListener("mousedown", handleClickOutside);
-  };
-    
+  useEffect(() => {
+    if (!isOpen) {
+      setSearchValue("");
+    }
   }, [isOpen]);
-
   const handleOptionClick = (option: DropdownOption) => {
     let newSelection: DropdownOption[];
 
@@ -79,6 +68,8 @@ export const DropdownSearchSelect = ({
   };
 
   const handleSearch = (value: string) => {
+    console.log("value", value);
+    
     setSearchValue(value);
   };
 
@@ -141,9 +132,8 @@ export const DropdownSearchSelect = ({
     return `${baseStyles} ${rotationStyle} ${colorStyle}`.trim();
   };
 
-  console.log('sear', searchValue);
+  console.log("sear", searchValue);
   
-
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
       <Typography
@@ -192,44 +182,55 @@ export const DropdownSearchSelect = ({
         </div>
 
         {isOpen && (
-          <div
-            className="absolute z-50 w-full mt-1 bg-white border border-[#E3DFDA] rounded-[8px] shadow-lg"
-            style={{ maxHeight: `${maxHeight}px`, overflowY: "auto" }}
-          >
-            <div className="p-2">
-              <SearchBar onSearch={handleSearch} placeholder="Rechercher..." />
-            </div>
-            {options.length === 0 ? (
-              <div className="px-3 py-2 text-[#A29D98] text-[12px] font-light">
-                Aucune option disponible
+          <>
+            <div
+              className="fixed inset-0 z-40 bg-transparent"
+              onClick={() => setIsOpen(false)}
+            />
+            <div
+              className="absolute z-50 w-full mt-1 bg-white border border-[#E3DFDA] rounded-[8px] shadow-lg"
+              style={{ maxHeight: `${maxHeight}px`, overflowY: "auto" }}
+            >
+              <div className="p-2">
+                <SearchBar
+                  onSearch={handleSearch}
+                  placeholder="Rechercher..."
+                />
               </div>
-            ) : (
-              getFilteredOptions().map((option) => {
-                const isSelected = selectedOptions.some(
-                  (selected) => selected.id === option.id
-                );
+              {options.length === 0 || filteredOptions.length === 0 ? (
+                <div className="px-3 py-2 text-[#A29D98] text-[12px] font-light">
+                  Aucune option disponible
+                </div>
+              ) : (
+                getFilteredOptions().map((option) => {
+                  const isSelected = selectedOptions.some(
+                    (selected) => selected.id === option.id
+                  );
 
-                return (
-                  <DropdownItem
-                    key={option.id}
-                    label={option.label}
-                    icon={option.icon}
-                    iconPosition={option.iconPosition}
-                    disabled={option.disabled}
-                    isActive={!multiSelect && isSelected}
-                    variant={
-                      option.variant || (multiSelect ? "checkbox" : "default")
-                    }
-                    checked={multiSelect ? isSelected : undefined}
-                    onClick={() => handleOptionClick(option)}
-                    onCheckChange={
-                      multiSelect ? () => handleOptionClick(option) : undefined
-                    }
-                  />
-                );
-              })
-            )}
-          </div>
+                  return (
+                    <DropdownItem
+                      key={option.id}
+                      label={option.label}
+                      icon={option.icon}
+                      iconPosition={option.iconPosition}
+                      disabled={option.disabled}
+                      isActive={!multiSelect && isSelected}
+                      variant={
+                        option.variant || (multiSelect ? "checkbox" : "default")
+                      }
+                      checked={multiSelect ? isSelected : undefined}
+                      onClick={() => handleOptionClick(option)}
+                      onCheckChange={
+                        multiSelect
+                          ? () => handleOptionClick(option)
+                          : undefined
+                      }
+                    />
+                  );
+                })
+              )}
+            </div>
+          </>
         )}
       </div>
     </Box>
