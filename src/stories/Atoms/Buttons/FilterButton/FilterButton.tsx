@@ -48,6 +48,8 @@ export const FilterButton = ({
   };
 
   const selectStyles = {
+    fontSize: "14px",
+
     "& .MuiSelect-icon": {
       width: "20px",
       position: "relative",
@@ -71,8 +73,7 @@ export const FilterButton = ({
         visibility: "visible",
       },
     },
-
-   "&.Mui-focused": {
+    "&.Mui-focused": {
       backgroundColor: "#F7F5F3",
       "& .MuiOutlinedInput-notchedOutline": {
         borderColor: "#696663",
@@ -96,7 +97,29 @@ export const FilterButton = ({
   const menuProps = {
     PaperProps: {
       sx: {
-        backgroundColor: "#F7F5F3",
+        backgroundColor: "#FFFFFF",
+        border: "1px solid #D4D0CB",
+        borderRadius: "8px",
+        boxShadow: "none",
+        padding: "0px",
+        marginTop: "8px",
+        "& .MuiList-root": {
+          padding: 0,
+        },
+        "& .MuiMenuItem-root": {
+          color: "#696663",
+          fontWeight: 300,
+          fontSize: "12px",
+          "&:hover": {
+            backgroundColor: "#F7F5F3",
+          },
+          "&.Mui-selected": {
+            backgroundColor: "#F7F5F3",
+            "&:hover": {
+              backgroundColor: "#F7F5F3",
+            },
+          },
+        },
       },
     },
   };
@@ -119,7 +142,7 @@ export const FilterButton = ({
         >
           {options.map((option, index) => (
             <MenuItem key={option.value || index} value={option.value}>
-              {option.name}
+              <p className="capitalize py-1">{option.name}</p>
             </MenuItem>
           ))}
         </Select>

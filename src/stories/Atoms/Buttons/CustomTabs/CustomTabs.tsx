@@ -36,7 +36,7 @@ const getTabStyles = (variant: TabVariant): SxProps<Theme> => {
       "& .MuiTab-root": {
         textTransform: "none",
         color: "#696663",
-        fontSize: "16px",
+        fontSize: "14px",
         padding: "0px 0px",
       },
       "& .MuiTab-root.Mui-disabled": {

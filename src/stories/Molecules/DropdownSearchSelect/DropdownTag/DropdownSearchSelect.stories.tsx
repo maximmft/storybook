@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { DropdownSearchSelect } from "./DropdownSearchSelect";
-import { SettingsIcon, UserIcon } from "lucide-react";
+import { SettingsIcon } from "lucide-react";
 
 const basicOptions = [
   { id: "1", label: "JavaScript" },
