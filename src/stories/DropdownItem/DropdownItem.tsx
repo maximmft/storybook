@@ -37,7 +37,7 @@ export const DropdownItem = ({
   return (
     <div
       className={`
-         flex h-[41px] px-[12px] items-center text-[14px] w-full min-w-[157px] group gap-2
+         flex h-[41px] px-[12px] items-center text-[12px] w-full min-w-[157px] group gap-2
         ${iconPosition === "right" && IconComponent ? "justify-between" : ""}
         ${variant === "checkbox" ? "cursor-pointer" : ""}
         ${

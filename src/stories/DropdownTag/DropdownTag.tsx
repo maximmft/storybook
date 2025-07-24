@@ -88,7 +88,6 @@ export const DropdownTag = ({
     if (variant === "error") {
       return "bg-[#F7F5F3] text-[#F03538]";
     }
-    
     return "bg-[#F7F5F3] text-[#3C3A37]";
   };
 
@@ -97,19 +96,19 @@ export const DropdownTag = ({
       <div
         onClick={() => !disabled && setIsOpen(!isOpen)}
         className={`
-          h-[40px] px-2 w-full flex items-center gap-2 cursor-pointer overflow-hidden
-          border rounded-lg bg-white font-light text-[14px] leading-[20px]
+          h-[40px] w-full flex items-center cursor-pointer overflow-hidden
+          border rounded-[8px] font-light text-[12px] text-greyscale-800
           ${getVariantStyles()}
-          ${!disabled && variant !== "error" ? "hover:border-[#696663] focus:outline-none focus:ring-1 focus:ring-[#2D2A27] focus:border-[#2D2A27]" : ""}
-          ${isOpen && variant !== "error" ? "border-[#2D2A27] ring-1 ring-[#2D2A27]" : ""}
+          ${!disabled && variant !== "error" ? "hover:border-[#696663] " : ""}
+          ${isOpen && variant !== "error" ? "border-[#2D2A27]" : ""}
         `}
       >
-        <div className="flex gap-1 flex-1 min-w-0 overflow-x-auto scrollbar-hide">
+        <div className="flex gap-1 flex-1 min-w-0 overflow-x-auto scrollbar-hide pl-3 py-[14px]">
           {selectedOptions.map((selected) => (
             <div
               key={selected.id}
               className={`
-                flex items-center gap-1 px-2 py-1 rounded-md text-xs flex-shrink-0 whitespace-nowrap
+                flex items-center gap-1  rounded-[8px] p-[6px] flex-shrink-0 whitespace-nowrap
                 ${getTagVariantStyles()}
               `}
             >
@@ -133,17 +132,17 @@ export const DropdownTag = ({
         </div>
 
         <ChevronDown 
-          className={`w-4 h-4 transition-transform flex-shrink-0 ${isOpen ? "rotate-180" : ""} ${disabled ? "text-[#D4D0CB]" : ""}`}
+          className={`w-4 h-4 mx-2 transition-transform ${isOpen ? "rotate-180" : ""} ${disabled ? "text-[#D4D0CB]" : ""}`}
         />
       </div>
 
       {isOpen && (
         <div 
-          className="absolute z-50 w-full mt-1 bg-white border border-[#E3DFDA] rounded-lg shadow-lg"
+          className="absolute z-50 w-full mt-1 bg-white border border-[#E3DFDA] rounded-[8px] shadow-lg"
           style={{ maxHeight: `${maxHeight}px`, overflowY: "auto" }}
         >
           {options.length === 0 ? (
-            <div className="px-3 py-2 text-[#A29D98] text-sm font-light">
+            <div className="px-3 py-2 text-[#A29D98] text-[12px] font-light">
               Aucune option disponible
             </div>
           ) : (
@@ -161,7 +160,7 @@ export const DropdownTag = ({
                   variant={option.variant || (multiSelect ? "checkbox" : "default")}
                   checked={multiSelect ? isSelected : undefined}
                   onClick={() => handleOptionClick(option)}
-                  onCheckChange={multiSelect ? (checked) => handleOptionClick(option) : undefined}
+                  onCheckChange={multiSelect ? () => handleOptionClick(option) : undefined}
                 />
               );
             })
