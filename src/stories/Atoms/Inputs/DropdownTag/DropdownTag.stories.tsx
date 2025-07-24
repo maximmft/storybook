@@ -41,9 +41,8 @@ const meta: Meta<typeof DropdownTag> = {
     multiSelect: {
       control: { type: "boolean" },
     },
-    variant: {
-      control: { type: "select" },
-      options: ["default", "error"],
+    error: {
+      control: { type: "boolean" },
     },
   },
 };
@@ -76,7 +75,7 @@ export const ErrorState: Story = {
   args: {
     options: basicOptions,
     placeholder: "Champ requis",
-    variant: "error",
+    error: true,
   },
 };
 
