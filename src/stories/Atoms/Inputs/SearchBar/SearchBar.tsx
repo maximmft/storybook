@@ -9,7 +9,7 @@ type SearchBarPropsType = {
   placeholder?: string;
   disabled?: boolean;
   error?: boolean;
-  onSearch?: (value: string) => void;
+  onSearch: (value: string) => void;
   onClear?: () => void;
   defaultValue?: string;
 };
@@ -33,6 +33,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarPropsType>(
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setValue(e.target.value);
+      onSearch(value)
     };
 
     const handleClear = () => {
@@ -85,7 +86,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarPropsType>(
               <SearchIcon
                 sx={{
                   color: getIconColor(),
-                  fontSize: "20px",
+                  fontSize: "16px",
                 }}
               />
             </InputAdornment>
@@ -136,13 +137,11 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarPropsType>(
             },
             "& input": {
               fontWeight: 200,
-              padding: "0 14px", 
-              fontSize:"14px",
+              fontSize:"12px",
               "&::placeholder": {
                 color: error ? "#F03538" : disabled ? "#D4D0CB" : "#A29D98",
                 opacity: 1,
                 fontWeight: 200,
-                fontSize:"14px"
               },
             },
           },

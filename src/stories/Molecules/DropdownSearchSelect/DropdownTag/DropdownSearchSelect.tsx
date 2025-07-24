@@ -1,7 +1,8 @@
 import * as React from "react";
-import { ChevronDown } from "lucide-react";
-import { DropdownItem } from "../../Buttons/DropdownItem/DropdownItem";
+import { ChevronDown, X } from "lucide-react";
 import { Box, Typography } from "@mui/material";
+import { DropdownItem } from "../../../Atoms/Buttons/DropdownItem/DropdownItem";
+import { SearchBar } from "../../../Atoms/Inputs/SearchBar/SearchBar";
 
 type DropdownOption = {
   id: string;
@@ -12,7 +13,7 @@ type DropdownOption = {
   variant?: "default" | "checkbox";
 };
 
-type DropdownItemProps = {
+type DropdownTagProps = {
   label: string;
   options: DropdownOption[];
   placeholder?: string;
@@ -23,20 +24,22 @@ type DropdownItemProps = {
   maxHeight?: number;
 };
 
-export const Dropdown = ({
+export const DropdownSearchSelect = ({
   label = "Label",
   options = [],
-  placeholder = "Sélectionner une option",
+  placeholder = "Placeholder",
   disabled = false,
   error = false,
   onSelectionChange,
-  multiSelect = false,
+  multiSelect = true,
   maxHeight = 200,
-}: DropdownItemProps) => {
+}: DropdownTagProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedOptions, setSelectedOptions] = React.useState<
     DropdownOption[]
   >([]);
+  const [searchValue, setSearchValue] = React.useState("");
+
   const dropdownRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -48,10 +51,13 @@ export const Dropdown = ({
         setIsOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+
+    return () => {   setSearchValue("");
+      document.removeEventListener("mousedown", handleClickOutside);
+  };
+    
+  }, [isOpen]);
 
   const handleOptionClick = (option: DropdownOption) => {
     let newSelection: DropdownOption[];
@@ -72,44 +78,62 @@ export const Dropdown = ({
     onSelectionChange?.(newSelection);
   };
 
-  const getDisplayText = () => {
-    if (selectedOptions.length === 0) return placeholder;
-    if (selectedOptions.length === 1) return selectedOptions[0].label;
-    return `${selectedOptions.length} éléments sélectionnés`;
+  const handleSearch = (value: string) => {
+    setSearchValue(value);
+  };
+
+  const removeTag = (optionId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const newSelection = selectedOptions.filter(
+      (selected) => selected.id !== optionId
+    );
+    setSelectedOptions(newSelection);
+    onSelectionChange?.(newSelection);
   };
 
   const hasSelection = selectedOptions.length > 0;
 
-  const getButtonBaseStyles = () =>
-    "h-10 px-3 w-full min-w-[200px] flex items-center justify-between border rounded-lg bg-white font-light text-[14px] leading-[20px]";
-  const getButtonStateStyles = () => {
+  const filteredOptions = options.filter((option) =>
+    option.label.toLowerCase().includes(searchValue.toLowerCase())
+  );
+
+  const getFilteredOptions = () => {
+    if (searchValue) return filteredOptions;
+    else return options;
+  };
+
+  const getContainerStateStyles = () => {
     if (disabled) {
       return "text-[#D4D0CB] cursor-not-allowed bg-[#F7F5F3] border-[#F7F5F3]";
     }
     if (error) {
-      return "border-[#F03538] hover:border-[#F03538] focus:outline-none focus:ring-1 focus:ring-[#F03538] focus:border-[#F03538]";
+      return "border-[#F03538] text-[#251F19]";
     }
-    const baseColor = hasSelection
+    return hasSelection
       ? "text-[#251F19] border-[#696663]"
       : "text-[#A29D98] border-[#E3DFDA]";
-    return `${baseColor} hover:border-[#696663] focus:outline-none focus:ring-1 focus:ring-[#2D2A27] focus:border-[#2D2A27]`;
   };
 
-  const getButtonOpenStyles = () => {
+  const getContainerInteractionStyles = () => {
+    if (disabled || error) return "";
+    return "hover:border-[#696663]";
+  };
+
+  const getContainerOpenStyles = () => {
     if (!isOpen) return "";
-    return error
-      ? "border-[#F03538] ring-1 ring-[#F03538]"
-      : "border-[#2D2A27] ring-1 ring-[#2D2A27]";
+    return error ? "border-[#F03538]" : "border-[#2D2A27]";
   };
 
-  const getTextStyles = () => {
-    const baseStyles = "truncate text-left flex-1";
-    return !hasSelection ? `${baseStyles} text-[#A29D98]` : baseStyles;
+  const getTagVariantStyles = () => {
+    return error
+      ? "bg-[#F7F5F3] text-[#F03538]"
+      : "bg-[#F7F5F3] text-[#3C3A37]";
   };
 
   const getChevronStyles = () => {
-    const baseStyles = "w-4 h-4 transition-transform ml-auto";
+    const baseStyles = "w-4 h-4 mx-2 transition-transform";
     const rotationStyle = isOpen ? "rotate-180" : "";
+
     let colorStyle = "";
     if (disabled) colorStyle = "text-[#D4D0CB]";
     else if (error) colorStyle = "text-[#F03538]";
@@ -117,11 +141,8 @@ export const Dropdown = ({
     return `${baseStyles} ${rotationStyle} ${colorStyle}`.trim();
   };
 
-  const getDropdownStyles = () =>
-    "absolute z-50 w-full mt-1 bg-white border border-[#E3DFDA] rounded-lg shadow-lg";
-
-  const getEmptyMessageStyles = () =>
-    "px-3 py-2 text-[#A29D98] text-sm font-light";
+  console.log('sear', searchValue);
+  
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
@@ -136,31 +157,54 @@ export const Dropdown = ({
         {label}
       </Typography>
 
-      <div
-        className="relative inline-block min-w-[220px] w-full"
-        ref={dropdownRef}
-      >
-        <button
-          type="button"
+      <div className="relative inline-block w-[220px]" ref={dropdownRef}>
+        <div
           onClick={() => !disabled && setIsOpen(!isOpen)}
-          disabled={disabled}
-          className={`${getButtonBaseStyles()} ${getButtonStateStyles()} ${getButtonOpenStyles()}`}
+          className={`h-[40px] w-full flex items-center cursor-pointer overflow-hidden border rounded-[8px] font-light text-[12px] text-greyscale-800 ${getContainerStateStyles()} ${getContainerInteractionStyles()} ${getContainerOpenStyles()}`}
         >
-          <span className={getTextStyles()}>{getDisplayText()}</span>
+          <div className="flex gap-1 flex-1 min-w-0 overflow-x-auto scrollbar-hide pl-3 py-[14px]">
+            {selectedOptions.map((selected) => (
+              <div
+                key={selected.id}
+                className={`flex items-center gap-1 rounded-[8px] p-[6px] flex-shrink-0 whitespace-nowrap ${getTagVariantStyles()}`}
+              >
+                <span>{selected.label}</span>
+                {!disabled && (
+                  <button
+                    onClick={(e) => removeTag(selected.id, e)}
+                    className="hover:bg-black/10 rounded-sm p-0.5 transition-colors"
+                    type="button"
+                  >
+                    <X size={10} />
+                  </button>
+                )}
+              </div>
+            ))}
+
+            {selectedOptions.length === 0 && (
+              <span className="text-[#A29D98] truncate py-1">
+                {placeholder}
+              </span>
+            )}
+          </div>
+
           <ChevronDown className={getChevronStyles()} />
-        </button>
+        </div>
 
         {isOpen && (
           <div
-            className={getDropdownStyles()}
+            className="absolute z-50 w-full mt-1 bg-white border border-[#E3DFDA] rounded-[8px] shadow-lg"
             style={{ maxHeight: `${maxHeight}px`, overflowY: "auto" }}
           >
+            <div className="p-2">
+              <SearchBar onSearch={handleSearch} placeholder="Rechercher..." />
+            </div>
             {options.length === 0 ? (
-              <div className={getEmptyMessageStyles()}>
+              <div className="px-3 py-2 text-[#A29D98] text-[12px] font-light">
                 Aucune option disponible
               </div>
             ) : (
-              options.map((option) => {
+              getFilteredOptions().map((option) => {
                 const isSelected = selectedOptions.some(
                   (selected) => selected.id === option.id
                 );
@@ -179,9 +223,7 @@ export const Dropdown = ({
                     checked={multiSelect ? isSelected : undefined}
                     onClick={() => handleOptionClick(option)}
                     onCheckChange={
-                      multiSelect
-                        ? (checked) => handleOptionClick(option)
-                        : undefined
+                      multiSelect ? () => handleOptionClick(option) : undefined
                     }
                   />
                 );
