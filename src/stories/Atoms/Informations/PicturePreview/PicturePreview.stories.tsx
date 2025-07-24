@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import PicturePreview from "./PicturePreview.tsx";
-import brochure_hotel from "/public/borchure_hotel.png"
+
+const brochure_hotel = "/brochure_hotel.png";
 
 const meta: Meta<typeof PicturePreview> = {
   title: "Atoms/Informations/PicturePreview",
