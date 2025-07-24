@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Checkbox } from "../Checkbox/Checkbox.tsx";
+import { Checkbox } from "../../Inputs/Checkbox/Checkbox";
 
 type DropdownItemProps = {
   label: string;

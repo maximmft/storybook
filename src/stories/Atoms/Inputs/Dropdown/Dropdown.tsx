@@ -1,6 +1,6 @@
 import * as React from "react";
-import { DropdownItem } from "../DropdownItem/DropdownItem.tsx";
 import { ChevronDown } from "lucide-react";
+import { DropdownItem } from "../../Buttons/DropdownItem/DropdownItem";
 
 type DropdownOption = {
   id: string;
