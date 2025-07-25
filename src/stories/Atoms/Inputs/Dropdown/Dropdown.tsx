@@ -3,7 +3,7 @@ import { ChevronDown } from "lucide-react";
 import { DropdownItem } from "../../Buttons/DropdownItem/DropdownItem";
 import { Box, Typography } from "@mui/material";
 
-type DropdownOption = {
+export type DropdownOption = {
   id: string;
   label: string;
   icon?: React.ComponentType<any>;
@@ -12,7 +12,7 @@ type DropdownOption = {
   variant?: "default" | "checkbox";
 };
 
-type DropdownItemProps = {
+type DropdownPropsType = {
   label: string;
   options: DropdownOption[];
   placeholder?: string;
@@ -21,6 +21,14 @@ type DropdownItemProps = {
   onSelectionChange?: (selectedOptions: DropdownOption[]) => void;
   multiSelect?: boolean;
   maxHeight?: number;
+  size?: "small" | "medium" | "large";
+  required?: boolean;
+};
+
+const fontSize = {
+  small: "12px",
+  medium: "14px",
+  large: "16px",
 };
 
 export const Dropdown = ({
@@ -29,29 +37,17 @@ export const Dropdown = ({
   placeholder = "Sélectionner une option",
   disabled = false,
   error = false,
+  size = "medium",
+  required = false,
   onSelectionChange,
   multiSelect = false,
   maxHeight = 200,
-}: DropdownItemProps) => {
+}: DropdownPropsType) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedOptions, setSelectedOptions] = React.useState<
     DropdownOption[]
   >([]);
   const dropdownRef = React.useRef<HTMLDivElement>(null);
-
-  React.useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   const handleOptionClick = (option: DropdownOption) => {
     let newSelection: DropdownOption[];
@@ -80,8 +76,6 @@ export const Dropdown = ({
 
   const hasSelection = selectedOptions.length > 0;
 
-  const getButtonBaseStyles = () =>
-    "h-10 px-3 w-full min-w-[200px] flex items-center justify-between border rounded-lg bg-white font-light text-[14px] leading-[20px]";
   const getButtonStateStyles = () => {
     if (disabled) {
       return "text-[#D4D0CB] cursor-not-allowed bg-[#F7F5F3] border-[#F7F5F3]";
@@ -103,25 +97,19 @@ export const Dropdown = ({
   };
 
   const getTextStyles = () => {
-    const baseStyles = "truncate text-left flex-1";
-    return !hasSelection ? `${baseStyles} text-[#A29D98]` : baseStyles;
+    return !hasSelection
+      ? `truncate text-left flex-1 text-[#A29D98]`
+      : "truncate text-left flex-1";
   };
 
   const getChevronStyles = () => {
-    const baseStyles = "w-4 h-4 transition-transform ml-auto";
     const rotationStyle = isOpen ? "rotate-180" : "";
     let colorStyle = "";
     if (disabled) colorStyle = "text-[#D4D0CB]";
     else if (error) colorStyle = "text-[#F03538]";
 
-    return `${baseStyles} ${rotationStyle} ${colorStyle}`.trim();
+    return `w-4 h-4 transition-transform ml-auto ${rotationStyle} ${colorStyle}`.trim();
   };
-
-  const getDropdownStyles = () =>
-    "absolute z-50 w-full mt-1 bg-white border border-[#E3DFDA] rounded-lg shadow-lg";
-
-  const getEmptyMessageStyles = () =>
-    "px-3 py-2 text-[#A29D98] text-sm font-light";
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
@@ -130,10 +118,12 @@ export const Dropdown = ({
         sx={{
           color: error ? "#F03538" : disabled ? "#D4D0CB" : "#2D2A27",
           fontWeight: 400,
-          fontSize: "12px",
+
+          fontSize: fontSize[size],
         }}
       >
         {label}
+        {required && <span className="text-[#F03538] ml-1">*</span>}
       </Typography>
 
       <div
@@ -144,50 +134,56 @@ export const Dropdown = ({
           type="button"
           onClick={() => !disabled && setIsOpen(!isOpen)}
           disabled={disabled}
-          className={`${getButtonBaseStyles()} ${getButtonStateStyles()} ${getButtonOpenStyles()}`}
+          className={`h-10 px-3 w-full min-w-[200px] flex items-center justify-between border rounded-lg bg-white font-light text-[14px] leading-[20px] ${getButtonStateStyles()} ${getButtonOpenStyles()}`}
         >
           <span className={getTextStyles()}>{getDisplayText()}</span>
           <ChevronDown className={getChevronStyles()} />
         </button>
 
         {isOpen && (
-          <div
-            className={getDropdownStyles()}
-            style={{ maxHeight: `${maxHeight}px`, overflowY: "auto" }}
-          >
-            {options.length === 0 ? (
-              <div className={getEmptyMessageStyles()}>
-                Aucune option disponible
-              </div>
-            ) : (
-              options.map((option) => {
-                const isSelected = selectedOptions.some(
-                  (selected) => selected.id === option.id
-                );
+          <>
+            <div
+              className="fixed inset-0 z-40 bg-transparent"
+              onClick={() => setIsOpen(false)}
+            />
+            <div
+              className="absolute z-50 w-full mt-1 bg-white border border-[#E3DFDA] rounded-lg shadow-lg"
+              style={{ maxHeight: `${maxHeight}px`, overflowY: "auto" }}
+            >
+              {options.length === 0 ? (
+                <div className="px-3 py-2 text-[#A29D98] text-sm font-light">
+                  Aucune option disponible
+                </div>
+              ) : (
+                options.map((option) => {
+                  const isSelected = selectedOptions.some(
+                    (selected) => selected.id === option.id
+                  );
 
-                return (
-                  <DropdownItem
-                    key={option.id}
-                    label={option.label}
-                    icon={option.icon}
-                    iconPosition={option.iconPosition}
-                    disabled={option.disabled}
-                    isActive={!multiSelect && isSelected}
-                    variant={
-                      option.variant || (multiSelect ? "checkbox" : "default")
-                    }
-                    checked={multiSelect ? isSelected : undefined}
-                    onClick={() => handleOptionClick(option)}
-                    onCheckChange={
-                      multiSelect
-                        ? (checked) => handleOptionClick(option)
-                        : undefined
-                    }
-                  />
-                );
-              })
-            )}
-          </div>
+                  return (
+                    <DropdownItem
+                      key={option.id}
+                      label={option.label}
+                      icon={option.icon}
+                      iconPosition={option.iconPosition}
+                      disabled={option.disabled}
+                      isActive={!multiSelect && isSelected}
+                      variant={
+                        option.variant || (multiSelect ? "checkbox" : "default")
+                      }
+                      checked={multiSelect ? isSelected : undefined}
+                      onClick={() => handleOptionClick(option)}
+                      onCheckChange={
+                        multiSelect
+                          ? () => handleOptionClick(option)
+                          : undefined
+                      }
+                    />
+                  );
+                })
+              )}
+            </div>
+          </>
         )}
       </div>
     </Box>

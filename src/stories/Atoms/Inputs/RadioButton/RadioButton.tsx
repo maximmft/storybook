@@ -2,19 +2,7 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import Radio, { RadioProps } from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import RadioGroup from "@mui/material/RadioGroup";
 
-type RadioOptionsType = {
-  id: string;
-  label: string;
-};
-
-type RadioButtonPropsType = {
-  options: RadioOptionsType[];
-};
-
-// Icones personnalisées
 const BpIcon = styled("span")(() => ({
   borderRadius: "50%",
   width: 16,
@@ -50,19 +38,26 @@ const BpCheckedIcon = styled(BpIcon)({
   },
 });
 
-const StyledFormControlLabel = styled(FormControlLabel)<{ checked?: boolean }>(
-  ({ checked }) => ({
-    "& .MuiFormControlLabel-label": {
-      fontSize: "12px",
-      fontWeight: checked ? 400 : 300,
-      color: "#2D2A27",
-    },
-    "&:hover .MuiFormControlLabel-label": {
-      fontWeight: 400,
-      cursor: "pointer",
-    },
-  })
-);
+const fontSize = {
+  small: 12,
+  medium: 14,
+  large: 16,
+};
+
+const StyledFormControlLabel = styled(FormControlLabel)<{
+  checked?: boolean;
+  size?: "small" | "medium" | "large";
+}>(({ checked, size = "small" }) => ({
+  "& .MuiFormControlLabel-label": {
+    fontSize: fontSize[size] ?? 12,
+    fontWeight: checked ? 400 : 300,
+    color: "#2D2A27",
+  },
+  "&:hover .MuiFormControlLabel-label": {
+    fontWeight: 400,
+    cursor: "pointer",
+  },
+}));
 
 function BpRadio(props: RadioProps) {
   return (
@@ -75,26 +70,31 @@ function BpRadio(props: RadioProps) {
   );
 }
 
-export default function RadioButton({ options }: RadioButtonPropsType) {
-  const [selectedValue, setSelectedValue] = React.useState<string>("");
+type RadioButtonPropsType = {
+  id: string;
+  label: string;
+  checked: boolean;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
+  size?: "small" | "medium" | "large";
+};
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedValue(event.target.value);
-  };
-
+export default function RadioButton({
+  id,
+  label,
+  checked,
+  onChange,
+  value,
+  size = "small",
+}: RadioButtonPropsType) {
   return (
-    <FormControl>
-      <RadioGroup value={selectedValue} onChange={handleChange}>
-        {options.map((option) => (
-          <StyledFormControlLabel
-            key={option.id}
-            value={option.id}
-            control={<BpRadio />}
-            label={option.label}
-            checked={selectedValue === option.id}
-          />
-        ))}
-      </RadioGroup>
-    </FormControl>
+    <StyledFormControlLabel
+      control={
+        <BpRadio id={id} checked={checked} onChange={onChange} value={value} />
+      }
+      label={label}
+      checked={checked}
+      size={size}
+    />
   );
 }

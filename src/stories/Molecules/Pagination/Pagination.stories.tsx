@@ -8,6 +8,12 @@ const meta: Meta<typeof Pagination> = {
     layout: "centered",
   },
   tags: ["autodocs"],
+  argTypes: {
+    pages: {
+      control: { type: "object" },
+      description: "Liste des numéros de pages à afficher",
+    },
+  },
 };
 
 export default meta;
@@ -22,5 +28,11 @@ export const Default: Story = {
 export const FewPages: Story = {
   args: {
     pages: [1, 2, 3],
+  },
+};
+
+export const ManyPages: Story = {
+  args: {
+    pages: Array.from({ length: 20 }, (_, i) => i + 1),
   },
 };

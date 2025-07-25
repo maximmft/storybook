@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
-import RadioButton from "./RadioButton.tsx";
+import { useState } from "react";
+import RadioButton from "./RadioButton";
 
 const teamOptions = [
   { id: "1", label: "Alice" },
@@ -15,19 +16,32 @@ const meta: Meta<typeof RadioButton> = {
   parameters: {
     layout: "centered",
   },
-  argTypes: {
-    options: {
-      description: "Liste des options pour les boutons radio",
-      control: { type: "object" },
-    },
-  },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {
-    options: teamOptions,
+  render: () => {
+    const [selectedValue, setSelectedValue] = useState("");
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSelectedValue(event.target.value);
+    };
+
+    return (
+      <>
+        {teamOptions.map(({ id, label }) => (
+          <RadioButton
+            key={id}
+            id={id}
+            label={label}
+            value={id}
+            checked={selectedValue === id}
+            onChange={handleChange}
+          />
+        ))}
+      </>
+    );
   },
 };
