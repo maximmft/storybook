@@ -19,44 +19,48 @@ const meta: Meta<typeof ToggleSwitch> = {
   argTypes: {
     label: {
       control: { type: "text" },
-      description: "The label text displayed next to the switch"
+      description: "The label text displayed next to the switch",
     },
     value: {
       control: { type: "boolean" },
-      description: "Whether the switch is checked/on"
+      description: "Whether the switch is checked/on",
     },
     register: {
       table: { disable: true },
-      description: "React Hook Form register function"
+      description: "React Hook Form register function",
     },
     disabled: {
-      control: {type: "boolean"}
-    }
+      control: { type: "boolean" },
+    },
   },
   args: {
     register: mockRegister,
-  }
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {
-    value: false,
+  render: () => {
+    return (
+      <div className="w-[200px] ">
+        <ToggleSwitch label="Label" value={false} />
+      </div>
+    );
   },
 };
-
 export const Checked: Story = {
   args: {
     value: true,
+    label: "lalala",
   },
 };
 
 export const Disabled: Story = {
   args: {
     value: false,
-    disabled: true
+    disabled: true,
   },
 };
 

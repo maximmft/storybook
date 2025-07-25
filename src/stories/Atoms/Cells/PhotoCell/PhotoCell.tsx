@@ -12,7 +12,7 @@ export default function PhotoCell({
   imageSrc = "/brochure_hotel.png",
 }: PhotoCellPropsType) {
   return (
-    <div className="flex items-center gap-3 text-greyscale-700 h-[52px] w-full px-4 py-2">
+    <div className="flex items-center gap-3 text-greyscale-700 w-full px-4 py-2">
       <img
         src={imageSrc}
         alt={label || "Photo"}

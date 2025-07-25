@@ -1,3 +1,4 @@
+import React from "react";
 import { styled } from "@mui/material/styles";
 import Radio, { RadioProps } from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -13,13 +14,13 @@ type RadioButtonPropsType = {
   options: RadioOptionsType[];
 };
 
+// Icones personnalisées
 const BpIcon = styled("span")(() => ({
   borderRadius: "50%",
   width: 16,
   height: 16,
   boxShadow: "inset 0 0 0 1px #E3DFDA",
   backgroundColor: "#FFFFFF",
-
   "input:hover ~ &": {
     backgroundColor: "#F7F5F3",
   },
@@ -49,13 +50,19 @@ const BpCheckedIcon = styled(BpIcon)({
   },
 });
 
-const StyledFormControlLabel = styled(FormControlLabel)({
-  '& .MuiFormControlLabel-label': {
-    fontSize: '12px',
-    fontWeight: 400,
-    color: '#2D2A27',
-  },
-});
+const StyledFormControlLabel = styled(FormControlLabel)<{ checked?: boolean }>(
+  ({ checked }) => ({
+    "& .MuiFormControlLabel-label": {
+      fontSize: "12px",
+      fontWeight: checked ? 400 : 300,
+      color: "#2D2A27",
+    },
+    "&:hover .MuiFormControlLabel-label": {
+      fontWeight: 400,
+      cursor: "pointer",
+    },
+  })
+);
 
 function BpRadio(props: RadioProps) {
   return (
@@ -69,15 +76,22 @@ function BpRadio(props: RadioProps) {
 }
 
 export default function RadioButton({ options }: RadioButtonPropsType) {
+  const [selectedValue, setSelectedValue] = React.useState<string>("");
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedValue(event.target.value);
+  };
+
   return (
     <FormControl>
-      <RadioGroup>
+      <RadioGroup value={selectedValue} onChange={handleChange}>
         {options.map((option) => (
           <StyledFormControlLabel
-            value={option.id}
             key={option.id}
+            value={option.id}
             control={<BpRadio />}
             label={option.label}
+            checked={selectedValue === option.id}
           />
         ))}
       </RadioGroup>
