@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Pagination } from "./Pagination";
 
 const meta: Meta<typeof Pagination> = {
-  title: "Molecules/Pagination",
+  title: "Molecules/Filters/Pagination",
   component: Pagination,
   parameters: {
     layout: "centered",

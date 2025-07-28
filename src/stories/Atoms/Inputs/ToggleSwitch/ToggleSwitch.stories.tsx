@@ -32,6 +32,9 @@ const meta: Meta<typeof ToggleSwitch> = {
     disabled: {
       control: { type: "boolean" },
     },
+    error: {
+      control: { type: "boolean" },
+    },
   },
   args: {
     register: mockRegister,
@@ -45,7 +48,7 @@ export const Default: Story = {
   render: () => {
     return (
       <div className="w-[200px] ">
-        <ToggleSwitch label="Label" value={false} />
+        <ToggleSwitch label="Label" value={false} justify="space-between" />
       </div>
     );
   },
@@ -68,5 +71,14 @@ export const WithLabel: Story = {
   args: {
     label: "Enable notifications",
     value: false,
+  },
+};
+
+export const Error: Story = {
+  args: {
+    label: "Enable notifications",
+    value: true,
+    error: true,
+    direction: "left"
   },
 };

@@ -17,7 +17,7 @@ export const IconButton = ({
   ...props
 }: ButtonProps) => {
   const baseClasses =
-    "w-10 h-10 flex items-center justify-center rounded-full border";
+    "w-10 h-10 flex items-center justify-center rounded-full border shrink-0";
 
   const getVariantClasses = () => {
     if (variant === "primary") {

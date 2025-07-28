@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Notification } from "./Notification";
 
 const meta: Meta<typeof Notification> = {
-  title: "Molecules/Notification",
+  title: "Molecules/Navigations/Notification",
   component: Notification,
   parameters: {
     layout: "centered",

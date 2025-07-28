@@ -6,7 +6,7 @@ import { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 
 const meta: Meta<typeof RadioCard> = {
-  title: "Molecules/RadioCard",
+  title: "Molecules/Filters/RadioCard",
   component: RadioCard,
   parameters: {
     layout: "centered",
