@@ -18,22 +18,23 @@ type FormSelectedPropsType = {
   contentClassname?: string;
   initiallyOpen?: boolean;
   disabled?: boolean;
+  isActive?: boolean;
 };
 
 export default function FormSelected({
   children,
   ...props
 }: FormSelectedPropsType) {
-  const { title, subtitle, icon, disabled = false, contentClassname } = props;
+  const { title, subtitle, icon, disabled = false, contentClassname, isActive = false } = props;
 
-  const [active, setActive] = useState<boolean>(props.initiallyOpen || false);
+  const [isOpen, setIsOpen] = useState<boolean>(props.initiallyOpen || false);
   const [accordionHeight, setAccordionHeight] = useState<number>(0);
   const accordionRef = useRef<null | HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     if (accordionRef.current) {
       const resizeObserver = new ResizeObserver(() => {
-        if (active && accordionRef.current) {
+        if (isOpen && accordionRef.current) {
           setAccordionHeight(accordionRef.current.scrollHeight);
         }
       });
@@ -47,11 +48,11 @@ export default function FormSelected({
         resizeObserver.disconnect();
       };
     }
-  }, [active, children]);
+  }, [isOpen, children]);
 
   const accordionOnClick = () => {
     if (!disabled) {
-      const newActive = !active;
+      const newActive = !isOpen;
       if (accordionRef.current !== null) {
         if (newActive === false) {
           setAccordionHeight(0);
@@ -59,28 +60,32 @@ export default function FormSelected({
           setAccordionHeight(accordionRef.current.scrollHeight);
         }
       }
-      setActive(newActive);
+      setIsOpen(newActive);
     }
   };
 
   const displayIconComponent = () => {
     if (props.customIcon === undefined) {
-      return active ? <ChevronDown size={18} /> : <ChevronUp size={18} />;
+      return isOpen ? <ChevronDown size={18} /> : <ChevronUp size={18} />;
     } else {
-      return active ? props.customIcon.active : props.customIcon.inactive;
+      return isOpen ? props.customIcon.active : props.customIcon.inactive;
     }
   };
 
   return (
-    <div
-      className={`w-full border border-greyscale-400 rounded-[8px] ${
-        disabled
-          ? ""
-          : !active
-          ? "hover:bg-greyscale-200 transition-colors duration-200 active:border-greyscale-900"
-          : ""
-      } `}
-    >
+<div
+  className={`w-full border rounded-[8px] transition-colors duration-200 ${
+    isActive 
+      ? "bg-greyscale-100 border-greyscale-600" 
+      : "border-greyscale-400"
+  } ${
+    disabled
+      ? ""
+      : !isOpen
+      ? "hover:bg-greyscale-200 active:border-greyscale-900"
+      : ""
+  }`}
+>
       {" "}
       <button
         onClick={accordionOnClick}

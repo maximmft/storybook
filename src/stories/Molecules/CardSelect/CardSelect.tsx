@@ -1,6 +1,5 @@
 import FormSelected from "src/stories/Atoms/Buttons/FormSelected/FormSelected";
 import { CardSelectChildren } from "../CardSelectChildren/CardSelectChildren";
-import { useState } from "react";
 import ToggleSwitch from "src/stories/Atoms/Inputs/ToggleSwitch/ToggleSwitch";
 
 type ServiceType = {
@@ -9,34 +8,42 @@ type ServiceType = {
     price: string;
     duration: string;
     name: string;
+    disabled?: boolean;
   };
 };
 
 type CardSelectPropsType = {
   title: string;
   services: ServiceType[];
-  toggleValue: boolean;
+  mainToggleValue: boolean;
+  selectedServices: number[];
+  onMainToggleChange: (value: boolean) => void;
+  onServiceToggle: (index: number) => void;
   disabled?: boolean;
+  disabledChildren?: boolean;
   editableChildren?: boolean;
 };
+
 export const CardSelect = ({
   title,
   services,
+  mainToggleValue,
+  selectedServices,
+  onMainToggleChange,
+  onServiceToggle,
   editableChildren,
   disabled = false,
 }: CardSelectPropsType) => {
-  const [mainToggleValue, setMainToggleValue] = useState<boolean>(false);
-  const [toggleValues, setToggleValues] = useState<number[]>([]);
-
   const handleToggleChildren = (index: number) => {
-    if (toggleValues.includes(index)) {
-      setToggleValues(toggleValues.filter((value) => value !== index));
-    } else setToggleValues([...toggleValues, index]);
+    onServiceToggle(index);
   };
 
   const handleMainToggle = () => {
-    setMainToggleValue(!mainToggleValue);
+    onMainToggleChange(!mainToggleValue);
   };
+
+  console.log("mainToggleValue",mainToggleValue);
+  
 
   const displayTitle = (title: string) => {
     return (
@@ -52,15 +59,15 @@ export const CardSelect = ({
 
   return (
     <div>
-      <FormSelected title={displayTitle(title)} disabled={disabled}>
+      <FormSelected title={displayTitle(title)} disabled={disabled} isActive={mainToggleValue}>
         <div className="space-y-4">
           {services.map((serviceItem, index) => (
             <CardSelectChildren
               key={index}
               editable={editableChildren}
               service={serviceItem.service}
-              toggleValue={toggleValues.includes(index)}
-              disabled={disabled}
+              toggleValue={selectedServices.includes(index)}
+              disabled={serviceItem.service.disabled || false}
               onToggle={() => handleToggleChildren(index)}
             />
           ))}

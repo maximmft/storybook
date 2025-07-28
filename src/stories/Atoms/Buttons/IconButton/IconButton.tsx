@@ -31,7 +31,7 @@ export const IconButton = ({
       return `bg-white text-primary-800 border-primary-800 
               enabled:hover:bg-greyscale-200 
               enabled:active:bg-greyscale-300 
-              disabled:border-greyscale-400 disabled:text-greyscale-400`;
+              disabled:border-greyscale-400 disabled:text-greyscale-400 disabled:bg-transparent`;
     }
 
     if (variant === "tertiary") {

@@ -40,7 +40,7 @@ export const CardSelectChildren = ({
       }`}
     >
       <div className="flex flex-row items-center ">
-        <div className="w-[250px]">
+        <div className="w-fit">
           <ToggleSwitch
             label={service.name}
             value={toggleValue}

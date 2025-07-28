@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
+import { useState } from "react";
 import { CardSelect } from "./CardSelect";
 
 const mockServices = [
@@ -24,6 +25,7 @@ const mockServices = [
       price: "200",
       duration: "90",
       name: "Massage thérapeutique premium",
+      disabled: true
     },
   },
 ];
@@ -35,7 +37,7 @@ const meta: Meta<typeof CardSelect> = {
     layout: "centered",
     docs: {
       description: {
-        component: "Composant de sélection de cartes avec services et options de filtrage.",
+        component: "Composant de sélection de cartes avec services et options de filtrage (contrôlé).",
       },
     },
   },
@@ -51,6 +53,14 @@ const meta: Meta<typeof CardSelect> = {
       control: false,
       description: "Liste des services à afficher",
     },
+    editableChildren: {
+      control: "boolean",
+      description: "Les enfants sont-ils éditables",
+    },
+    disabled: {
+      control: "boolean",
+      description: "Le composant est-il désactivé",
+    },
   },
 };
 
@@ -58,24 +68,68 @@ export default meta;
 type Story = StoryObj<typeof CardSelect>;
 
 export const Default: Story = {
+  render: (args) => {
+    const [mainToggleValue, setMainToggleValue] = useState<boolean>(false);
+    const [selectedServices, setSelectedServices] = useState<number[]>([]);
+
+    const handleMainToggleChange = (value: boolean) => {
+      setMainToggleValue(value);
+    };
+
+    const handleServiceToggle = (index: number) => {
+      if (selectedServices.includes(index)) {
+        setSelectedServices(selectedServices.filter((value) => value !== index));
+      } else {
+        setSelectedServices([...selectedServices, index]);
+      }
+    };
+
+    return (
+      <CardSelect
+        {...args}
+        mainToggleValue={mainToggleValue}
+        selectedServices={selectedServices}
+        onMainToggleChange={handleMainToggleChange}
+        onServiceToggle={handleServiceToggle}
+      />
+    );
+  },
   args: {
-    title: "Choisissez votre service",
+    title: "Massages balinais",
     services: mockServices,
   },
 };
 
 export const NonEditable: Story = {
+  render: (args) => {
+    const [mainToggleValue, setMainToggleValue] = useState<boolean>(false);
+    const [selectedServices, setSelectedServices] = useState<number[]>([]);
+
+    const handleMainToggleChange = (value: boolean) => {
+      setMainToggleValue(value);
+    };
+
+    const handleServiceToggle = (index: number) => {
+      if (selectedServices.includes(index)) {
+        setSelectedServices(selectedServices.filter((value) => value !== index));
+      } else {
+        setSelectedServices([...selectedServices, index]);
+      }
+    };
+
+    return (
+      <CardSelect
+        {...args}
+        mainToggleValue={mainToggleValue}
+        selectedServices={selectedServices}
+        onMainToggleChange={handleMainToggleChange}
+        onServiceToggle={handleServiceToggle}
+      />
+    );
+  },
   args: {
-    title: "Choisissez votre service",
+    title: "Massage balinais",
     services: mockServices,
     editableChildren: false,
-  },
-};
-
-
-export const LongTitle: Story = {
-  args: {
-    title: "Découvrez notre gamme complète de services de massage et de bien-être pour votre détente",
-    services: mockServices,
   },
 };

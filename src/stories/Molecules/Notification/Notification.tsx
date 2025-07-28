@@ -84,7 +84,7 @@ export const Notification = ({ notifications }: NotificationComponentProps) => {
         return (
           <div
             key={notification.bookingId}
-            className="w-full min-w-[437px] px-8 py-4 hover:bg-greyscale-100 cursor-pointer"
+            className="w-full min-w-[437px] px-8 py-4 hover:bg-greyscale-100 cursor-pointer  border-b border-b-[#EFECE9]"
           >
             <div className="flex justify-between items-center">
               <div className="flex flex-row items-center">
