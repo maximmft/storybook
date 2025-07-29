@@ -110,9 +110,24 @@ export const CustomTable = ({
       color: "#374151",
       fontWeight: 400,
     },
+    // Styles pour le conteneur du select
+    "& .MuiTablePagination-selectRoot": {
+  
+
+    },
     "& .MuiTablePagination-select": {
       fontSize: "12px",
       color: "#374151",
+      backgroundColor: "#FFFFFF", 
+      border: "solid 0.5px",
+      borderRadius: '10px',
+      borderColor: '#D4D0CB', 
+      
+      
+    },
+    "& .MuiTablePagination-selectIcon": {
+      color: "#6B7280",
+      
     },
     "& .MuiTablePagination-actions": {
       "& .MuiIconButton-root": {
