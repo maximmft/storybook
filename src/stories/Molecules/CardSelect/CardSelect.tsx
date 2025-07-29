@@ -40,10 +40,7 @@ export const CardSelect = ({
 
   const handleMainToggle = () => {
     onMainToggleChange(!mainToggleValue);
-  };
-
-  console.log("mainToggleValue",mainToggleValue);
-  
+  };  
 
   const displayTitle = (title: string) => {
     return (

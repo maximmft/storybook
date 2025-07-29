@@ -6,8 +6,18 @@ type TagsType = {
   icon?: string | React.ReactElement;
 }
 
+export type VariantsType = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+
+type TagStatus = keyof typeof tagsConfig;
+
+interface TagProps {
+  status?: TagStatus;
+  variant?: VariantsType;
+  label?: string;
+}
+
 const baseTagsStyle =
-  "flex flex-row fit-content items-center justify-center border rounded-[4px] px-2 py-1 text-[10px] capitalize font-semibold shrink-0 whitespace-nowrap";
+  "flex flex-row w items-center justify-center border rounded-[4px] px-2 py-1 text-[10px] capitalize font-semibold shrink-0 whitespace-nowrap";
 
   export const tagsConfig: Record<string, TagsType> = {
     active: {
@@ -132,13 +142,7 @@ const baseTagsStyle =
   },
 };
 
-type TagStatus = keyof typeof tagsConfig;
 
-interface TagProps {
-  status?: TagStatus;
-  variant?: 1 | 2 | 3 | 4;
-  label?: string;
-}
 
 export default function Tag({ status, variant, label }: TagProps) {
   const colorVariants = {
@@ -153,6 +157,18 @@ export default function Tag({ status, variant, label }: TagProps) {
     },
     4: {
       style: "bg-[#FDF8EC] border-[#F3CC72] text-[#8B6309]",
+    },
+    5: {
+      style: "bg-[#F5E8F7] border-[#C8A7D1] text-[#6B4C7A]",
+    },
+    6: {
+      style: "bg-[#FFF0F0] border-[#F0B3B3] text-[#8B4A4A]",
+    },
+    7: {
+      style: "bg-[#E8F5F5] border-[#A7D1D1] text-[#4C7A7A]",
+    },
+    8: {
+      style: "bg-[#F0F0E8] border-[#D1D1A7] text-[#7A7A4C]",
     },
   };
 
