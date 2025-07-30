@@ -38,7 +38,7 @@ export const Primary: Story = {
 
 export const Error: Story = {
   args: {
-    variant: "error",
+    variant: "alert",
     icon: ArrowLeft
 
   },

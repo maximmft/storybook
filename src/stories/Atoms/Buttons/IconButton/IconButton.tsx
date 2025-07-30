@@ -1,11 +1,11 @@
 import React from "react";
 
 interface ButtonProps {
-  variant?: "primary" | "secondary" | "tertiary" | "quaternary" | "error";
+  variant?: "primary" | "secondary" | "tertiary" | "quaternary" | "alert";
   size?: "small" | "medium" | "large";
   icon: React.ComponentType<any>;
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const IconButton = ({
@@ -49,8 +49,8 @@ export const IconButton = ({
               disabled:bg-transparent`;
     }
 
-    if (variant === "error") {
-      return `border-error-100 text-error-100 
+    if (variant === "alert") {
+      return `border-error-100 text-error-100 bg-white
                 enabled:hover:bg-error-110 enabled:hover:border-error-110 enabled:hover:text-white 
                 enabled:active:border-error-150 enabled:active:bg-error-150 enabled:active:text-white 
                 disabled:border disabled:border-greyscale-400 disabled:text-greyscale-400`;

@@ -1,93 +1,82 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useState } from "react";
 
 type PaginationProps = {
-  pages?: number[];
+  pages: number;
+  page: number;
+  onPageChange: (newPage: number) => void;
 };
 
-export const Pagination = ({ pages = [] }: PaginationProps) => {
-  const [actualPageIndex, setActualPageIndex] = useState(0);
+export const Pagination = ({ pages, onPageChange, page }: PaginationProps) => {
+  const pagesArray = Array.from({ length: pages }, (_, i) => i + 1);
 
-  const handleNextPage = () => {
-    if (actualPageIndex < pages.length - 1) {
-      setActualPageIndex(actualPageIndex + 1);
-    }
-  };
-
-  const handlePreviousPage = () => {
-    if (actualPageIndex > 0) {
-      setActualPageIndex(actualPageIndex - 1);
-    }
-  };
-
-  let start = Math.max(0, actualPageIndex - 1);
-  let end = Math.min(pages.length, start + 3);
+  let start = Math.max(0, page - 1);
+  let end = Math.min(pages, start + 3);
   if (end - start < 3) {
     start = Math.max(0, end - 3);
   }
 
-  const visiblePages = pages.slice(start, end);
-
+  const visiblePages = pagesArray.slice(start, end);
+  
   return (
-    <div className="flex flex-row items-center gap-x-2 w-full">
+    <div className="flex flex-row items-center w-full gap-4">
       <ArrowLeft
-        onClick={handlePreviousPage}
+        onClick={() => onPageChange(page - 1)}
         size={14}
-        className={`cursor-pointer ${actualPageIndex === 0 ? "opacity-20 pointer-events-none" : ""}`}
+        className={`cursor-pointer ${
+          page === 0 ? "opacity-20 pointer-events-none" : ""
+        }`}
       />
-
-      {pages.length > 3 ? (
+      <div className="flex flex-row space-x-2">
         <>
-          {visiblePages.map((page, index) => {
-            const pageIndex = start + index;
+          {start > 0 && (
+            <>
+              <p className="text-[14px] text-greyscale-700 font-normal cursor-pointer"
+                 onClick={() => onPageChange(0)}>
+                1
+              </p>
+              <p className="text-greyscale-600">...</p>
+            </>
+          )}
+
+          {visiblePages.map((pageNumber) => {
             return (
               <p
-                key={pageIndex}
-                className={`text-[14px] ${
-                  pageIndex === actualPageIndex
+                key={pageNumber}
+                className={`text-[14px] cursor-pointer ${
+                  pageNumber === page + 1
                     ? "font-semibold text-greyscale-900"
                     : "text-greyscale-700 font-normal"
                 }`}
+                onClick={() => onPageChange(pageNumber - 1)}
               >
-                {page}
+                {pageNumber}
               </p>
             );
           })}
 
-          {end < pages.length && <p className="text-greyscale-600">...</p>}
-
-          {end < pages.length && (
-            <p
-              key={pages.length - 1}
-              className={`text-[14px] ${
-                actualPageIndex === pages.length - 1
-                  ? "font-semibold text-greyscale-900"
-                  : "text-greyscale-700 font-normal"
-              }`}
-            >
-              {pages[pages.length - 1]}
-            </p>
+          {end < pages && start === 0 && (
+            <>
+              <p className="text-greyscale-600">...</p>
+              <p
+                className={`text-[14px] cursor-pointer ${
+                  page === pages - 1
+                    ? "font-semibold text-greyscale-900"
+                    : "text-greyscale-700 font-normal"
+                }`}
+                onClick={() => onPageChange(pages - 1)}
+              >
+                {pages}
+              </p>
+            </>
           )}
         </>
-      ) : (
-        pages.map((page, index) => (
-          <p
-            key={index}
-            className={`text-[14px] ${
-              index === actualPageIndex
-                ? "font-semibold text-greyscale-900"
-                : "text-greyscale-700 font-normal"
-            }`}
-          >
-            {page}
-          </p>
-        ))
-      )}
-
+      </div>
       <ArrowRight
-        onClick={handleNextPage}
+        onClick={() => onPageChange(page + 1)}
         size={14}
-        className={`cursor-pointer ${actualPageIndex === pages.length - 1 ? "opacity-20 pointer-events-none" : ""}`}
+        className={`cursor-pointer ${
+          page === pages - 1 ? "opacity-20 pointer-events-none" : ""
+        }`}
       />
     </div>
   );

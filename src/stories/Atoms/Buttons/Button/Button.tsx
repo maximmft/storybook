@@ -3,7 +3,7 @@ import React from "react";
 interface ButtonProps {
   variant?: "primary" | "secondary" | "tertiary";
   size?: "small" | "medium" | "large";
-  label?: string;
+  label: string;
   icon?: React.ComponentType<any>;
   iconPosition?: "left" | "right";
   error?: boolean;

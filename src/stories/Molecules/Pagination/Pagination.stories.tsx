@@ -21,18 +21,6 @@ type Story = StoryObj<typeof Pagination>;
 
 export const Default: Story = {
   args: {
-    pages: [1, 2, 3, 4, 5, 6],
-  },
-};
-
-export const FewPages: Story = {
-  args: {
-    pages: [1, 2, 3],
-  },
-};
-
-export const ManyPages: Story = {
-  args: {
-    pages: Array.from({ length: 20 }, (_, i) => i + 1),
+    pages: 12,
   },
 };
