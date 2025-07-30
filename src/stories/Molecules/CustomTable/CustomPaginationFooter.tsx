@@ -1,6 +1,6 @@
 import { Button } from "src/stories/Atoms/Buttons/Button/Button";
-import { Pagination } from "../Pagination/Pagination";
 import { Download } from "lucide-react";
+import { Pagination } from "../Filters/Pagination/Pagination";
 
 const paginationStyle = {
   fontSize: "12px",

@@ -540,17 +540,15 @@ Exemple d'utilisation pour un catalogue de services avec :
   },
 };
 
-export const WithoutHeader: Story = {
+export const WithoutHeaderAndWatchableOnly: Story = {
   render: DefaultStory,
   args: {
     columns: defaultColumns,
     rows: defaultRows,
     color: "primary",
     showHeader: false,
-    deletable: true,
     watchable: true,
-    copyable: true,
-    watchButtonlabel: "Voir",
+    watchButtonlabel: "Voir les détails",
     watchButtonIconDirection: "left",
     photoCellVariant: "square",
     page: 0,

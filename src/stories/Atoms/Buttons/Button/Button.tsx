@@ -22,7 +22,7 @@ export const Button = ({
   onClick,
   ...props
 }: ButtonProps) => {
-  const baseClasses = "text-[12px] inline-flex items-center justify-center rounded-full px-4  font-regular w-full";
+  const baseClasses = "text-[12px] inline-flex items-center justify-center rounded-full px-4 whitespace-nowrap  font-regular w-full";
   
   const getVariantClasses = () => {
     if (variant === "primary") {
@@ -73,11 +73,11 @@ export const Button = ({
       {...props}
     >
       {iconPosition === "left" && IconComponent && (
-        <IconComponent size={14} className="mr-2" />
+        <IconComponent size={14} className="mr-2 shrink-0" />
       )}
       {label}
       {iconPosition === "right" && IconComponent && (
-        <IconComponent size={14} className="ml-2" />
+        <IconComponent size={14} className="ml-2 shrink-0" />
       )}
     </button>
   );

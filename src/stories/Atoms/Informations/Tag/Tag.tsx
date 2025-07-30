@@ -23,72 +23,77 @@ const baseTagsStyle =
     active: {
     name: "Actif",
     style: "bg-[#E8F8EC] border-[#4EC06D] text-[#4EC06D]",
-    icon: "●",
+    icon: "•",
   },
   inactive: {
     name: "Inactif",
     style: "bg-[#FCE6E6] border-[#F03538] text-[#F03538]",
-    icon: "●",
+    icon: "•",
+  },  
+  disabled: {
+    name: "Désactivé",
+    style: "bg-[#FCE6E6] border-[#F03538] text-[#F03538]",
+    icon: "•",
   },
   incomplete: {
     name: "Incomplet",
     style: "bg-[#FEF3EB] border-[#F08037] text-[#F08037]",
-    icon: "●",
+    icon: "•",
   },
   published: {
     name: "Publié",
     style: "bg-[#ECF6FF] border-[#2EA1FF] text-[#2EA1FF]",
-    icon: "●",
+    icon: "•",
   },
   pending: {
     name: "En attente",
     style: "bg-[#FCE6E6] border-[#F08037] text-[#F08037]",
-    icon: "●",
+    icon: "•",
   },
   validated: {
     name: "Validée",
     style: "bg-[#E8F8EC] border-[#4EC06D] text-[#4EC06D]",
-    icon: "●",
+    icon: "•",
   },
   cancelled: {
     name: "Annulée",
     style: "bg-[#FCE6E6] border-[#F03538] text-[#F03538]",
-    icon: "●",
+    icon: "•",
   },
   in_progress: {
     name: "En cours",
     style: "bg-[#ECF6FF] border-[#2EA1FF] text-[#2EA1FF]",
-    icon: "●",
+    icon: "•",
   },
   past: {
     name: "Passée",
     style: "bg-[#F7F5F3] border-[#A29D98] text-[#A29D98]",
-    icon: "●",
+    icon: "•",
   },
   to_follow_up: {
     name: "À relancer",
     style: "bg-[#FCE6E6] border-[#F08037] text-[#F08037]",
-    icon: "●",
+    icon: "•",
   },
   to_contact: {
     name: "À contacter",
     style: "bg-[#FCE6E6] border-[#F03538] text-[#F03538]",
-    icon: "●",
+    icon: "•",
   },
   qualified: {
     name: "Qualifié",
     style: "bg-[#ECF6FF] border-[#2EA1FF] text-[#2EA1FF]",
-    icon: "●",
+    icon: "•",
   },
   contracted: {
     name: "Contractualisé",
     style: "bg-[#E8F8EC] border-[#4EC06D] text-[#4EC06D]",
-    icon: "●",
+    icon: "•",
   },
   archived: {
     name: "Archivé",
     style: "bg-[#F7F5F3] border-[#A29D98] text-[#A29D98]",
-    icon: "●",
+    icon: "•",
   },
 
   inbound: {
