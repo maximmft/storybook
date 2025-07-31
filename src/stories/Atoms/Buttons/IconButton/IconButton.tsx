@@ -6,6 +6,8 @@ interface ButtonProps {
   icon: React.ComponentType<any>;
   disabled?: boolean;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onMouseEnter?: (e: React.MouseEvent<HTMLButtonElement>) => void; 
+  onMouseLeave?: (e: React.MouseEvent<HTMLButtonElement>) => void;   
 }
 
 export const IconButton = ({
@@ -14,6 +16,8 @@ export const IconButton = ({
   disabled = false,
   icon: IconComponent,
   onClick,
+  onMouseEnter,
+  onMouseLeave,
   ...props
 }: ButtonProps) => {
   const baseClasses =
@@ -63,6 +67,8 @@ export const IconButton = ({
       className={`${baseClasses} ${getVariantClasses()}`}
       onClick={onClick}
       {...props}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       <IconComponent size={14} />
     </button>
