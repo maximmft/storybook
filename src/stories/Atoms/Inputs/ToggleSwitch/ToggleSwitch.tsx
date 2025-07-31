@@ -15,8 +15,9 @@ type CustomSwitchPropsType = {
   value: boolean;
   disabled?: boolean;
   error?: boolean;
-  onChange?: () => void; 
-  size?: "small" | "medium";
+  onChange?: () => void;
+  
+  size?: "small" | "medium" | "large" | "extralarge";
   direction?: "left" | "right";
   justify?: "space-between" | "start";
 };
@@ -26,7 +27,7 @@ const SWITCH_CONFIG = {
     width: 30,
     height: 14,
     thumb: 10,
-    trackTranslate: 16, 
+    trackTranslate: 16,
     fontSize: "12px",
   },
   medium: {
@@ -35,6 +36,20 @@ const SWITCH_CONFIG = {
     thumb: 14,
     trackTranslate: 18,
     fontSize: "14px",
+  },
+  large: {
+    width: 36,
+    height: 18,
+    thumb: 14,
+    trackTranslate: 18,
+    fontSize: "16px",
+  },
+  extralarge: {
+    width: 36,
+    height: 18,
+    thumb: 14,
+    trackTranslate: 18,
+    fontSize: "18px",
   },
 };
 
@@ -99,13 +114,13 @@ export default function ToggleSwitch({
   const StyledSwitch = IOSSwitch(switchConfig);
   
   const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); 
+    e.stopPropagation();
+    
     if (!disabled && onChange) {
       onChange();
     }
   };
-
-
+  
   return (
     <FormGroup>
       <Box
@@ -116,11 +131,9 @@ export default function ToggleSwitch({
           flexDirection: direction === "left" ? "row-reverse" : "row",
           gap: 1,
           width: "fit-content"
-
-        }}
-        onClick={handleClick} 
-
-      >
+         }}
+        onClick={handleClick}
+        >
         <Typography
           sx={{
             fontFamily: "Fustat",
@@ -128,8 +141,7 @@ export default function ToggleSwitch({
             fontWeight,
             color: fontColor,
             cursor: disabled ? "not-allowed" : "pointer"
-            
-          }}
+                       }}
         >
           {label}
         </Typography>
