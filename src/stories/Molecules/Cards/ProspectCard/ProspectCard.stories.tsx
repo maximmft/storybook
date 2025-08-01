@@ -64,7 +64,7 @@ export const Default: Story = {
     }
   },
   render: (args) => (
-    <div className="w-[514px]">
+    <div className="w-[414px]">
       <ProspectCard {...args} />
     </div>
   ),

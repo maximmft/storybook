@@ -17,7 +17,7 @@ export default function TimeSlot({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`text-greyscale-700 h-[52px] w-full px-4 py-2 font-normal border-b border-greyscale-400 enabled:hover:bg-greyscale-200 enabled:hover:text-greyscale-900 enabled:hover:font-normal  ${
+      className={`text-greyscale-700 h-[52px] w-full px-4 py-2 font-light border-b border-greyscale-400 enabled:hover:bg-greyscale-200 enabled:hover:text-greyscale-900 enabled:hover:font-normal  ${
         isSelected
           ? "bg-primary-800 border-primary-800 text-white font-semibold"
           : ""
