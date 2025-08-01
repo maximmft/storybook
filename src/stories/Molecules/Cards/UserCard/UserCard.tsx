@@ -53,6 +53,7 @@ export const UserCard = ({
   const isDefault = variant === "default";
   const isSelectable = variant === "selectable";
   const isSelectableSmall = variant === "selectableSmall";
+  const isSelected = user.id === selectedUser
 
   const imageSize = isDefault
     ? "w-[106px] h-[106px]"
@@ -71,9 +72,9 @@ export const UserCard = ({
 
   return (
     <div
-      className={`w-full flex flex-row border border-[#E3DFDA] rounded-[8px] bg-white gap-6 ${
+      className={`w-full flex flex-row border rounded-[8px]  gap-6 ${
         isSelectableSmall ? "p-4" : "p-6"
-      }`}
+      } ${isSelected ? "border-[#2D2A27] bg-greyscale-100 " : "border-[#E3DFDA] bg-white" }`}
     >
       {!isSelectableSmall && (
         <img
@@ -127,7 +128,7 @@ export const UserCard = ({
       </div>
 
       {(isSelectable || isSelectableSmall) && (
-        <RadioButton label="" id={user.id} value={user.id} checked={selectedUser === user.id} onChange={() => onSelect(user.id)}/>
+        <RadioButton label="" id={user.id} value={user.id} checked={isSelected} onChange={() => onSelect(user.id)}/>
       )}
     </div>
   );

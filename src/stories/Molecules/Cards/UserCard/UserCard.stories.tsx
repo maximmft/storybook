@@ -106,7 +106,7 @@ export const TwoCardsSmall: Story = {
     };
 
     return (
-      <div className="w-[514px] flex flex-col gap-4">
+      <div className="w-[314px] flex flex-col gap-4">
         <UserCard 
           user={mockUser} 
           variant={args.variant} 

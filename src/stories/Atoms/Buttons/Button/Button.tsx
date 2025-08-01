@@ -3,12 +3,13 @@ import React from "react";
 interface ButtonProps {
   variant?: "primary" | "secondary" | "tertiary";
   size?: "small" | "medium" | "large";
-  label: string;
+  label: string | React.ReactElement;
   icon?: React.ComponentType<any>;
   iconPosition?: "left" | "right";
   error?: boolean;
   disabled?: boolean;
   onClick?: () => void;
+  className?: string;
 }
 
 export const Button = ({
@@ -20,9 +21,10 @@ export const Button = ({
   icon: IconComponent,
   iconPosition = "right",
   onClick,
+  className,
   ...props
 }: ButtonProps) => {
-  const baseClasses = "text-[12px] inline-flex items-center justify-center rounded-full px-4 whitespace-nowrap  font-regular w-full";
+  const baseClasses = `text-[12px] inline-flex items-center justify-center rounded-full px-4 whitespace-nowrap  font-regular w-full ${className}`;
   
   const getVariantClasses = () => {
     if (variant === "primary") {

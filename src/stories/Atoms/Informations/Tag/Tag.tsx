@@ -14,10 +14,11 @@ interface TagProps {
   status?: TagStatus;
   variant?: VariantsType;
   label?: string;
+  icon?: string | React.ReactElement; // Nouvelle prop pour icône personnalisée
 }
 
 const baseTagsStyle =
-  "flex flex-row w-fit max-h-[22px] items-center justify-center border rounded-[4px] px-2 py-1 text-[10px] capitalize font-semibold shrink-0 whitespace-nowrap";
+  "flex flex-row w-fit max-h-[22px] items-center justify-center border rounded-[4px] px-2 py-1 text-[10px] font-semibold shrink-0 whitespace-nowrap";
 
 export const tagsConfig: Record<string, TagsType> = {
   active: {
@@ -152,7 +153,7 @@ export const tagsConfig: Record<string, TagsType> = {
   },
 };
 
-export default function Tag({ status, variant, label }: TagProps) {
+export default function Tag({ status, variant, label, icon }: TagProps) {
   const colorVariants = {
     1: {
       style: "bg-[#EEF5FB] border-[#98B2CD] text-[#5A6E81]",
@@ -186,9 +187,15 @@ export default function Tag({ status, variant, label }: TagProps) {
 
   if (!tag && !variant) return null;
 
+  const displayIcon = icon || tag?.icon;
+
   return (
     <div className={`${baseTagsStyle} ${style}`}>
-      {tag?.icon && <span className="mr-1 shrink-0">{tag.icon}</span>}
+      {displayIcon && (
+        <span className="mr-1 shrink-0 flex items-center justify-center w-[10px] h-[10px]">
+          {displayIcon}
+        </span>
+      )}
       <span className="font-normal text-[10px]">{label || tag?.name}</span>
     </div>
   );
