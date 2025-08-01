@@ -1,10 +1,10 @@
 import { Building2, Star, Tag as LucideTag, UserRound } from "lucide-react";
 
 type TagsType = {
-  name:string,
-  style: string,
+  name: string;
+  style: string;
   icon?: string | React.ReactElement;
-}
+};
 
 export type VariantsType = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 
@@ -17,10 +17,10 @@ interface TagProps {
 }
 
 const baseTagsStyle =
-  "flex flex-row max-w-[90px] items-center justify-center border rounded-[4px] px-2 py-1 text-[10px] capitalize font-semibold shrink-0 whitespace-nowrap";
+  "flex flex-row w-fit items-center justify-center border rounded-[4px] px-2 py-1 text-[10px] capitalize font-semibold shrink-0 whitespace-nowrap";
 
-  export const tagsConfig: Record<string, TagsType> = {
-    active: {
+export const tagsConfig: Record<string, TagsType> = {
+  active: {
     name: "Actif",
     style: "bg-[#E8F8EC] border-[#4EC06D] text-[#4EC06D]",
     icon: "•",
@@ -29,7 +29,7 @@ const baseTagsStyle =
     name: "Inactif",
     style: "bg-[#FCE6E6] border-[#F03538] text-[#F03538]",
     icon: "•",
-  },  
+  },
   disabled: {
     name: "Désactivé",
     style: "bg-[#FCE6E6] border-[#F03538] text-[#F03538]",
@@ -141,13 +141,16 @@ const baseTagsStyle =
     style: "bg-[#FDF8EC] border-[#F3CC72] text-[#8B6309]",
     icon: <Star size={8} strokeWidth={3} />,
   },
+  payment_pending: {
+    name: "Paiement en attente",
+    style: "bg-[#ECF6FF] border-[#2EA1FF] text-[#2EA1FF]",
+    icon: "•",
+  },
   undefined: {
     name: "Non défini",
     style: "bg-[#EEF5FB] border-[#98B2CD] text-[#5A6E81]",
   },
 };
-
-
 
 export default function Tag({ status, variant, label }: TagProps) {
   const colorVariants = {

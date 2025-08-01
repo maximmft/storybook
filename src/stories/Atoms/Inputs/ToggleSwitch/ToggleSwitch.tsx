@@ -10,7 +10,7 @@ import {
 import { UseFormRegisterReturn } from "react-hook-form";
 
 type CustomSwitchPropsType = {
-  label: string;
+  label: string | React.ReactElement;
   register?: UseFormRegisterReturn;
   value: boolean;
   disabled?: boolean;

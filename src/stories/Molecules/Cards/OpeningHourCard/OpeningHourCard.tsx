@@ -27,7 +27,9 @@ export const OpeningHourCard = ({
         {day.morningHours && (
           <div className="flex items-center gap-2">
             <Clock color="#696663" size={16} className="shrink-0" />
-            <span className="text-greyscale-700 font-medium">Horaires d'ouverture</span>
+            <span className="text-greyscale-700 font-medium">
+              Horaires d'ouverture
+            </span>
             <span className="text-greyscale-800 font-light">
               {hours.start} <span className="text-greyscale-500">-</span>{" "}
               {hours.end}
@@ -54,21 +56,20 @@ export const OpeningHourCard = ({
         <IconButton variant="secondary" icon={Pencil} />
       </div>
 
-<div className="min-h-12 flex items-center">
-
-      {!day.isEnabled && (
+      <div className="min-h-12 flex items-center">
+        {!day.isEnabled && (
           <div className="flex items-center text-[14px] h-12 text-greyscale-700 font-light">
-          Activez vos horaires d'ouverture.
-        </div>
-      )}
+            Activez vos horaires d'ouverture.
+          </div>
+        )}
 
-      {day.isEnabled && (
+        {day.isEnabled && (
           <div className="flex flex-col gap-2 text-[14px]">
-          {day.morningHours && diqplayHours(day.morningHours)}
+            {day.morningHours && diqplayHours(day.morningHours)}
 
-          {day.afternoonHours && diqplayHours(day.afternoonHours)}
-        </div>
-      )}
+            {day.afternoonHours && diqplayHours(day.afternoonHours)}
+          </div>
+        )}
       </div>
     </div>
   );

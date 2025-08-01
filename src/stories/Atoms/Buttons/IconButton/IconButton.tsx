@@ -42,7 +42,7 @@ export const IconButton = ({
   const [isHovered, setIsHovered] = React.useState(false);
 
   const baseClasses =
-    "w-10 h-10 flex items-center justify-center rounded-full border shrink-0";
+    `w-10 h-10 flex items-center justify-center rounded-full border shrink-0 ${isHovered ? "bg-primary-100" : ""}`;
 
   const getVariantClasses = () => {
     if (variant === "primary") {
@@ -86,7 +86,7 @@ export const IconButton = ({
 
   const displaySettings = () => {
     return (
-      <div className="absolute top-12 right-0 text-[14px] bg-white w-fit h-fit border border-[#D4D0CB] rounded-[8px] shadow-md z-10">
+      <div className="absolute top-12 right-0 text-[14px] cursor-pointer bg-white w-fit h-fit border border-[#D4D0CB] rounded-[8px] shadow-md z-10">
         {settings?.map((setting, index) => (
           <div
             key={index}
@@ -112,7 +112,7 @@ export const IconButton = ({
     return (
       <div className="relative" onMouseLeave={() => setIsHovered(false)}>
         {isHovered && (
-          <div className="absolute -top-2 -right-2 -bottom-2 w-52 h-40 z-0" />
+          <div className="absolute -top-2 -right-2 -bottom-2 w-52 h-40 z-0 cursor-pointer" />
         )}
 
         <div onMouseEnter={() => setIsHovered(true)}>

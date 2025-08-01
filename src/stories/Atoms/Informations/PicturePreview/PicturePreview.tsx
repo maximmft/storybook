@@ -21,7 +21,7 @@ export default function PicturePreview({
     },
     horizontal: {
       container: "w-full gap-4 flex flex-row",
-      image: "h-[40px] w-full rounded-[8px] object-cover",
+      image: "h-[40px] w-full max-w-[60px] rounded-[8px] object-cover",
     },
   };
 
