@@ -17,7 +17,7 @@ interface TagProps {
 }
 
 const baseTagsStyle =
-  "flex flex-row w-fit items-center justify-center border rounded-[4px] px-2 py-1 text-[10px] capitalize font-semibold shrink-0 whitespace-nowrap";
+  "flex flex-row w-fit max-h-[22px] items-center justify-center border rounded-[4px] px-2 py-1 text-[10px] capitalize font-semibold shrink-0 whitespace-nowrap";
 
 export const tagsConfig: Record<string, TagsType> = {
   active: {
