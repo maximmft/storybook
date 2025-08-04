@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
-import FormSelected from "./FormSelected.tsx";
 import { Grid } from "lucide-react";
+import CustomAccordion from "./CustomAccordion";
 
-const meta: Meta<typeof FormSelected> = {
-  title: "Atoms/Buttons/FormSelected",
-  component: FormSelected,
+const meta: Meta<typeof CustomAccordion> = {
+  title: "Atoms/Buttons/CustomAccordion",
+  component: CustomAccordion,
   tags: ["autodocs"],
   parameters: {
     layout: "centered",

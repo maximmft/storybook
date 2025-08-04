@@ -9,7 +9,7 @@ type AccordionCustomIconType = {
   inactive?: RenderableElementType;
 };
 
-type FormSelectedPropsType = {
+type CustomAccordionPropsType = {
   title: string | RenderableElementType;
   subtitle?: string | RenderableElementType;
   children: RenderableElementType;
@@ -21,10 +21,10 @@ type FormSelectedPropsType = {
   isActive?: boolean;
 };
 
-export default function FormSelected({
+export default function CustomAccordion({
   children,
   ...props
-}: FormSelectedPropsType) {
+}: CustomAccordionPropsType) {
   const { title, subtitle, icon, disabled = false, contentClassname, isActive = false } = props;
 
   const [isOpen, setIsOpen] = useState<boolean>(props.initiallyOpen || false);

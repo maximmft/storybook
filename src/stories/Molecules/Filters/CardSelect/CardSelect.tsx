@@ -1,4 +1,4 @@
-import FormSelected from "src/stories/Atoms/Buttons/FormSelected/FormSelected";
+import CustomAccordion from "src/stories/Atoms/Buttons/CustomAccordion/CustomAccordion";
 import ToggleSwitch from "src/stories/Atoms/Inputs/ToggleSwitch/ToggleSwitch";
 import { CardSelectChildren } from "../CardSelectChildren/CardSelectChildren";
 
@@ -56,7 +56,7 @@ export const CardSelect = ({
 
   return (
     <div>
-      <FormSelected title={displayTitle(title)} disabled={disabled} isActive={mainToggleValue}>
+      <CustomAccordion title={displayTitle(title)} disabled={disabled} isActive={mainToggleValue}>
         <div className="space-y-4">
           {services.map((serviceItem, index) => (
             <CardSelectChildren
@@ -69,7 +69,7 @@ export const CardSelect = ({
             />
           ))}
         </div>
-      </FormSelected>
+      </CustomAccordion>
     </div>
   );
 };
