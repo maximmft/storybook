@@ -17,7 +17,7 @@ const meta: Meta<typeof Feedback> = {
       control: { type: "select" },
       options: [
         "published",
-        "NotPublished", 
+        "notPublished", 
         "modificationSaved",
         "modificationNotPublished",
         "error",
@@ -44,7 +44,7 @@ export const Published: Story = {
 
 export const NotPublished: Story = {
   args: {
-    type: "NotPublished",
+    type: "notPublished",
     variant: "statut",
   },
 };

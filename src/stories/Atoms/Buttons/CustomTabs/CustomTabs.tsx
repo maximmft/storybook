@@ -23,12 +23,14 @@ const getTabStyles = (variant: TabVariant): SxProps<Theme> => {
       minHeight: 0,
       "& .MuiTabs-scroller": {
         height: "42px",
+        
       },
       "& .MuiTabs-indicator": {
         backgroundColor: "#29382C",
         height: "2px",
         borderTopLeftRadius: "2px",
         borderTopRightRadius: "2px",
+        
       },
       "& .MuiTab-root.Mui-selected": {
         color: "#29382C",
@@ -36,8 +38,8 @@ const getTabStyles = (variant: TabVariant): SxProps<Theme> => {
       "& .MuiTab-root": {
         textTransform: "none",
         color: "#696663",
-        fontSize: "14px",
-        padding: "0px 0px",
+        fontSize: "12px",
+        padding: "0px 24px",
       },
       "& .MuiTab-root.Mui-disabled": {
         color: "#E3DFDA",
@@ -117,6 +119,7 @@ export default function SimpleTabs({
         sx={{
           borderBottom: variant === "standard" ? 1 : 0,
           borderColor: "divider",
+       
         }}
       >
         <Tabs

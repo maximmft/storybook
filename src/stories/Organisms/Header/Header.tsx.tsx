@@ -31,9 +31,9 @@ export const Header = ({ user, pathname }: HeaderPropsType) => {
   };
 
   const getDisplayTitle = (pathName: string, firstname: string) => {
-    if (pathName === "/") return <p>Bienvenue, {firstname}</p>;
-    if (pathName === "/customer") return <p>Clients</p>;
-    if (pathName === "/availabilities") return <p>Disponibilité</p>;
+    if (pathName === "/") return <span>Bienvenue, {firstname}</span>;
+    if (pathName === "/customer") return <span>Clients</span>;
+    if (pathName === "/availabilities") return <span>Disponibilité</span>;
   };
 
   const { firstname, lastname } = mockData.user;
