@@ -87,8 +87,8 @@ export const Notification = ({ notifications }: NotificationComponentProps) => {
             className="w-full min-w-[437px] px-8 py-4 hover:bg-greyscale-100 cursor-pointer  border-b border-b-[#EFECE9]"
           >
             <div className="flex justify-between items-center">
-              <div className="flex flex-row items-center">
-                <p className="text-[#F03538] text-[10px]">●</p>
+              <div className="flex flex-row items-center gap-2">
+                <p className="text-[#F03538] text-[10px] ">●</p>
                 <PhotoCell imageSrc={brochure_hotel} variant="square" />
                 <p className="text-[16px]">Relax</p>
               </div>

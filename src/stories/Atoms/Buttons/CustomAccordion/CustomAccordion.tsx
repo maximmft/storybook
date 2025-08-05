@@ -19,13 +19,22 @@ type CustomAccordionPropsType = {
   initiallyOpen?: boolean;
   disabled?: boolean;
   isActive?: boolean;
+  showIconBorder?: boolean;
 };
 
 export default function CustomAccordion({
   children,
   ...props
 }: CustomAccordionPropsType) {
-  const { title, subtitle, icon, disabled = false, contentClassname, isActive = false } = props;
+  const { 
+    title, 
+    subtitle, 
+    icon, 
+    disabled = false, 
+    contentClassname, 
+    isActive = false,
+    showIconBorder = true
+  } = props;
 
   const [isOpen, setIsOpen] = useState<boolean>(props.initiallyOpen || false);
   const [accordionHeight, setAccordionHeight] = useState<number>(0);
@@ -66,27 +75,26 @@ export default function CustomAccordion({
 
   const displayIconComponent = () => {
     if (props.customIcon === undefined) {
-      return isOpen ? <ChevronDown size={18} /> : <ChevronUp size={18} />;
+      return isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />;
     } else {
       return isOpen ? props.customIcon.active : props.customIcon.inactive;
     }
   };
 
   return (
-<div
-  className={`w-full border rounded-[8px] transition-colors duration-200 ${
-    isActive 
-      ? "bg-greyscale-100 border-greyscale-600" 
-      : "border-greyscale-400"
-  } ${
-    disabled
-      ? ""
-      : !isOpen
-      ? "hover:bg-greyscale-200 active:border-greyscale-900"
-      : ""
-  }`}
->
-      {" "}
+    <div
+      className={`w-full rounded-[8px] transition-colors duration-200 ${
+        isActive 
+          ? "bg-greyscale-100 border-greyscale-600" 
+          : "border-greyscale-400"
+      } ${
+        disabled
+          ? ""
+          : !isOpen
+          ? "hover:bg-greyscale-200 active:border-greyscale-900"
+          : ""
+      }`}
+    >
       <button
         onClick={accordionOnClick}
         disabled={disabled}
@@ -126,9 +134,15 @@ export default function CustomAccordion({
         <div
           className={`flex justify-center items-center ${
             disabled
-              ? "text-greyscale-500 border-greyscale-500"
-              : "text-primary-800 border-primary-800"
-          } ml-4 flex-shrink-0 border w-10 h-10 rounded-full transition-transform duration-200`}
+              ? "text-greyscale-500"
+              : "text-primary-800"
+          } ml-4 flex-shrink-0 w-10 h-10 rounded-full transition-transform duration-200 ${
+            showIconBorder 
+              ? disabled 
+                ? "border border-greyscale-500" 
+                : "border border-primary-800"
+              : ""
+          }`}
         >
           {displayIconComponent()}
         </div>
@@ -136,8 +150,9 @@ export default function CustomAccordion({
       <div
         ref={accordionRef}
         style={{ maxHeight: accordionHeight }}
-        className={`transition-all overflow-hidden duration-300 ease-in-out ${contentClassname}`}
-      >
+        className={`transition-all duration-300 ease-in-out ${
+          isOpen ? 'overflow-visible' : 'overflow-hidden'
+        } ${contentClassname}`}      >
         <div className="px-6 pb-6">{children}</div>
       </div>
     </div>

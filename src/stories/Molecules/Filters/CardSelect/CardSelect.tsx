@@ -56,7 +56,7 @@ export const CardSelect = ({
 
   return (
     <div>
-      <CustomAccordion title={displayTitle(title)} disabled={disabled} isActive={mainToggleValue}>
+      <CustomAccordion title={displayTitle(title)} disabled={disabled} showIconBorder={false} isActive={mainToggleValue}>
         <div className="space-y-4">
           {services.map((serviceItem, index) => (
             <CardSelectChildren

@@ -11,6 +11,7 @@ type ClassicInputPropsType = {
   helperText?: string;
   type?: string;
   register?: UseFormRegisterReturn;
+  required?: boolean
 };
 
 export const ClassicInput = forwardRef<HTMLInputElement, ClassicInputPropsType>(
@@ -23,6 +24,7 @@ export const ClassicInput = forwardRef<HTMLInputElement, ClassicInputPropsType>(
       register,
       helperText,
       type = "text",
+      required = false,
       ...props
     },
     ref
@@ -37,10 +39,10 @@ export const ClassicInput = forwardRef<HTMLInputElement, ClassicInputPropsType>(
           sx={{
             color: error ? "#F03538" : disabled ? "#D4D0CB" : "#2D2A27",
             fontWeight: 400,
-            fontSize: '12px'
+            fontSize: '14px'
           }}
         >
-          {label}
+          {label}{" "}{required && <span className="text-[#F03538]">*</span>}
         </Typography>
         
         <TextField
@@ -58,6 +60,8 @@ export const ClassicInput = forwardRef<HTMLInputElement, ClassicInputPropsType>(
           }}
           sx={{
             "& .MuiOutlinedInput-root": {
+              height: "48px",
+              fontSize: "14px",
               "& fieldset": {
                 borderColor: error
                   ? "#F03538"

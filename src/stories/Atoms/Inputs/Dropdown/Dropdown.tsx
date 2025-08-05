@@ -127,14 +127,14 @@ export const Dropdown = ({
       </Typography>
 
       <div
-        className="relative inline-block min-w-[220px] w-full"
+        className="relative inline-block w-full"
         ref={dropdownRef}
       >
         <button
           type="button"
           onClick={() => !disabled && setIsOpen(!isOpen)}
           disabled={disabled}
-          className={`h-10 px-3 w-full min-w-[200px] flex items-center justify-between border rounded-lg bg-white font-light text-[14px] leading-[20px] ${getButtonStateStyles()} ${getButtonOpenStyles()}`}
+          className={`h-12 px-3 w-full  flex items-center justify-between border rounded-lg bg-white font-light text-[14px] leading-[20px] ${getButtonStateStyles()} ${getButtonOpenStyles()}`}
         >
           <span className={getTextStyles()}>{getDisplayText()}</span>
           <ChevronDown className={getChevronStyles()} />
@@ -147,7 +147,7 @@ export const Dropdown = ({
               onClick={() => setIsOpen(false)}
             />
             <div
-              className="absolute z-50 w-full mt-1 bg-white border border-[#E3DFDA] rounded-lg shadow-lg"
+              className="absolute z-[9999] w-full mt-1 bg-white border border-[#E3DFDA] rounded-lg shadow-lg"
               style={{ maxHeight: `${maxHeight}px`, overflowY: "auto" }}
             >
               {options.length === 0 ? (

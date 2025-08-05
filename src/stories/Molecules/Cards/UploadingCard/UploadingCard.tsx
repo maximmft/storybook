@@ -42,20 +42,17 @@ export const UploadingCard = ({
   const processFile = (file: File) => {
     
     if (file.size > maxSize) {
-      console.log('File too large:', file.size, 'vs', maxSize);
       setSelectedFile(file);
       setUploadState("error");
       return;
     }
 
     if (!isFileTypeAccepted(file)) {
-      console.log('File type not accepted:', file.name);
       setSelectedFile(file);
       setUploadState("error");
       return;
     }
     
-    console.log('File accepted, starting upload');
     setSelectedFile(file);
     setUploadState("uploading");
     onFileSelect?.(file);
