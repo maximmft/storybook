@@ -94,6 +94,11 @@ export const AppointmentBloc: React.FC<AppointmentBlocProps> = ({
     if (editMode) {
       return (
         <div className="space-y-4">
+          {isDuo && (
+            <h3 className="text-[14px] font-medium text-greyscale-900 pb-2">
+              Bénéficiaire #{index + 1}
+            </h3>
+          )}
           <div className="grid grid-cols-2 gap-4">
             <ClassicInput label="Prénom" required />
             <ClassicInput label="Nom" required />
