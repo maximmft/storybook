@@ -1,7 +1,6 @@
 import { User } from "lucide-react";
 import CustomAccordion from "src/stories/Atoms/Buttons/CustomAccordion/CustomAccordion";
 import { ClassicInput } from "src/stories/Atoms/Inputs/ClassicInput/ClassicInput";
-import PhotoCell from "src/stories/Atoms/Cells/PhotoCell/PhotoCell";
 import { Dropdown } from "src/stories/Atoms/Inputs/Dropdown/Dropdown";
 
 export interface Customer {
@@ -75,10 +74,6 @@ export const AppointmentBloc: React.FC<AppointmentBlocProps> = ({
     );
   };
 
-  const totalOptionsPrice = options.reduce(
-    (total, option) => total + option.price,
-    0
-  );
   const isDuo = customers.length > 1;
 
   const renderCustomerSection = (
@@ -213,10 +208,7 @@ export const AppointmentBloc: React.FC<AppointmentBlocProps> = ({
                       <p>{option.price}€</p>
                     </div>
                   ))}
-                  <div className="flex flex-row justify-between items-center text-[12px] font-medium pt-1 border-t border-greyscale-300">
-                    <p>Total options</p>
-                    <p>{totalOptionsPrice}€</p>
-                  </div>
+    
                 </div>
               )}
             </>
