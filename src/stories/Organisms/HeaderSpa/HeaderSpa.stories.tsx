@@ -28,7 +28,7 @@ type Story = StoryObj<typeof HeaderSpa>;
 export const NotPublished: Story = {
   args: {
     spa: {
-      name: "Spa Wellness & Détente",
+      name: "Domaine de la Reine Margot",
       statutPage: "notPublished",
       information: {
         statut: "modificationNotPublished"
@@ -47,7 +47,7 @@ export const NotPublished: Story = {
 export const Published: Story = {
   args: {
     spa: {
-      name: "Spa Royal Relaxation",
+      name: "Maison Proust",
       statutPage: "published",
       information: {
         statut: "modificationSaved"

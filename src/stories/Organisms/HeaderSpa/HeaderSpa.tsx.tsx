@@ -28,7 +28,10 @@ export const HeaderSpa = ({spa}: HeaderSpaPropsType) => {
           <Button label="Publier ma page" icon={Check} />
         </div>
       </div>
+      <div className="mb-4">
+
       <Feedback type={spa.information.statut} variant="statut" />
+      </div>
       <SimpleTabs
         defaultValue={0}
         onChange={() => {}}

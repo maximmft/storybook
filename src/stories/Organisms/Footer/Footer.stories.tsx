@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Footer } from "./Footer.tsx.tsx";
 
-
 const meta: Meta<typeof Footer> = {
   title: "Organisms/Footer",
   component: Footer,
@@ -9,7 +8,8 @@ const meta: Meta<typeof Footer> = {
     layout: "centered",
     docs: {
       description: {
-        component: "Composant de sélection de cartes avec services et options de filtrage (contrôlé).",
+        component:
+          "Composant de sélection de cartes avec services et options de filtrage (contrôlé).",
       },
     },
   },
@@ -41,12 +41,10 @@ type Story = StoryObj<typeof Footer>;
 
 export const Default: Story = {
   render: () => {
-  
     return (
-      <Footer
-
-      />
+      <div className="w-[1440px]">
+        <Footer />
+      </div>
     );
   },
-
 };
