@@ -5,6 +5,8 @@ interface TabItem {
   label: string;
   content: React.ReactNode;
   disabled?: boolean;
+  icon?: React.ReactElement; 
+  iconPosition?: 'start' | 'end'; 
 }
 
 type TabVariant = "standard" | "solid";
@@ -23,14 +25,12 @@ const getTabStyles = (variant: TabVariant): SxProps<Theme> => {
       minHeight: 0,
       "& .MuiTabs-scroller": {
         height: "42px",
-        
       },
       "& .MuiTabs-indicator": {
         backgroundColor: "#29382C",
         height: "2px",
         borderTopLeftRadius: "2px",
         borderTopRightRadius: "2px",
-        
       },
       "& .MuiTab-root.Mui-selected": {
         color: "#29382C",
@@ -55,10 +55,9 @@ const getTabStyles = (variant: TabVariant): SxProps<Theme> => {
       "& .MuiTabs-scroller": {
         display: "flex",
         alignItems: "center",
-        height: "69px",
         backgroundColor: "#F7F5F3",
         borderRadius: "8px",
-        padding: "0px 8px",
+        padding: "8px",
       },
       "& .MuiTabs-indicator": {
         backgroundColor: "transparent",
@@ -69,6 +68,9 @@ const getTabStyles = (variant: TabVariant): SxProps<Theme> => {
         borderRadius: "8px",
         fontWeight: "500",
         minHeight: "37px",
+        "& .MuiTab-iconWrapper": {
+          color: "#ffffff",
+        },
       },
       "& .MuiTab-root": {
         textTransform: "none",
@@ -79,15 +81,25 @@ const getTabStyles = (variant: TabVariant): SxProps<Theme> => {
         borderRadius: "4px",
         height: "37px",
         minHeight: "37px",
+        "& .MuiTab-iconWrapper": {
+          fontSize: "14px",
+          color: "#A29D98",
+        },
       },
       "& .MuiTab-root.Mui-disabled": {
         color: "#E3DFDA",
+        "& .MuiTab-iconWrapper": {
+          color: "#E3DFDA",
+        },
       },
       "& .MuiTab-root:hover:not(.Mui-selected)": {
         backgroundColor: "#4C574F",
         color: "white",
         borderRadius: "8px",
         fontWeight: "300",
+        "& .MuiTab-iconWrapper": {
+          color: "white",
+        },
       },
     },
   };
@@ -119,7 +131,6 @@ export default function SimpleTabs({
         sx={{
           borderBottom: variant === "standard" ? 1 : 0,
           borderColor: "divider",
-       
         }}
       >
         <Tabs
@@ -131,7 +142,13 @@ export default function SimpleTabs({
           centered={centered}
         >
           {tabs.map((tab, index) => (
-            <Tab key={index} label={tab.label} disabled={tab.disabled} />
+            <Tab
+              key={index}
+              label={tab.label}
+              icon={variant === "solid" ? tab.icon : undefined}
+              iconPosition={tab.iconPosition || 'start'}
+              disabled={tab.disabled}
+            />
           ))}
         </Tabs>
       </Box>
