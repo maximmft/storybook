@@ -44,18 +44,33 @@ const fontSize = {
   large: 16,
 };
 
+const lineHeight = {
+  small: 16, 
+  medium: 16,
+  large: 16,
+};
+
 const StyledFormControlLabel = styled(FormControlLabel)<{
   checked?: boolean;
   size?: "small" | "medium" | "large";
 }>(({ checked, size = "small" }) => ({
+  margin: 0, 
+  alignItems: "center", 
   "& .MuiFormControlLabel-label": {
     fontSize: fontSize[size] ?? 12,
     fontWeight: checked ? 400 : 300,
     color: "#2D2A27",
+    lineHeight: `${lineHeight[size]}px`, 
+    display: "flex",
+    alignItems: "center", 
   },
   "&:hover .MuiFormControlLabel-label": {
     fontWeight: 400,
     cursor: "pointer",
+  },
+  "& .MuiRadio-root": {
+    padding: 0, 
+    marginRight: 8, 
   },
 }));
 

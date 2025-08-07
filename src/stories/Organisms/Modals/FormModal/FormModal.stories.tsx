@@ -7,39 +7,25 @@ import { FormModal } from "./FormModal";
 const FormContent = () => {
   return (
     <>
-     
-
       <div className="space-y-6">
-        <ClassicInput
-          label="Label title"
-          required
-          placeholder="Placeholder"
-        />
+        <ClassicInput label="Label title" required placeholder="Placeholder" />
 
-        <ClassicInput
-          label="Label title"
-          required
-          placeholder="Placeholder"
-        />
+        <ClassicInput label="Label title" required placeholder="Placeholder" />
 
-        <ClassicInput
-          label="Label title"
-          required
-          placeholder="Placeholder"
-        />
-        
+        <ClassicInput label="Label title" required placeholder="Placeholder" />
+
         <ClassicInput
           label="Label title 4"
           required
           placeholder="Placeholder"
         />
-        
+
         <ClassicInput
           label="Label title 5"
           required
           placeholder="Placeholder"
         />
-        
+
         <ClassicInput
           label="Label title 6"
           required
@@ -71,7 +57,8 @@ const meta: Meta<typeof FormModal> = {
       description: "État d'ouverture de la modale (pour usage externe)",
     },
     onClose: {
-      description: "Fonction appelée pour fermer la modale (pour usage externe)",
+      description:
+        "Fonction appelée pour fermer la modale (pour usage externe)",
     },
     onSubmit: {
       description: "Fonction appelée lors de la soumission du formulaire",
@@ -87,7 +74,7 @@ export const Desktop: Story = {
     const [open, setOpen] = useState(false);
 
     const handleValidate = () => {
-      console.log('Formulaire validé');
+      console.log("Formulaire validé");
       setOpen(false);
     };
 
@@ -101,22 +88,28 @@ export const Desktop: Story = {
             className="mb-4"
           />
         </div>
-        <FormModal
-          title="Titre de la modale"
-          subtitle="Remplissez les champs ci-dessous afin de ..."
-          isOpen={open}
-          onClose={() => setOpen(false)}
-          onSubmit={handleValidate}
-        >
-          <FormContent />
-        </FormModal>
+        <div className="max-h-[587px] max-w-[527px]">
+          <FormModal
+            title="Titre de la modale"
+            subtitle="Remplissez les champs ci-dessous afin de ..."
+            isOpen={open}
+            onClose={() => setOpen(false)}
+            onSubmit={handleValidate}
+            maxWidth="527px"
+            maxHeight="587px"
+            labelButtonRight="Confirmer"
+          >
+            <FormContent />
+          </FormModal>
+        </div>
       </div>
     );
   },
   parameters: {
     docs: {
       description: {
-        story: "Version desktop de la modale avec état contrôlé depuis la story.",
+        story:
+          "Version desktop de la modale avec état contrôlé depuis la story.",
       },
     },
   },

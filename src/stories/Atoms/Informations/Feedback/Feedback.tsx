@@ -71,13 +71,13 @@ export default function Feedback({ variant, type, label }: FeedbackPropsType) {
       statut: {
         published: {
           className:
-            "border bg-[#E8F8EC] border-[#4EC06D] text-[#4EC06D] px-2 py-1",
+            "w-fit border bg-[#E8F8EC] border-[#4EC06D] text-[#4EC06D] px-2 py-1",
           icon: CircleCheck,
           iconSize: 12,
           label: "Page publiée",
         },
         notPublished: {
-          className: "bg-[#F7F5F3] text-[#A29D98] px-2 py-1",
+          className: "w-fit bg-[#F7F5F3] text-[#A29D98] px-2 py-1",
           icon: CircleAlert,
           iconSize: 12,
           label: "Page non publiée",
@@ -127,7 +127,7 @@ export default function Feedback({ variant, type, label }: FeedbackPropsType) {
 
   return (
     <div
-      className={`w-fit flex flex-row items-center justify-center rounded-[4px] text-[10px] font-regular ${config.className}`}
+      className={` flex flex-row items-center justify-center rounded-[4px] text-[10px] font-regular ${config.className}`}
     >
       <IconComponent
         className={variant === "modale" ? "" : "mr-1"}
