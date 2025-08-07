@@ -62,6 +62,10 @@ export const ClassicInput = forwardRef<HTMLInputElement, ClassicInputPropsType>(
             "& .MuiOutlinedInput-root": {
               height: "48px",
               fontSize: "14px",
+              backgroundColor: "white",
+              borderRadius: "8px",
+
+              
               "& fieldset": {
                 borderColor: error
                   ? "#F03538"

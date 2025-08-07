@@ -60,7 +60,7 @@ export const Button = ({
                 enabled:active:border-error-150 enabled:active:bg-error-150 enabled:active:text-white 
                 disabled:border disabled:border-greyscale-400 disabled:text-greyscale-400`;
       }
-      return `bg-transparent text-primary-800 border py-[10px] border-primary-800
+      return `bg-white text-primary-800 border py-[10px] border-primary-800
                enabled:hover:bg-greyscale-200 
                enabled:active:bg-greyscale-300 
                disabled:border-greyscale-400 disabled:text-greyscale-400`;

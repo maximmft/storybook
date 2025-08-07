@@ -13,6 +13,7 @@ import { IconButton } from "src/stories/Atoms/Buttons/IconButton/IconButton";
 import PicturePreview from "src/stories/Atoms/Informations/PicturePreview/PicturePreview";
 import Tag from "src/stories/Atoms/Informations/Tag/Tag";
 import React from "react";
+import { FilePreviewCard } from "../FilePreviewCard/FilePreviewCard";
 
 type OfferDetailsType = {
   title: string;
@@ -72,17 +73,17 @@ export const MinorationPriceCard = ({
     {
       icon: <Eye color="#a29d98" {...iconsProps} />,
       label: "Voir les détails de l'offre",
-      onclick: (() => {}),
+      onclick: () => {},
     },
     {
       icon: <RefreshCcw color="#a29d98" {...iconsProps} />,
       label: "Relancer l'offre",
-      onclick: (() => {}),
+      onclick: () => {},
     },
     {
       icon: <Trash color="#F03538" {...iconsProps} />,
       label: "Supprimer",
-      onclick: (() => {}),
+      onclick: () => {},
     },
   ];
 
@@ -162,26 +163,11 @@ export const MinorationPriceCard = ({
             </div>
           </div>
 
-          <div className="border border-[#3C3A37] p-3 flex justify-between items-center rounded-[8px]">
-            <PicturePreview
-              direction="horizontal"
-              name={offer.image.name}
-              image_url={offer.image.url}
-              size={offer.image.size}
-            />
-            <div className="flex gap-2">
-              <IconButton
-                icon={Undo2}
-                variant="secondary"
-                onClick={() => {}}
-              />
-              <IconButton
-                icon={Trash}
-                variant="alert"
-                onClick={() => {}}
-              />
-            </div>
-          </div>
+          <FilePreviewCard
+            name={offer.image.name}
+            image_url={offer.image.url}
+            size={offer.image.size}
+          />
         </div>
       </div>
 
