@@ -1,6 +1,6 @@
 import TextField from "@mui/material/TextField";
 import { forwardRef, useState } from "react";
-import { UseFormRegisterReturn } from "react-hook-form";
+import { UseFormRegisterReturn, UseFormWatch } from "react-hook-form";
 import { Box, Typography } from "@mui/material";
 
 type ClassicInputPropsType = {
@@ -11,7 +11,9 @@ type ClassicInputPropsType = {
   helperText?: string;
   type?: string;
   register?: UseFormRegisterReturn;
-  required?: boolean
+  required?: boolean;
+  fieldName?: string;
+  watch?: UseFormWatch<any>;
 };
 
 export const ClassicInput = forwardRef<HTMLInputElement, ClassicInputPropsType>(
@@ -24,39 +26,41 @@ export const ClassicInput = forwardRef<HTMLInputElement, ClassicInputPropsType>(
       register,
       helperText,
       type = "text",
+      fieldName,
+      watch,
       required = false,
       ...props
     },
     ref
   ) => {
-    const [value, setValue] = useState('');
-    const hasValue = value.length > 0;
+    const fieldValue = watch && fieldName ? watch(fieldName) : "";
+
+    const hasValue = fieldValue && fieldValue.length > 0;
 
     return (
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
         <Typography
           variant="body2"
           sx={{
             color: error ? "#F03538" : disabled ? "#D4D0CB" : "#2D2A27",
             fontWeight: 400,
-            fontSize: '14px'
+            fontSize: "14px",
           }}
         >
-          {label}{" "}{required && <span className="text-[#F03538]">*</span>}
+          {label} {required && <span className="text-[#F03538]">*</span>}
         </Typography>
-        
+
         <TextField
           {...register}
           ref={ref}
           placeholder={placeholder}
           disabled={disabled}
           error={error}
+          value={fieldValue}
           helperText={helperText}
           type={type}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
           InputLabelProps={{
-            shrink: false, 
+            shrink: false,
           }}
           sx={{
             "& .MuiOutlinedInput-root": {
@@ -65,21 +69,20 @@ export const ClassicInput = forwardRef<HTMLInputElement, ClassicInputPropsType>(
               backgroundColor: "white",
               borderRadius: "8px",
 
-              
               "& fieldset": {
                 borderColor: error
                   ? "#F03538"
                   : hasValue
-                    ? "#696663"
-                    : "#E3DFDA",
-                borderRadius: "8px"
+                  ? "#696663"
+                  : "#E3DFDA",
+                borderRadius: "8px",
               },
               "&:hover fieldset": {
                 borderColor: error
                   ? "#F03538"
                   : hasValue
-                    ? "#696663"
-                    : "#696663", 
+                  ? "#696663"
+                  : "#696663",
               },
               "&.Mui-focused fieldset": {
                 borderColor: error ? "#F03538" : "#2D2A27",

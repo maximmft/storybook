@@ -41,11 +41,26 @@ const meta: Meta<typeof Dropdown> = {
     disabled: {
       control: { type: "boolean" },
     },
+    error: {
+      control: { type: "boolean" },
+    },
+    required: {
+      control: { type: "boolean" },
+    },
     multiSelect: {
       control: { type: "boolean" },
     },
     maxHeight: {
       control: { type: "number" },
+    },
+    size: {
+      control: { type: "select" },
+      options: ["small", "medium", "large"],
+    },
+  
+    fieldName: {
+      control: { type: "text" },
+      description: "Nom du champ pour react-hook-form",
     },
   },
 };

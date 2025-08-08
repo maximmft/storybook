@@ -13,6 +13,10 @@ const meta: Meta<typeof ClassicInput> = {
       control: "text",
       description: "Label du champ",
     },
+    placeholder: {
+      control: "text",
+      description: "Texte de placeholder",
+    },
     disabled: {
       control: "boolean",
       description: "Désactive le champ",
@@ -21,18 +25,26 @@ const meta: Meta<typeof ClassicInput> = {
       control: "boolean",
       description: "Affiche l'état d'erreur",
     },
+    required: {
+      control: "boolean",
+      description: "Champ requis (affiche l'astérisque)",
+    },
     helperText: {
       control: "text",
       description: "Texte d'aide sous le champ",
     },
     type: {
       control: "select",
-      options: ["text", "email", "password", "number", "tel"],
+      options: ["text", "email", "password", "number", "tel", "url", "search"],
       description: "Type du champ",
     },
+
+    fieldName: {
+      control: "text",
+      description: "Nom du champ pour react-hook-form",
+    }, 
   },
 };
-
 export default meta;
 type Story = StoryObj<typeof meta>;
 

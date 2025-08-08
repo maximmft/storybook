@@ -29,7 +29,7 @@ const mockBookingData = {
           lastname: "Dupont",
           email: "sophie.dupont@gmail.com",
         },
-        preference: "Femme",
+        preference: "woman",
         room: "Salle de beauté",
         options: []
       },

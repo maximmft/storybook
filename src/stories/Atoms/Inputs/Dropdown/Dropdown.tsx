@@ -2,6 +2,7 @@ import * as React from "react";
 import { ChevronDown } from "lucide-react";
 import { DropdownItem } from "../../Buttons/DropdownItem/DropdownItem";
 import { Box, Typography } from "@mui/material";
+import { UseFormRegisterReturn, UseFormWatch } from "react-hook-form";
 
 export type DropdownOption = {
   id: string;
@@ -23,6 +24,9 @@ type DropdownPropsType = {
   maxHeight?: number;
   size?: "small" | "medium" | "large";
   required?: boolean;
+  register?: UseFormRegisterReturn;
+  fieldName?: string;
+  watch?: UseFormWatch<any>;
 };
 
 const fontSize = {
@@ -30,6 +34,7 @@ const fontSize = {
   medium: "14px",
   large: "16px",
 };
+
 
 export const Dropdown = ({
   label = "Label",
@@ -42,15 +47,35 @@ export const Dropdown = ({
   onSelectionChange,
   multiSelect = false,
   maxHeight = 200,
+  register,
+  fieldName,
+  watch,
 }: DropdownPropsType) => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [selectedOptions, setSelectedOptions] = React.useState<
-    DropdownOption[]
-  >([]);
+
   const dropdownRef = React.useRef<HTMLDivElement>(null);
+
+  const fieldValue = watch && fieldName ? watch(fieldName) : undefined;
+
+  const getSelectedOptionsFromValue = React.useMemo(() => {
+    if (!fieldValue) return [];
+
+    if (multiSelect) {
+      const valueArray = Array.isArray(fieldValue) ? fieldValue : [fieldValue];
+      return options.filter((option) => valueArray.includes(option.id));
+    } else {
+      const singleValue = Array.isArray(fieldValue)
+        ? fieldValue[0]
+        : fieldValue;
+      return options.filter((option) => option.id === singleValue);
+    }
+  }, [fieldValue, options, multiSelect]);
+
+  const selectedOptions = getSelectedOptionsFromValue;
 
   const handleOptionClick = (option: DropdownOption) => {
     let newSelection: DropdownOption[];
+    let newValue: string | string[];
 
     if (multiSelect) {
       const isSelected = selectedOptions.some(
@@ -59,13 +84,23 @@ export const Dropdown = ({
       newSelection = isSelected
         ? selectedOptions.filter((selected) => selected.id !== option.id)
         : [...selectedOptions, option];
+      newValue = newSelection.map((opt) => opt.id);
     } else {
       newSelection = [option];
+      newValue = option.id;
       setIsOpen(false);
     }
 
-    setSelectedOptions(newSelection);
     onSelectionChange?.(newSelection);
+
+    if (register?.onChange) {
+      register.onChange({
+        target: {
+          name: register.name,
+          value: newValue,
+        },
+      });
+    }
   };
 
   const getDisplayText = () => {
@@ -126,10 +161,14 @@ export const Dropdown = ({
         {required && <span className="text-[#F03538] ml-1">*</span>}
       </Typography>
 
-      <div
-        className="relative inline-block w-full"
-        ref={dropdownRef}
-      >
+      <div className="relative inline-block w-full" ref={dropdownRef}>
+      {register && (
+    <input
+      {...register}
+      type="hidden"
+      value={multiSelect ? JSON.stringify(fieldValue || []) : (fieldValue || '')}
+    />
+  )}
         <button
           type="button"
           onClick={() => !disabled && setIsOpen(!isOpen)}
@@ -147,7 +186,7 @@ export const Dropdown = ({
               onClick={() => setIsOpen(false)}
             />
             <div
-              className="absolute z-[9999] w-full mt-1 bg-white border border-[#E3DFDA] rounded-lg shadow-lg"
+              className="absolute z-[99999] w-full mt-1 bg-white border border-[#E3DFDA] rounded-lg shadow-lg"
               style={{ maxHeight: `${maxHeight}px`, overflowY: "auto" }}
             >
               {options.length === 0 ? (

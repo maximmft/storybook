@@ -1,4 +1,5 @@
 import { User } from "lucide-react";
+import { useForm } from "react-hook-form";
 import CustomAccordion from "src/stories/Atoms/Buttons/CustomAccordion/CustomAccordion";
 import { ClassicInput } from "src/stories/Atoms/Inputs/ClassicInput/ClassicInput";
 import { Dropdown } from "src/stories/Atoms/Inputs/Dropdown/Dropdown";
@@ -18,7 +19,7 @@ export interface Service {
   beneficiary: Beneficiary;
   preference: string;
   room: string;
-  options: {name:string, price: number}[];
+  options: { name: string; price: number }[];
 }
 
 export interface Option {
@@ -36,22 +37,22 @@ export const AppointmentBloc: React.FC<AppointmentBlocProps> = ({
   editMode = false,
 }) => {
   const roomsOptions = [
-    { id: "1", label: "Salle 1" },
-    { id: "2", label: "Salle 2" },
-    { id: "3", label: "Salle 3" },
+    { id: "Salle de beauté", label: "Salle de beauté" }, 
+    { id: "Salle 1", label: "Salle 1" },
+    { id: "Salle 2", label: "Salle 2" },
+    { id: "Salle 3", label: "Salle 3" },
   ];
-  
+
   const providerOptions = [
-    { id: "1", label: "Homme" },
-    { id: "2", label: "Femme" },
-    { id: "3", label: "Sans préférence" },
+    { id: "man", label: "Homme" },
+    { id: "woman", label: "Femme" },    
+    { id: "no-preference", label: "Sans préférence" },
   ];
-  
+
   const servicesOptions = [
     { id: "1", label: "Huile hydratante" },
     { id: "2", label: "Peeling" },
   ];
-
 
   const displayTitle = () => {
     return (
@@ -67,23 +68,55 @@ export const AppointmentBloc: React.FC<AppointmentBlocProps> = ({
       </div>
     );
   };
+  const beneficiary = service.beneficiary;
+
+  const { register, watch } = useForm({
+    defaultValues: {
+      firstname: beneficiary.firstname,
+      lastname: beneficiary.lastname,
+      email: beneficiary.email,
+      preference: service.preference,
+      room: service.room,
+      options: service.options,
+    },
+  });
 
   const renderBeneficiarySection = () => {
-    const beneficiary = service.beneficiary;
-
     if (editMode) {
       return (
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
-            <ClassicInput label="Prénom" required />
-            <ClassicInput label="Nom" required />
+            <ClassicInput
+              label="Prénom"
+              required
+              register={register("firstname")}
+              fieldName="firstname"
+              watch={watch}
+            />
+            <ClassicInput
+              label="Nom"
+              required
+              register={register("lastname")}
+              fieldName="lastname"
+              watch={watch}
+            />
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <ClassicInput required label="Adresse email" type="email" />
+            <ClassicInput
+              required
+              label="Adresse email"
+              type="email"
+              register={register("email")}
+              fieldName="email"
+              watch={watch}
+            />
             <Dropdown
               label="Prestataire privilégié"
               required
               options={providerOptions}
+              register={register("preference")}
+              fieldName="preference"
+              watch={watch}
             />
           </div>
         </div>
@@ -107,7 +140,7 @@ export const AppointmentBloc: React.FC<AppointmentBlocProps> = ({
               )}
             </div>
             <div className="flex flex-col min-w-0 text-[12px]">
-              <p>
+              <p className="capitalize">
                 {beneficiary.firstname} {beneficiary.lastname}
               </p>
               <p className="text-greyscale-800 truncate font-light">
@@ -134,10 +167,8 @@ export const AppointmentBloc: React.FC<AppointmentBlocProps> = ({
   return (
     <div className="w-full flex flex-row border border-greyscale-400 rounded-lg">
       <CustomAccordion title={displayTitle()} showIconBorder={false}>
-        <div className="space-y-4">
-          {renderBeneficiarySection()}
-        </div>
-        
+        <div className="space-y-4">{renderBeneficiarySection()}</div>
+
         <div className="flex flex-col my-4">
           {editMode === false && (
             <p className="text-[14px] mb-1">Salle de prestation</p>
@@ -147,16 +178,30 @@ export const AppointmentBloc: React.FC<AppointmentBlocProps> = ({
               label="Salle de prestation"
               required
               options={roomsOptions}
+              register={register("room")}
+              fieldName="room"
+              watch={watch}
             />
           ) : (
-            <p className="text-greyscale-800 text-[12px] font-light">{service.room}</p>
+            <p className="text-greyscale-800 text-[12px] font-light">
+              {service.room}
+            </p>
           )}
         </div>
-        
+
         <div className="flex flex-col">
           {!editMode && <p className="text-[14px] mb-1">Option(s)</p>}
           {editMode ? (
-            <Dropdown label="Options" required options={servicesOptions} />
+            <Dropdown
+              label="Options"
+              required
+              options={servicesOptions}
+              multiSelect
+              register={register("options")}
+              fieldName="options"
+              watch={watch}
+              
+            />
           ) : (
             <>
               {service.options.length === 0 ? (

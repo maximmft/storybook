@@ -1,6 +1,7 @@
 import { CaretDownIcon } from "@phosphor-icons/react";
 import { ArrowRight, Mail, Pencil, Phone, X } from "lucide-react";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Button } from "src/stories/Atoms/Buttons/Button/Button";
 import { IconButton } from "src/stories/Atoms/Buttons/IconButton/IconButton";
 import Tag from "src/stories/Atoms/Informations/Tag/Tag";
@@ -69,6 +70,13 @@ export const BookingDetailsSideBar = ({
   booking,
 }: BookingDetailsSideBarProps) => {
   const [editMode, setEditMode] = useState(false);
+  const { register, watch } = useForm({
+    defaultValues: {
+      "date": booking.appointment.date,
+      "time": booking.appointment.time
+    }
+  });
+
   return (
     <main className="p-8 bg-white w-[483px] flex flex-col h-screen ">
       <div className="flex flex-row items-center justify-between mb-1">
@@ -148,8 +156,20 @@ export const BookingDetailsSideBar = ({
 
         {editMode && (
           <div className="flex flex-col gap-2">
-            <ClassicInput label="Date" required />
-            <ClassicInput label="Heure" required />
+            <ClassicInput 
+              label="Date" 
+              required 
+              register={register("date")} 
+              fieldName="date" 
+              watch={watch} 
+            />
+            <ClassicInput 
+              label="Heure" 
+              required 
+              register={register("time")} 
+              fieldName="time" 
+              watch={watch} 
+            />
             <ToggleSwitch
               label="Appliquer les majorations tarifaires aux prestations"
               direction="left"
@@ -161,9 +181,8 @@ export const BookingDetailsSideBar = ({
           {booking.appointment.services.map((service, index) => {
             const servicesLength = booking.appointment.services.length;
             return (
-              <div>
+              <div key={index}>
                 <AppointmentBloc
-                  key={index}
                   service={service}
                   editMode={editMode}
                 />
@@ -194,22 +213,23 @@ export const BookingDetailsSideBar = ({
           </section>
         )}
 
-        {!editMode ? <section className="flex flex-col border border-greyscale-400 rounded-lg p-4 gap-2">
-          <h1 className="text-[16px]"> Notes</h1>
-          <p className="font-light text-[12px] text-greyscale-800">
-            {booking.notes ? booking.notes : "Aucune note pour le moment"}
-          </p>
-        </section> :
-        <TextArea label="Notes sur la prestation" placeholder="Aucune note pour le moment"/>
-        }
-
+        {!editMode ? (
+          <section className="flex flex-col border border-greyscale-400 rounded-lg p-4 gap-2">
+            <h1 className="text-[16px]"> Notes</h1>
+            <p className="font-light text-[12px] text-greyscale-800">
+              {booking.notes ? booking.notes : "Aucune note pour le moment"}
+            </p>
+          </section>
+        ) : (
+          <TextArea label="Notes sur la prestation" placeholder="Aucune note pour le moment"/>
+        )}
 
       </section>
       {editMode ? (
         <div className="pt-8 px-8 flex flex-row-reverse gap-4 shadow-[0_-16px_28px_-20px_rgba(0,0,0,0.1)]">
           <Button label="Enregistrer" />
           <Button
-            onClick={() => setEditMode(true)}
+            onClick={() => setEditMode(false)}
             label="Annuler"
             variant="secondary"
           />
