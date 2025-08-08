@@ -66,7 +66,7 @@ export interface BookingDetailsSideBarProps {
   booking: BookingData;
 }
 
-export const BookingDetailsSideBar = ({
+export const BookingDetails = ({
   booking,
 }: BookingDetailsSideBarProps) => {
   const [editMode, setEditMode] = useState(false);

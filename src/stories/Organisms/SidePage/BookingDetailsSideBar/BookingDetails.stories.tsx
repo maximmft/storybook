@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
-import { BookingDetailsSideBar } from "./BookingDetailsSideBar.tsx";
+import { BookingDetails } from "./BookingDetails.tsx";
 
 const mockBookingData = {
   status: "pending",
@@ -57,9 +57,9 @@ const mockBookingData = {
   notes: ""
 };
 
-const meta: Meta<typeof BookingDetailsSideBar> = {
-  title: "Organisms/BookingDetailsSideBar",
-  component: BookingDetailsSideBar,
+const meta: Meta<typeof BookingDetails> = {
+  title: "Organisms/SidePage/BookingDetails",
+  component: BookingDetails,
   parameters: {
     layout: "fullscreen",
     docs: {
@@ -74,13 +74,13 @@ const meta: Meta<typeof BookingDetailsSideBar> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof BookingDetailsSideBar>;
+type Story = StoryObj<typeof BookingDetails>;
 
 export const Desktop: Story = {
   render: () => {
     return (
       <div className="w-screen bg-slate-400">
-        <BookingDetailsSideBar booking={mockBookingData} />
+        <BookingDetails booking={mockBookingData} />
       </div>
     );
   },
