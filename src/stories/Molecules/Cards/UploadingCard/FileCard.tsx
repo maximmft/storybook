@@ -71,7 +71,7 @@ export const FileCard = ({
   };
 
   return (
-    <div className={`border border-solid w-full ${borderColor} rounded-lg text-[14px] p-4 transition-all duration-200 ${cursorClass} flex-1`}>
+    <div className={`border border-solid w-full bg-white ${borderColor} rounded-lg text-[14px] p-4 transition-all duration-200 ${cursorClass} flex-1`}>
       <div className="flex flex-col gap-3">
         <div className="flex flex-row items-center justify-between gap-4">
           <div className="flex flex-row items-center flex-1 min-w-0 mr-3">

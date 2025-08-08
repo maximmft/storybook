@@ -341,7 +341,7 @@ export const UploadingCard = ({
         <div 
           key={completedFile.file.name + completedFile.file.size}
           className={`flex flex-row items-center gap-2 transition-color duration-100
-            ${draggedIndex === index ? 'opacity-50 transform scale-95' : ''}
+            ${draggedIndex === index ? ' transform scale-95' : ''}
             ${dragOverIndex === index ? 'border border-dashed border-greyscale-400 bg-greyscale-100 rounded-lg' : ''}
           `}
           draggable

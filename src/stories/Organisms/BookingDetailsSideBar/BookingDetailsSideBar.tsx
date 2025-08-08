@@ -1,0 +1,234 @@
+import { CaretDownIcon } from "@phosphor-icons/react";
+import { ArrowRight, Mail, Pencil, Phone, X } from "lucide-react";
+import { useState } from "react";
+import { Button } from "src/stories/Atoms/Buttons/Button/Button";
+import { IconButton } from "src/stories/Atoms/Buttons/IconButton/IconButton";
+import Tag from "src/stories/Atoms/Informations/Tag/Tag";
+import { ClassicInput } from "src/stories/Atoms/Inputs/ClassicInput/ClassicInput";
+import { TextArea } from "src/stories/Atoms/Inputs/TextArea/TextArea";
+import ToggleSwitch from "src/stories/Atoms/Inputs/ToggleSwitch/ToggleSwitch";
+import Separator from "src/stories/Atoms/Separator/Separator";
+import { AppointmentBloc } from "src/stories/Molecules/AppointmentBloc/AppointmentBloc";
+
+export interface Customer {
+  firstname: string;
+  lastname: string;
+  email: string;
+  phoneNumber: string;
+}
+
+export interface Beneficiary {
+  firstname: string;
+  lastname: string;
+  email: string;
+}
+
+export interface Service {
+  serviceName: string;
+  format: string;
+  price: number;
+  duration: number;
+  beneficiary: Beneficiary;
+  preference: string;
+  room: string;
+  options: {
+    name: string;
+    price: number;
+  }[];
+}
+
+export interface Appointment {
+  totalDuration: number;
+  totalPrice: number;
+  id: string;
+  comment: string;
+  date: string;
+  time: string;
+  services: Service[];
+}
+
+export interface Information {
+  createdAt: string;
+  canal: string;
+  paiment: string;
+}
+
+export interface BookingData {
+  status: string;
+  customer: Customer;
+  appointment: Appointment;
+  information: Information;
+  notes: string;
+}
+
+export interface BookingDetailsSideBarProps {
+  booking: BookingData;
+}
+
+export const BookingDetailsSideBar = ({
+  booking,
+}: BookingDetailsSideBarProps) => {
+  const [editMode, setEditMode] = useState(false);
+  return (
+    <main className="p-8 bg-white w-[483px] flex flex-col h-screen ">
+      <div className="flex flex-row items-center justify-between mb-1">
+        <div className="flex flex-row text-[20px] capitalize items-center gap-x-2">
+          {booking.customer.firstname} {booking.customer.lastname}
+          <Tag status={booking.status} />
+        </div>
+        <IconButton icon={X} variant="secondary" />
+      </div>
+
+      <div className="flex flex-row text-[16px]">
+        {booking.appointment.date}
+        <span className="text-greyscale-500 mx-2">•</span>
+
+        {booking.appointment.time}
+      </div>
+      <div className="flex flex-col mb-8">
+        <p className="text-greyscale-700 font-light my-0.5">
+          {booking.appointment.id}
+        </p>
+        <div className="flex flex-row gap-x-4">
+          <div className="flex flex-row gap-x-2 text-greyscale-800">
+            <p className="font-medium">Durée totale</p>
+            <p className="font-light">
+              {booking.appointment.totalDuration} min
+            </p>
+          </div>
+          <div className="flex flex-row gap-x-2 text-greyscale-800">
+            <p className="font-medium">Prix total</p>
+            <p className="font-light">{booking.appointment.totalPrice} €</p>
+          </div>
+        </div>
+      </div>
+      <section className="flex flex-col gap-4 overflow-scroll pr-6 mb-8 ">
+        {!editMode && (
+          <section className="flex flex-col border border-greyscale-400 rounded-lg p-4 gap-2">
+            <h1 className="text-[16px]"> Informations clients</h1>
+            <div className="flex flex-row items-center gap-2">
+              <Mail size={14} color="#3c3a37" strokeWidth={1.5} />
+              <p className="text-[14px] text-greyscale-800 font-light">
+                {booking.customer.email}
+              </p>
+            </div>
+            <div className="flex flex-row items-center gap-2">
+              <Phone size={14} color="#3c3a37" strokeWidth={1.5} />
+              <p className="text-[14px] text-greyscale-800 font-light">
+                {booking.customer.phoneNumber}
+              </p>
+            </div>
+            <div className="w-fit">
+              <Button
+                label="Voir le profil"
+                icon={ArrowRight}
+                iconPosition="right"
+                variant="tertiary"
+              />
+            </div>
+          </section>
+        )}
+
+        {!editMode && (
+          <section className="flex flex-col border border-greyscale-400 rounded-lg p-4 gap-2">
+            <h1 className="text-[16px]"> Commentaires clients</h1>
+            <p className="text-[12px] font-light text-greyscale-800">
+              {booking.appointment.comment}
+            </p>
+            <div className="w-fit">
+              <Button
+                label="Afficher plus"
+                icon={CaretDownIcon}
+                iconPosition="right"
+                variant="tertiary"
+              />
+            </div>
+          </section>
+        )}
+
+        {editMode && (
+          <div className="flex flex-col gap-2">
+            <ClassicInput label="Date" required />
+            <ClassicInput label="Heure" required />
+            <ToggleSwitch
+              label="Appliquer les majorations tarifaires aux prestations"
+              direction="left"
+              value={false}
+            />
+          </div>
+        )}
+        <div>
+          {booking.appointment.services.map((service, index) => {
+            const servicesLength = booking.appointment.services.length;
+            return (
+              <div>
+                <AppointmentBloc
+                  key={index}
+                  service={service}
+                  editMode={editMode}
+                />
+                {servicesLength > 1 && index < servicesLength - 1 && (
+                  <div className="my-4">
+                    <Separator />
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+        {!editMode && (
+          <section className="flex flex-col border border-greyscale-400 rounded-lg p-4 gap-2">
+            <h1 className="text-[16px]"> Informations complémentaires</h1>
+            <div className="flex flex-row gap-x-2 text-[12px] text-greyscale-800">
+              <p className="font-medium">Commande passé le </p>
+              <p className="font-light">{booking.information.createdAt}</p>
+            </div>
+            <div className="flex flex-row gap-x-2 text-[12px] text-greyscale-800">
+              <p className="font-medium">Canal :</p>
+              <p className="font-light">{booking.information.canal}</p>
+            </div>
+            <div className="flex flex-row gap-x-2 text-[12px] text-greyscale-800">
+              <p className="font-medium">Moyen de paiement</p>
+              <p className="font-light">{booking.information.paiment}</p>
+            </div>
+          </section>
+        )}
+
+        {!editMode ? <section className="flex flex-col border border-greyscale-400 rounded-lg p-4 gap-2">
+          <h1 className="text-[16px]"> Notes</h1>
+          <p className="font-light text-[12px] text-greyscale-800">
+            {booking.notes ? booking.notes : "Aucune note pour le moment"}
+          </p>
+        </section> :
+        <TextArea label="Notes sur la prestation" placeholder="Aucune note pour le moment"/>
+        }
+
+
+      </section>
+      {editMode ? (
+        <div className="pt-8 px-8 flex flex-row-reverse gap-4 shadow-[0_-16px_28px_-20px_rgba(0,0,0,0.1)]">
+          <Button label="Enregistrer" />
+          <Button
+            onClick={() => setEditMode(true)}
+            label="Annuler"
+            variant="secondary"
+          />
+        </div>
+      ) : (
+        <div className="pt-8 px-8 flex flex-col items-center gap-4 shadow-[0_-16px_28px_-20px_rgba(0,0,0,0.1)]">
+          <Button label="Confirmer la réservation" />
+          <Button
+            onClick={() => setEditMode(true)}
+            label={"Modifier les informations"}
+            variant="secondary"
+            icon={Pencil}
+          />
+
+          <div className="w-fit">
+            <Button label="Annuler la réservation" variant="tertiary" error />
+          </div>
+        </div>
+      )}
+    </main>
+  );
+};

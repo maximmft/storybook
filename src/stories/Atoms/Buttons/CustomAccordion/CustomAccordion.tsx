@@ -148,13 +148,12 @@ export default function CustomAccordion({
         </div>
       </button>
       <div
-        ref={accordionRef}
-        style={{ maxHeight: accordionHeight }}
-        className={`transition-all duration-300 ease-in-out ${
-          isOpen ? 'overflow-visible' : 'overflow-hidden'
-        } ${contentClassname}`}      >
-        <div className="px-6 pb-6">{children}</div>
-      </div>
+  ref={accordionRef}
+  style={{ maxHeight: accordionHeight }}
+  className={`transition-all duration-300 ease-in-out overflow-hidden ${contentClassname}`}
+>
+  <div className="px-6 pb-6">{children}</div>
+</div>
     </div>
   );
 }

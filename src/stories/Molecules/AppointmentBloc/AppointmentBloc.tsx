@@ -3,23 +3,22 @@ import CustomAccordion from "src/stories/Atoms/Buttons/CustomAccordion/CustomAcc
 import { ClassicInput } from "src/stories/Atoms/Inputs/ClassicInput/ClassicInput";
 import { Dropdown } from "src/stories/Atoms/Inputs/Dropdown/Dropdown";
 
-export interface Customer {
-  firstName: string;
-  lastName: string;
+export interface Beneficiary {
+  firstname: string;
+  lastname: string;
   email: string;
   avatar?: string;
 }
 
 export interface Service {
-  name: string;
-  type: string;
-  duration: number;
+  serviceName: string;
+  format: string;
   price: number;
-}
-
-export interface Provider {
+  duration: number;
+  beneficiary: Beneficiary;
   preference: string;
-  avatar?: string;
+  room: string;
+  options: {name:string, price: number}[];
 }
 
 export interface Option {
@@ -28,20 +27,12 @@ export interface Option {
 }
 
 export interface AppointmentBlocProps {
-  customers: Customer[];
   service: Service;
-  providers: Provider[];
-  room: string;
-  options?: Option[];
   editMode?: boolean;
 }
 
 export const AppointmentBloc: React.FC<AppointmentBlocProps> = ({
-  customers,
   service,
-  providers,
-  room,
-  options = [],
   editMode = false,
 }) => {
   const roomsOptions = [
@@ -49,22 +40,25 @@ export const AppointmentBloc: React.FC<AppointmentBlocProps> = ({
     { id: "2", label: "Salle 2" },
     { id: "3", label: "Salle 3" },
   ];
+  
   const providerOptions = [
     { id: "1", label: "Homme" },
     { id: "2", label: "Femme" },
     { id: "3", label: "Sans préférence" },
   ];
+  
   const servicesOptions = [
     { id: "1", label: "Huile hydratante" },
     { id: "2", label: "Peeling" },
   ];
 
+
   const displayTitle = () => {
     return (
       <div>
-        <h1 className="text-[16px]">{service.name}</h1>
+        <h1 className="text-[16px]">{service.serviceName}</h1>
         <div className="flex flex-row items-center text-[14px] text-greyscale-800 font-light">
-          <p>{service.type}</p>
+          <p className="capitalize">{service.format}</p>
           <span className="text-greyscale-500 mx-2">•</span>
           <p>{service.duration}min</p>
           <span className="text-greyscale-500 mx-2">•</span>
@@ -74,26 +68,12 @@ export const AppointmentBloc: React.FC<AppointmentBlocProps> = ({
     );
   };
 
-  const isDuo = customers.length > 1;
-
-  const renderCustomerSection = (
-    customer: Customer,
-    provider: Provider,
-    index: number
-  ) => {
-    const label = isDuo ? `Bénéficiaire ${index + 1}` : "Bénéficiaire";
-    const providerLabel = isDuo
-      ? `Prestataire privilégié ${index + 1}`
-      : "Prestataire privilégié";
+  const renderBeneficiarySection = () => {
+    const beneficiary = service.beneficiary;
 
     if (editMode) {
       return (
         <div className="space-y-4">
-          {isDuo && (
-            <h3 className="text-[14px] font-medium text-greyscale-900 pb-2">
-              Bénéficiaire #{index + 1}
-            </h3>
-          )}
           <div className="grid grid-cols-2 gap-4">
             <ClassicInput label="Prénom" required />
             <ClassicInput label="Nom" required />
@@ -113,13 +93,13 @@ export const AppointmentBloc: React.FC<AppointmentBlocProps> = ({
     return (
       <div className="flex flex-row items-center gap-x-[32px]">
         <div className="flex flex-col">
-          <p className="text-[14px] mb-1">{label}</p>
+          <p className="text-[14px] mb-1">Bénéficiaire</p>
           <div className="flex flex-row gap-x-2 my-2 w-[162px]">
             <div className="h-8 w-10 rounded-md flex justify-center items-center bg-greyscale-200">
-              {customer.avatar ? (
+              {beneficiary.avatar ? (
                 <img
-                  src={customer.avatar}
-                  alt={`${customer.firstName} ${customer.lastName}`}
+                  src={beneficiary.avatar}
+                  alt={`${beneficiary.firstname} ${beneficiary.lastname}`}
                   className="h-8 w-8 rounded-md object-cover"
                 />
               ) : (
@@ -128,30 +108,22 @@ export const AppointmentBloc: React.FC<AppointmentBlocProps> = ({
             </div>
             <div className="flex flex-col min-w-0 text-[12px]">
               <p>
-                {customer.firstName} {customer.lastName}
+                {beneficiary.firstname} {beneficiary.lastname}
               </p>
               <p className="text-greyscale-800 truncate font-light">
-                {customer.email}
+                {beneficiary.email}
               </p>
             </div>
           </div>
         </div>
         <div className="flex flex-col">
-          <p className="text-[14px] mb-1">{providerLabel}</p>
+          <p className="text-[14px] mb-1">Prestataire privilégié</p>
           <div className="flex flex-row items-center gap-x-2 my-2 w-[162px]">
             <div className="h-8 w-8 rounded-md flex justify-center items-center bg-greyscale-200">
-              {provider.avatar ? (
-                <img
-                  src={provider.avatar}
-                  alt={provider.preference}
-                  className="h-8 w-8 rounded-md object-cover"
-                />
-              ) : (
-                <User size={18} color="#A29D98" />
-              )}
+              <User size={18} color="#A29D98" />
             </div>
-            <div className="flex flex-col text-[12px]">
-              <p>{provider.preference}</p>
+            <div className="flex flex-col text-[12px] capitalize">
+              <p>{service.preference}</p>
             </div>
           </div>
         </div>
@@ -163,15 +135,9 @@ export const AppointmentBloc: React.FC<AppointmentBlocProps> = ({
     <div className="w-full flex flex-row border border-greyscale-400 rounded-lg">
       <CustomAccordion title={displayTitle()} showIconBorder={false}>
         <div className="space-y-4">
-          {customers.map((customer, index) => {
-            const provider = providers[index];
-            return (
-              <div key={index}>
-                {renderCustomerSection(customer, provider, index)}
-              </div>
-            );
-          })}
+          {renderBeneficiarySection()}
         </div>
+        
         <div className="flex flex-col my-4">
           {editMode === false && (
             <p className="text-[14px] mb-1">Salle de prestation</p>
@@ -183,23 +149,24 @@ export const AppointmentBloc: React.FC<AppointmentBlocProps> = ({
               options={roomsOptions}
             />
           ) : (
-            <p className="text-greyscale-800 text-[12px] font-light">{room}</p>
+            <p className="text-greyscale-800 text-[12px] font-light">{service.room}</p>
           )}
         </div>
+        
         <div className="flex flex-col">
           {!editMode && <p className="text-[14px] mb-1">Option(s)</p>}
           {editMode ? (
             <Dropdown label="Options" required options={servicesOptions} />
           ) : (
             <>
-              {options.length === 0 ? (
+              {service.options.length === 0 ? (
                 <div className="flex flex-row justify-between items-center text-greyscale-600 text-[12px] font-light">
                   <p>Aucune option</p>
                   <p>0€</p>
                 </div>
               ) : (
                 <div className="space-y-1">
-                  {options.map((option, index) => (
+                  {service.options.map((option, index) => (
                     <div
                       key={index}
                       className="flex flex-row justify-between items-center text-greyscale-600 text-[12px] font-light"
@@ -208,7 +175,6 @@ export const AppointmentBloc: React.FC<AppointmentBlocProps> = ({
                       <p>{option.price}€</p>
                     </div>
                   ))}
-    
                 </div>
               )}
             </>
