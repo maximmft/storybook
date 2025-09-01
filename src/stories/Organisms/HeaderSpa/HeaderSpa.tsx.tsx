@@ -1,6 +1,6 @@
 import { Check, Eye, Share2 } from "lucide-react";
 import { Button } from "src/stories/Atoms/Buttons/Button/Button";
-import SimpleTabs from "src/stories/Atoms/Buttons/CustomTabs/CustomTabs";
+import CustomTabs from "src/stories/Atoms/Buttons/CustomTabs/CustomTabs";
 import { IconButton } from "src/stories/Atoms/Buttons/IconButton/IconButton";
 import Feedback from "src/stories/Atoms/Informations/Feedback/Feedback";
 
@@ -32,7 +32,7 @@ export const HeaderSpa = ({spa}: HeaderSpaPropsType) => {
 
       <Feedback type={spa.information.statut} variant="statut" />
       </div>
-      <SimpleTabs
+      <CustomTabs
         defaultValue={0}
         onChange={() => {}}
         tabs={[

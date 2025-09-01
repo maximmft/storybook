@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { BookingDetails } from "./BookingDetails.tsx";
+import { useState } from "react";
+import { Button } from "src/stories/Atoms/Buttons/Button/Button.tsx";
 
 const mockBookingData = {
   status: "pending",
@@ -8,7 +10,6 @@ const mockBookingData = {
     lastname: "Dupont",
     email: "sophie.dupont@gmail.com",
     phoneNumber: "+33 6 23 45 67 89",
-   
   },
   appointment: {
     totalDuration: 90,
@@ -31,7 +32,7 @@ const mockBookingData = {
         },
         preference: "woman",
         room: "Salle de beauté",
-        options: []
+        options: [],
       },
       {
         serviceName: "Beauté des mains",
@@ -45,16 +46,16 @@ const mockBookingData = {
         },
         preference: "woman",
         room: "Salle de beauté",
-        options: []
+        options: [],
       },
     ],
   },
   information: {
     createdAt: "27/07/2025",
     canal: "Relax massage",
-    paiment: "Bon cadeau"
+    paiment: "Bon cadeau",
   },
-  notes: ""
+  notes: "",
 };
 
 const meta: Meta<typeof BookingDetails> = {
@@ -78,9 +79,22 @@ type Story = StoryObj<typeof BookingDetails>;
 
 export const Desktop: Story = {
   render: () => {
+    const [isOpen, setIsOpen] = useState(false);
+
     return (
-      <div className="w-screen bg-slate-400">
-        <BookingDetails booking={mockBookingData} />
+      <div className="w-screen h-screen">
+        <div className="w-[250px] p-10">
+          <Button
+            onClick={() => setIsOpen(true)}
+            label={"Clique ici pour ouvrir"}
+            variant="secondary"
+          />
+        </div>
+        <BookingDetails
+          booking={mockBookingData}
+          setIsOpen={setIsOpen}
+          isOpen={isOpen}
+        />
       </div>
     );
   },

@@ -11,7 +11,7 @@ interface TabItem {
 
 type TabVariant = "standard" | "solid";
 
-interface SimpleTabsProps {
+interface CustomTabsProps {
   tabs: TabItem[];
   defaultValue?: number;
   onChange?: (value: number) => void;
@@ -107,13 +107,13 @@ const getTabStyles = (variant: TabVariant): SxProps<Theme> => {
   return variants[variant];
 };
 
-export default function SimpleTabs({
+export default function CustomTabs({
   tabs,
   defaultValue = 0,
   onChange,
   variant = "standard",
   centered = false,
-}: SimpleTabsProps) {
+}: CustomTabsProps) {
   const [value, setValue] = React.useState(defaultValue);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -155,7 +155,7 @@ export default function SimpleTabs({
 
       {tabs.map((tab, index) => (
         <div key={index} hidden={value !== index}>
-          {value === index && <Box sx={{ p: 2 }}>{tab.content}</Box>}
+          {value === index && <Box sx={{ pt: 2 }}>{tab.content}</Box>}
         </div>
       ))}
     </Box>

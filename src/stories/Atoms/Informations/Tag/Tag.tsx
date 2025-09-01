@@ -137,8 +137,8 @@ export const tagsConfig: Record<string, TagsType> = {
     style: "bg-[#FDF8EC] border-[#8B6309] text-[#8B6309]",
     icon: <LucideTag size={8} strokeWidth={3} />,
   },
-  vip_client: {
-    name: "Client VIP",
+  vip: {
+    name: "VIP",
     style: "bg-[#FDF8EC] border-[#F3CC72] text-[#8B6309]",
     icon: <Star size={8} strokeWidth={3} />,
   },

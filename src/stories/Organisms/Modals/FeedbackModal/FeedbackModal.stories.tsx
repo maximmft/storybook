@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FeedbackModal } from "./FeedbackModal";
 import { Dropdown } from "src/stories/Atoms/Inputs/Dropdown/Dropdown";
 import { AppointmentCard } from "src/stories/Molecules/Cards/AppointmentCard/AppointmentCard";
+import { useForm } from "react-hook-form";
 
 const options = [
   { id: "1", label: "Option" },
@@ -15,23 +16,64 @@ const AppointmentContent = () => {
   return (
     <AppointmentCard
       data={{
-        appointment: {
-          date: "28/07/25",
-          duration: 150,
-          options: [],
-          price: 250,
-          rooms: ["Salle de beauté", "Salle de massage"],
-          services: ["Teint parfait", "Beauté des mains", "Massage"],
-          status: "pending",
-          time: "10:00",
-        },
         customer: {
-          email: "sophie.dupont@gmail.com",
           firstname: "Sophie",
           lastname: "Dupont",
-          phone: "+33 6 23 55 67 89",
+          email: "sophie.dupont@gmail.com",
+          phoneNumber: "+33 6 23 55 67 89", 
         },
-        id: "1",
+        appointment: {
+          totalDuration: 150, 
+          totalPrice: 250, 
+          id: "#ID09847693",
+          comment: "Nouvelle réservation", 
+          datetime: "2025-07-28T10:00:00+02:00", 
+          status: "pending" as const,
+          services: [
+            {
+              serviceName: "Teint parfait",
+              format: "solo",
+              price: 150,
+              duration: 90,
+              beneficiary: {
+                firstname: "Sophie",
+                lastname: "Dupont",
+                email: "sophie.dupont@gmail.com",
+              },
+              preference: "woman",
+              room: "Salle de beauté",
+              options: [],
+            },
+            {
+              serviceName: "Beauté des mains",
+              format: "solo",
+              price: 50,
+              duration: 30,
+              beneficiary: {
+                firstname: "Sophie",
+                lastname: "Dupont",
+                email: "sophie.dupont@gmail.com",
+              },
+              preference: "woman",
+              room: "Salle de beauté",
+              options: [],
+            },
+            {
+              serviceName: "Massage",
+              format: "solo",
+              price: 50,
+              duration: 30,
+              beneficiary: {
+                firstname: "Sophie",
+                lastname: "Dupont",
+                email: "sophie.dupont@gmail.com",
+              },
+              preference: "woman",
+              room: "Salle de massage",
+              options: [],
+            },
+          ],
+        },
       }}
       size="small"
       variant="compact"
@@ -40,6 +82,8 @@ const AppointmentContent = () => {
 };
 
 const FormContent = () => {
+  const { register, watch } = useForm();
+
   return (
     <>
       <div className="space-y-6">
@@ -48,6 +92,9 @@ const FormContent = () => {
           required
           placeholder="Placeholder"
           options={options}
+          register={register("cancellationReason")}
+          fieldName="cancellationReason"
+          watch={watch}
         />
       </div>
     </>

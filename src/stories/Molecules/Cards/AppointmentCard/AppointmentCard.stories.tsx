@@ -2,62 +2,146 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { AppointmentCard, AppointmentData } from "./AppointmentCard";
 
 const mockAppointmentData: AppointmentData = {
-  id: "1",
   customer: {
     firstname: "Sophie",
     lastname: "Dupont",
     email: "sophie.dupont@gmail.com",
-    phone: "+33 6 23 55 67 89",
+    phoneNumber: "+33 6 23 55 67 89",
   },
   appointment: {
-    date: "28/07/25",
-    time: "10:00",
-    duration: 150,
-    price: 250,
-    services: ["Teint parfait", "Beauté des mains", "Massage"],
-    rooms: ["Salle de beauté", "Salle de massage"],
-    options: [],
+    totalDuration: 150,
+    totalPrice: 250,
+    id: "#ID09847693",
+    comment: "Lorem ipsum dolor sit amet consectetur.",
+    datetime: "2025-07-28T10:00:00+02:00", 
     status: "pending",
+    services: [
+      {
+        serviceName: "Teint parfait",
+        format: "solo",
+        price: 150,
+        duration: 90,
+        beneficiary: {
+          firstname: "Sophie",
+          lastname: "Dupont",
+          email: "sophie.dupont@gmail.com",
+        },
+        preference: "woman",
+        room: "Salle de beauté",
+        options: [],
+      },
+      {
+        serviceName: "Beauté des mains",
+        format: "solo",
+        price: 50,
+        duration: 30,
+        beneficiary: {
+          firstname: "Sophie",
+          lastname: "Dupont",
+          email: "sophie.dupont@gmail.com",
+        },
+        preference: "woman",
+        room: "Salle de beauté",
+        options: [],
+      },
+      {
+        serviceName: "Massage",
+        format: "solo",
+        price: 50,
+        duration: 30,
+        beneficiary: {
+          firstname: "Sophie",
+          lastname: "Dupont",
+          email: "sophie.dupont@gmail.com",
+        },
+        preference: "woman",
+        room: "Salle de massage",
+        options: [],
+      },
+    ],
   },
 };
 
 const mockAppointmentWithOptions: AppointmentData = {
-  id: "2",
   customer: {
     firstname: "Marie",
     lastname: "Martin",
     email: "marie.martin@gmail.com",
-    phone: "+33 6 23 55 67 89",
+    phoneNumber: "+33 6 23 55 67 89",
   },
   appointment: {
-    date: "28/07/25",
-    time: "10:00",
-    duration: 120,
-    price: 180,
-    services: ["Teint parfait", "Beauté des mains", "Massage"],
-    rooms: ["Salle de beauté", "Salle de massage"],
-    options: ["Produits bio", "Musique relaxante"],
-    status: "pending",
+    totalDuration: 120,
+    totalPrice: 180,
+    id: "#ID09847694",
+    comment: "Rdv avec options spéciales.",
+    datetime: "2025-07-28T10:00:00+02:00",  
+    status: "confirmed",
+    services: [
+      {
+        serviceName: "Teint parfait",
+        format: "solo",
+        price: 100,
+        duration: 60,
+        beneficiary: {
+          firstname: "Marie",
+          lastname: "Martin",
+          email: "marie.martin@gmail.com",
+        },
+        preference: "woman",
+        room: "Salle de beauté",
+        options: [
+          { name: "Produits bio", price: 20 },
+          { name: "Musique relaxante", price: 10 },
+        ],
+      },
+      {
+        serviceName: "Massage",
+        format: "solo",
+        price: 50,
+        duration: 60,
+        beneficiary: {
+          firstname: "Marie",
+          lastname: "Martin",
+          email: "marie.martin@gmail.com",
+        },
+        preference: "woman",
+        room: "Salle de massage",
+        options: [],
+      },
+    ],
   },
 };
 
 const mockCompletedAppointment: AppointmentData = {
-  id: "3",
   customer: {
     firstname: "Julie",
     lastname: "Leblanc",
     email: "julie.leblanc@gmail.com",
-    phone: "+33 6 12 34 56 78",
+    phoneNumber: "+33 6 12 34 56 78",
   },
   appointment: {
-    date: "25/07/25",
-    time: "14:30",
-    duration: 90,
-    price: 150,
-    services: ["Soin du visage"],
-    rooms: ["Salle de beauté"],
-    options: [],
-    status: "pending",
+    totalDuration: 90,
+    totalPrice: 150,
+    id: "#ID09847695",
+    comment: "Soin terminé avec succès.",
+    datetime: "2025-07-25T14:30:00+02:00",
+    status: "completed",
+    services: [
+      {
+        serviceName: "Soin du visage",
+        format: "solo",
+        price: 150,
+        duration: 90,
+        beneficiary: {
+          firstname: "Julie",
+          lastname: "Leblanc",
+          email: "julie.leblanc@gmail.com",
+        },
+        preference: "woman",
+        room: "Salle de beauté",
+        options: [],
+      },
+    ],
   },
 };
 
@@ -91,7 +175,7 @@ export const CompactSmall: Story = {
   },
   render: (args) => {
     return (
-      <div className="w-[318px]">
+      <div className="w-[418px]">
         <AppointmentCard {...args} />
       </div>
     );
