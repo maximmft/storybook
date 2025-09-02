@@ -102,9 +102,7 @@ export const AppointmentCard = ({
 
        {rooms && <div className="flex flex-row flex-wrap">
           <span className="shrink-0 mr-3">Salles</span>
-          {rooms.map((room, index) => {
-            console.log("room", room);
-            
+          {rooms.map((room, index) => {            
             return (
             <span key={`room-${index}`} className="font-light">
               {room}

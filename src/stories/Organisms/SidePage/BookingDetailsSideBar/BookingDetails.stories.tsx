@@ -15,8 +15,7 @@ const mockBookingData = {
     totalDuration: 90,
     totalPrice: 250,
     id: "#ID09847693",
-    date: "28/07/2025",
-    time: "10:00",
+    datetime: "2025-07-28T10:00:00+02:00",
     comment:
       "Lorem ipsum dolor sit amet consectetur. Nunc at tellus sagittis nunc tincidunt at odio massa. Sapien adipiscing duis facilisis",
     services: [
@@ -51,7 +50,7 @@ const mockBookingData = {
     ],
   },
   information: {
-    createdAt: "27/07/2025",
+    createdAt: "2025-07-27T08:30:00+02:00",
     canal: "Relax massage",
     paiment: "Bon cadeau",
   },
@@ -66,12 +65,77 @@ const meta: Meta<typeof BookingDetails> = {
     docs: {
       description: {
         component:
-          "Composant Footer avec navigation, newsletter et réseaux sociaux. Comprend une section de liens organisés en colonnes, un formulaire d'inscription à la newsletter et les icônes des réseaux sociaux.",
+          "Composant sidebar pour afficher et modifier les détails d'une réservation avec informations client, services et notes.",
       },
     },
   },
   tags: ["autodocs"],
-  argTypes: {},
+  argTypes: {
+    booking: {
+      description: "Données complètes de la réservation",
+      control: { type: "object" },
+      table: {
+        type: {
+          summary: "BookingData",
+          detail: `{
+  status: string; // "pending" | "confirmed" | "cancelled" | "completed"
+  customer: {
+    firstname: string;
+    lastname: string;
+    email: string;
+    phoneNumber: string;
+  };
+  appointment: {
+    totalDuration: number; // en minutes
+    totalPrice: number; // en euros
+    id: string; // identifiant de la réservation
+    comment: string; // commentaire du client
+    datetime: string; // format ISO datetime (ex: "2025-07-28T10:00:00+02:00")
+    services: Array<{
+      serviceName: string;
+      format: string; // "solo" | "duo" | etc.
+      price: number; // en euros
+      duration: number; // en minutes
+      beneficiary: {
+        firstname: string;
+        lastname: string;
+        email: string;
+      };
+      preference: string; // "woman" | "man" | etc.
+      room: string; // nom de la salle
+      options: Array<{
+        name: string;
+        price: number;
+      }>;
+    }>;
+  };
+  information: {
+    createdAt: string; // date de création au format ISO datetime
+    canal: string; // canal de réservation
+    paiment: string; // moyen de paiement
+  };
+  notes: string; // notes sur la prestation
+}`
+        }
+      }
+    },
+    isOpen: {
+      description: "État d'ouverture/fermeture de la sidebar",
+      control: { type: "boolean" },
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" }
+      }
+    },
+    setIsOpen: {
+      description: "Fonction callback pour contrôler l'état d'ouverture de la sidebar",
+      control: false,
+      table: {
+        type: { summary: "(isOpen: boolean) => void" }
+      },
+      action: "setIsOpen"
+    }
+  },
 };
 
 export default meta;
@@ -101,7 +165,7 @@ export const Desktop: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Version desktop du footer avec une largeur fixe de 1440px.",
+        story: "Sidebar des détails de réservation avec mode consultation et édition. Affiche les informations client, services réservés, commentaires et permet la modification des détails.",
       },
     },
   },

@@ -4,6 +4,7 @@ import { CardSelect } from "./CardSelect";
 
 const mockServices = [
   {
+    id: "1-1",
     service: {
       format: "Solo",
       price: "150",
@@ -12,6 +13,7 @@ const mockServices = [
     },
   },
   {
+    id: "1-2",
     service: {
       format: "Duo",
       price: "120",
@@ -20,6 +22,7 @@ const mockServices = [
     },
   },
   {
+    id: "1-3",
     service: {
       format: "Solo",
       price: "200",
@@ -70,17 +73,17 @@ type Story = StoryObj<typeof CardSelect>;
 export const Default: Story = {
   render: (args) => {
     const [mainToggleValue, setMainToggleValue] = useState<boolean>(false);
-    const [selectedServices, setSelectedServices] = useState<number[]>([]);
+    const [selectedServices, setSelectedServices] = useState<string[]>([]);
 
     const handleMainToggleChange = (value: boolean) => {
       setMainToggleValue(value);
     };
 
-    const handleServiceToggle = (index: number) => {
-      if (selectedServices.includes(index)) {
-        setSelectedServices(selectedServices.filter((value) => value !== index));
+    const handleServiceToggle = (serviceId: string) => {
+      if (selectedServices.includes(serviceId)) {
+        setSelectedServices(selectedServices.filter((value) => value !== serviceId));
       } else {
-        setSelectedServices([...selectedServices, index]);
+        setSelectedServices([...selectedServices, serviceId]);
       }
     };
 
@@ -103,17 +106,17 @@ export const Default: Story = {
 export const NonEditable: Story = {
   render: (args) => {
     const [mainToggleValue, setMainToggleValue] = useState<boolean>(false);
-    const [selectedServices, setSelectedServices] = useState<number[]>([]);
+    const [selectedServices, setSelectedServices] = useState<string[]>([]);
 
     const handleMainToggleChange = (value: boolean) => {
       setMainToggleValue(value);
     };
 
-    const handleServiceToggle = (index: number) => {
-      if (selectedServices.includes(index)) {
-        setSelectedServices(selectedServices.filter((value) => value !== index));
+    const handleServiceToggle = (serviceId: string) => {
+      if (selectedServices.includes(serviceId)) {
+        setSelectedServices(selectedServices.filter((value) => value !== serviceId));
       } else {
-        setSelectedServices([...selectedServices, index]);
+        setSelectedServices([...selectedServices, serviceId]);
       }
     };
 

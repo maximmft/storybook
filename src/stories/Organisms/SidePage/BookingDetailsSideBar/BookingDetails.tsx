@@ -10,6 +10,7 @@ import { TextArea } from "src/stories/Atoms/Inputs/TextArea/TextArea";
 import ToggleSwitch from "src/stories/Atoms/Inputs/ToggleSwitch/ToggleSwitch";
 import Separator from "src/stories/Atoms/Separator/Separator";
 import { AppointmentBloc } from "src/stories/Molecules/AppointmentBloc/AppointmentBloc";
+import { formatDateShort, formatTime } from "src/utils/formatDate";
 
 export interface Customer {
   firstname: string;
@@ -43,8 +44,7 @@ export interface Appointment {
   totalPrice: number;
   id: string;
   comment: string;
-  date: string;
-  time: string;
+  datetime: string;
   services: Service[];
 }
 
@@ -64,8 +64,9 @@ export interface BookingData {
 
 export interface BookingDetailsSideBarProps {
   booking: BookingData;
-  isOpen: boolean,
-  setIsOpen: (isOpen: boolean) => void}
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+}
 
 export const BookingDetails = ({
   booking,
@@ -75,22 +76,24 @@ export const BookingDetails = ({
   const [editMode, setEditMode] = useState(false);
   const { register, watch } = useForm({
     defaultValues: {
-      date: booking.appointment.date,
-      time: booking.appointment.time,
+      date: formatDateShort(booking.appointment.datetime),
+      time: formatTime(booking.appointment.datetime),
     },
   });
 
   return (
     <>
-    <div 
-      className={`fixed inset-0 bg-black transition-opacity duration-200 ${
-        isOpen ? 'opacity-15' : 'opacity-0 pointer-events-none'
-      }`}
-      onClick={() => setIsOpen(false)}
-    />
-    <main className={`fixed left-0 top-0 p-8 bg-white w-[483px] flex flex-col h-screen transition-transform duration-200 z-50 ${
-      isOpen ? "translate-x-0" : "-translate-x-full"
-    }`}>
+      <div
+        className={`fixed inset-0 bg-black transition-opacity duration-200 ${
+          isOpen ? "opacity-15" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setIsOpen(false)}
+      />
+      <main
+        className={`fixed left-0 top-0 p-8 bg-white w-[483px] flex flex-col h-screen transition-transform duration-200 z-50 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
         <div className="flex flex-row items-center justify-between mb-1">
           <div className="flex flex-row text-[20px] capitalize items-center gap-x-2">
             {booking.customer.firstname} {booking.customer.lastname}
@@ -103,10 +106,10 @@ export const BookingDetails = ({
           />
         </div>
         <div className="flex flex-row text-[16px]">
-          {booking.appointment.date}
+          {formatDateShort(booking.appointment.datetime)}
           <span className="text-greyscale-500 mx-2">•</span>
 
-          {booking.appointment.time}
+          {formatTime(booking.appointment.datetime)}
         </div>
         <div className="flex flex-col mb-8">
           <p className="text-greyscale-700 font-light my-0.5">

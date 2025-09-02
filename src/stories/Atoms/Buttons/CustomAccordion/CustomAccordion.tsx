@@ -9,6 +9,8 @@ type AccordionCustomIconType = {
   inactive?: RenderableElementType;
 };
 
+type AccordionSizeType = "small" | "medium";
+
 type CustomAccordionPropsType = {
   title: string | RenderableElementType;
   subtitle?: string | RenderableElementType;
@@ -20,20 +22,22 @@ type CustomAccordionPropsType = {
   disabled?: boolean;
   isActive?: boolean;
   showIconBorder?: boolean;
+  size?: AccordionSizeType;
 };
 
 export default function CustomAccordion({
   children,
   ...props
 }: CustomAccordionPropsType) {
-  const { 
-    title, 
-    subtitle, 
-    icon, 
-    disabled = false, 
-    contentClassname, 
+  const {
+    title,
+    subtitle,
+    icon,
+    disabled = false,
+    contentClassname,
     isActive = false,
-    showIconBorder = true
+    showIconBorder = true,
+    size = "medium",
   } = props;
 
   const [isOpen, setIsOpen] = useState<boolean>(props.initiallyOpen || false);
@@ -81,11 +85,19 @@ export default function CustomAccordion({
     }
   };
 
+  const getPaddingClasses = () => {
+    return size === "small" ? "p-3" : "p-6";
+  };
+
+  const getContentPaddingClasses = () => {
+    return size === "small" ? "px-4 pb-2" : "px-6 pb-6";
+  };
+
   return (
     <div
       className={`w-full rounded-[8px] transition-colors duration-200 ${
-        isActive 
-          ? "bg-greyscale-100 border-greyscale-600" 
+        isActive
+          ? "bg-greyscale-100 border-greyscale-600"
           : "border-greyscale-400"
       } ${
         disabled
@@ -98,7 +110,7 @@ export default function CustomAccordion({
       <button
         onClick={accordionOnClick}
         disabled={disabled}
-        className={`w-full p-6 flex items-center justify-between text-left group ${
+        className={`w-full ${getPaddingClasses()} flex items-center justify-between text-left group ${
           disabled ? "cursor-not-allowed" : "cursor-pointer"
         }`}
       >
@@ -133,13 +145,11 @@ export default function CustomAccordion({
 
         <div
           className={`flex justify-center items-center ${
-            disabled
-              ? "text-greyscale-500"
-              : "text-primary-800"
+            disabled ? "text-greyscale-500" : "text-primary-800"
           } ml-4 flex-shrink-0 w-10 h-10 rounded-full transition-transform duration-200 ${
-            showIconBorder 
-              ? disabled 
-                ? "border border-greyscale-500" 
+            showIconBorder
+              ? disabled
+                ? "border border-greyscale-500"
                 : "border border-primary-800"
               : ""
           }`}
@@ -148,12 +158,12 @@ export default function CustomAccordion({
         </div>
       </button>
       <div
-  ref={accordionRef}
-  style={{ maxHeight: accordionHeight }}
-  className={`transition-all duration-300 ease-in-out overflow-hidden ${contentClassname}`}
->
-  <div className="px-6 pb-6">{children}</div>
-</div>
+        ref={accordionRef}
+        style={{ maxHeight: accordionHeight }}
+        className={`transition-all duration-300 ease-in-out overflow-hidden ${contentClassname}`}
+      >
+        <div className={getContentPaddingClasses()}>{children}</div>
+      </div>
     </div>
   );
 }

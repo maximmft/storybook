@@ -3,33 +3,55 @@ import { Button } from "src/stories/Atoms/Buttons/Button/Button";
 import { ClassicInput } from "src/stories/Atoms/Inputs/ClassicInput/ClassicInput";
 import { useState } from "react";
 import { FormModal } from "./FormModal";
+import { useForm } from "react-hook-form";
 
 const FormContent = () => {
+  const { register, watch } = useForm();
+
   return (
     <>
       <div className="space-y-6">
-        <ClassicInput label="Label title" required placeholder="Placeholder" />
-
-        <ClassicInput label="Label title" required placeholder="Placeholder" />
-
-        <ClassicInput label="Label title" required placeholder="Placeholder" />
-
         <ClassicInput
-          label="Label title 4"
+          label="Label title"
           required
           placeholder="Placeholder"
+          register={register("input1")}
+          fieldName="input1"
+          watch={watch}
         />
 
         <ClassicInput
-          label="Label title 5"
+          label="Label title"
           required
           placeholder="Placeholder"
+          register={register("input2")}
+          fieldName="input2"
+          watch={watch}
         />
 
         <ClassicInput
-          label="Label title 6"
+          label="Label title"
           required
           placeholder="Placeholder"
+          register={register("input3")}
+          fieldName="input3"
+          watch={watch}
+        />
+        <ClassicInput
+          label="Label title"
+          required
+          placeholder="Placeholder"
+          register={register("input4")}
+          fieldName="input4"
+          watch={watch}
+        />
+        <ClassicInput
+          label="Label title"
+          required
+          placeholder="Placeholder"
+          register={register("input5")}
+          fieldName="input5"
+          watch={watch}
         />
       </div>
     </>

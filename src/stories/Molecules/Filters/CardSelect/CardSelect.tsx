@@ -3,6 +3,7 @@ import ToggleSwitch from "src/stories/Atoms/Inputs/ToggleSwitch/ToggleSwitch";
 import { CardSelectChildren } from "../CardSelectChildren/CardSelectChildren";
 
 type ServiceType = {
+  id: string;
   service: {
     format: string;
     price: string;
@@ -16,26 +17,28 @@ type CardSelectPropsType = {
   title: string;
   services: ServiceType[];
   mainToggleValue: boolean;
-  selectedServices: number[];
+  selectedServices?: string[];
   onMainToggleChange: (value: boolean) => void;
-  onServiceToggle: (index: number) => void;
+  onServiceToggle: (serviceId: string) => void;
   disabled?: boolean;
   disabledChildren?: boolean;
   editableChildren?: boolean;
+  accordionSize?: "small" | "medium"
 };
 
 export const CardSelect = ({
   title,
   services,
   mainToggleValue,
-  selectedServices,
+  selectedServices = [],
   onMainToggleChange,
   onServiceToggle,
   editableChildren,
-  disabled = false,
+  accordionSize = "medium",
+    disabled = false,
 }: CardSelectPropsType) => {
-  const handleToggleChildren = (index: number) => {
-    onServiceToggle(index);
+  const handleToggleChildren = (serviceId: string) => {
+    onServiceToggle(serviceId);
   };
 
   const handleMainToggle = () => {
@@ -56,16 +59,17 @@ export const CardSelect = ({
 
   return (
     <div>
-      <CustomAccordion title={displayTitle(title)} disabled={disabled} showIconBorder={false} isActive={mainToggleValue}>
+      <CustomAccordion title={displayTitle(title)} disabled={disabled} showIconBorder={false} isActive={mainToggleValue} size={accordionSize}>
         <div className="space-y-4">
-          {services.map((serviceItem, index) => (
+          {services.map((serviceItem) => (
             <CardSelectChildren
-              key={index}
+              key={serviceItem.id}
               editable={editableChildren}
               service={serviceItem.service}
-              toggleValue={selectedServices.includes(index)}
+              toggleValue={selectedServices.includes(serviceItem.id)}
               disabled={serviceItem.service.disabled || false}
-              onToggle={() => handleToggleChildren(index)}
+              onToggle={() => handleToggleChildren(serviceItem.id)}
+              size={accordionSize}
             />
           ))}
         </div>
