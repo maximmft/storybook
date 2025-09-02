@@ -27,7 +27,7 @@ export const TimeSlotsList = ({
   };
 
   return (
-    <div className="w-full border border-greyscale-400 p-2 rounded-lg">
+    <div className="w-full flex flex-col flex-wrap border border-greyscale-400 p-2 rounded-lg">
       {timeSlots.map((time, index) => (
         <TimeSlot
           key={time}

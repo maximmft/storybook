@@ -3,11 +3,13 @@ import { PriceListSideBar } from "./PriceListSideBar.tsx";
 import { useState } from "react";
 import { Button } from "src/stories/Atoms/Buttons/Button/Button.tsx";
 
-const mockData = {
+const PricedListmockData = {
   title: "Grille tarifaire semaine",
   startDate: "2025-01-01T00:00:00.000Z",
   endDate: "2025-01-01T23:59:59.999Z",
-  markupTypology: "En pourcentage (%)",
+  applyAllYear: true,
+  annualRecurrence: true,
+  markupTypology: {id: "1", label: "En pourcentage (%)"},
   markupRate: 10,
   opening: {
     days: ["Lundi", "Mardi", "Mercredi"],
@@ -275,7 +277,7 @@ export const Desktop: Story = {
           />
         </div>
         <PriceListSideBar 
-          data={mockData} 
+          data={PricedListmockData} 
           setIsOpen={setIsOpen} 
           isOpen={isOpen} 
         />

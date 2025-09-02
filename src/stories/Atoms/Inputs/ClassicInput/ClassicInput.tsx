@@ -35,7 +35,7 @@ export const ClassicInput = forwardRef<HTMLInputElement, ClassicInputPropsType>(
   ) => {
     const fieldValue = watch && fieldName ? watch(fieldName) : "";
 
-    const hasValue = fieldValue && fieldValue.length > 0;
+    const hasValue = fieldValue !== null && fieldValue !== undefined && fieldValue !== "";
 
     return (
       <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>

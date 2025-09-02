@@ -23,6 +23,7 @@ type CardSelectPropsType = {
   disabled?: boolean;
   disabledChildren?: boolean;
   editableChildren?: boolean;
+  childrenDirection?: "vertical" | "horizontal",
   accordionSize?: "small" | "medium"
 };
 
@@ -35,9 +36,14 @@ export const CardSelect = ({
   onServiceToggle,
   editableChildren,
   accordionSize = "medium",
+  childrenDirection = "horizontal",
     disabled = false,
 }: CardSelectPropsType) => {
   const handleToggleChildren = (serviceId: string) => {
+    const service = services.find(service => service.id === serviceId)
+    if (service?.service.disabled) {
+      return;
+    } 
     onServiceToggle(serviceId);
   };
 
@@ -69,7 +75,7 @@ export const CardSelect = ({
               toggleValue={selectedServices.includes(serviceItem.id)}
               disabled={serviceItem.service.disabled || false}
               onToggle={() => handleToggleChildren(serviceItem.id)}
-              size={accordionSize}
+              direction={childrenDirection}
             />
           ))}
         </div>

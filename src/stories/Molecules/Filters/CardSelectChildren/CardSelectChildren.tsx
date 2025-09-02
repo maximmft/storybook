@@ -16,7 +16,7 @@ type CardSelectChildrenPropsType = {
   editable?: boolean;
   disabled: boolean;
   onToggle: () => void;
-  size?: "small" | "medium";
+  direction?: "horizontal" | "vertical";
 };
 
 export const CardSelectChildren = ({
@@ -24,7 +24,7 @@ export const CardSelectChildren = ({
   service,
   toggleValue,
   onToggle,
-  size = "medium",
+  direction = "horizontal",
   error = false,
   disabled = false,
   editable = true,
@@ -36,7 +36,7 @@ export const CardSelectChildren = ({
     return "border-[#E3DFDA] bg-white";
   };
 
-  if (size === "medium") {
+  if (direction === "horizontal") {
     return (
       <div
         className={`${getStyle()} w-full border rounded-[8px] gap-4 p-4 flex flex-row items-center justify-between ${

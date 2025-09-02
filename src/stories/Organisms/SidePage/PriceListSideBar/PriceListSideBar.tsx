@@ -6,7 +6,7 @@ import Tag from "src/stories/Atoms/Informations/Tag/Tag";
 import { CardSelect } from "src/stories/Molecules/Filters/CardSelect/CardSelect";
 import { formatDateShort } from "src/utils/formatDate";
 
-type ServiceType = {
+export type ServiceType = {
   id: string;
   service: {
     format: string;
@@ -17,18 +17,23 @@ type ServiceType = {
   };
 };
 
-type CategoryType = {
+export type CategoryType = {
   id: string;
   title: string;
   services: ServiceType[];
   mainToggleValue: boolean;
 };
 
-type PriceListDataType = {
+export type PriceListDataType = {
   title: string;
   startDate: string;
   endDate: string;
-  markupTypology: string;
+  markupTypology: {
+    id: string,
+    label: string,
+  };
+  applyAllYear: boolean;
+  annualRecurrence: boolean;
   markupRate: number;
   opening: {
     days: string[];
@@ -108,14 +113,18 @@ export const PriceListSideBar = ({
                   {formatDateShort(data.endDate)}
                 </p>
               </div>
-              <div className="flex flex-row text-[14px] gap-x-2">
-                <p>Appliquer sur toute l'année</p>
-                <CircleAlert size={16} color="#A29D98" />
-              </div>
-              <div className="flex flex-row text-[14px] gap-x-3">
-                <p>Récurrence annuelle</p>
-                <CircleAlert size={16} color="#A29D98" />
-              </div>
+              {data.applyAllYear && (
+                <div className="flex flex-row text-[14px] gap-x-2">
+                  <p>Appliquer sur toute l'année</p>
+                  <CircleAlert size={16} color="#A29D98" />
+                </div>
+              )}
+              {data.annualRecurrence && (
+                <div className="flex flex-row text-[14px] gap-x-3">
+                  <p>Récurrence annuelle</p>
+                  <CircleAlert size={16} color="#A29D98" />
+                </div>
+              )}
             </div>
           </section>
 
@@ -126,7 +135,7 @@ export const PriceListSideBar = ({
               </h1>
               <div className="flex flex-row text-[14px] gap-x-3">
                 <p>Type de majoration</p>
-                <p className="font-light">{data.markupTypology}</p>
+                <p className="font-light">{data.markupTypology.label}</p>
               </div>
               <div className="flex flex-row text-[14px] gap-x-3">
                 <p>Taux de majoration</p>
@@ -153,6 +162,7 @@ export const PriceListSideBar = ({
                       selectedServices={selectedServices}
                       accordionSize="small"
                       editableChildren={false}
+                      childrenDirection="vertical"
                     />
                   </div>
                 );
@@ -172,7 +182,9 @@ export const PriceListSideBar = ({
                   return (
                     <div className="flex flex-row">
                       <p className="font-light">{day}</p>
-                    {index < data.opening.days.length-1 && <p className="text-greyscale-400 mx-2">•</p>}
+                      {index < data.opening.days.length - 1 && (
+                        <p className="text-greyscale-400 mx-2">•</p>
+                      )}
                     </div>
                   );
                 })}
@@ -180,8 +192,10 @@ export const PriceListSideBar = ({
               <div className="flex flex-row text-[14px]">
                 <Clock size={18} />
                 <p className="mx-2">Horaires</p>
-                <p className="font-light">{data.opening.hours.opening} - {data.opening.hours.ending}</p>
-                </div>
+                <p className="font-light">
+                  {data.opening.hours.opening} - {data.opening.hours.ending}
+                </p>
+              </div>
             </div>
           </section>
         </section>

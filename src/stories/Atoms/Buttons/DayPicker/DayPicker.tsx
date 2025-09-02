@@ -3,7 +3,7 @@ import * as React from "react";
 type DayPickerPropsType = {
   day: string;
   onClick: () => void;
-  disabled: boolean;
+  disabled?: boolean;
   isSelected?: boolean;
 };
 
