@@ -34,8 +34,9 @@ export const ClassicInput = forwardRef<HTMLInputElement, ClassicInputPropsType>(
     ref
   ) => {
     const fieldValue = watch && fieldName ? watch(fieldName) : "";
-
-    const hasValue = fieldValue !== null && fieldValue !== undefined && fieldValue !== "";
+    
+    const safeFieldValue = fieldValue != null ? String(fieldValue) : "";
+    const hasValue = safeFieldValue.trim().length > 0;
 
     return (
       <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
@@ -51,24 +52,22 @@ export const ClassicInput = forwardRef<HTMLInputElement, ClassicInputPropsType>(
         </Typography>
 
         <TextField
-          {...register}
           ref={ref}
           placeholder={placeholder}
           disabled={disabled}
           error={error}
-          value={fieldValue}
           helperText={helperText}
           type={type}
           InputLabelProps={{
             shrink: false,
           }}
+          {...register}
           sx={{
             "& .MuiOutlinedInput-root": {
               height: "48px",
               fontSize: "14px",
               backgroundColor: "white",
               borderRadius: "8px",
-
               "& fieldset": {
                 borderColor: error
                   ? "#F03538"
