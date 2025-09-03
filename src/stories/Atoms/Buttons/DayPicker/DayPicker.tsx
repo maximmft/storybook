@@ -18,12 +18,12 @@ export default function DayPicker({
       onClick={onClick}
       disabled={disabled}
       className={`flex items-center justify-center h-10 w-10 border  rounded-full  group ${
-        isSelected ? "bg-primary-800 border-primary-800 hover:opacity-85" : "border-greyscale-400 hover:bg-greyscale-200 hover:border-greyscale-400 active:bg-greyscale-300 active:border-black"
+        isSelected ? "bg-primary-800 border-primary-800 hover:enabled:opacity-85" : "border-greyscale-400 hover:enabled:bg-greyscale-200 hover:enabled:border-greyscale-400 active:enabled:bg-greyscale-300 active:border-black"
       } ${disabled ? "bg-greyscale-100 border-none" : ""}`}
     >
       <p
-        className={` text-[14px] capitalize group-active:font-medium ${
-          isSelected ? "text-white" : "group-hover:text-black"
+        className={` text-[14px] capitalize group-active:enabled:font-medium ${
+          isSelected ? "text-white" : "group-hover:enabled:text-black"
         } ${disabled ? "text-greyscale-500" : "text-greyscale-700"} `}
       >
         {day.slice(0, 1)}

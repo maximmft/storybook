@@ -64,21 +64,20 @@ const meta: Meta<typeof BookingDetails> = {
     layout: "fullscreen",
     docs: {
       description: {
-        component:
-          "Composant sidebar pour afficher et modifier les détails d'une réservation avec informations client, services et notes.",
-      },
-    },
-  },
-  tags: ["autodocs"],
-  argTypes: {
-    booking: {
-      description: "Données complètes de la réservation",
-      control: { type: "object" },
-      table: {
-        type: {
-          summary: "BookingData",
-          detail: `{
-  status: string; // "pending" | "confirmed" | "cancelled" | "completed"
+        component: `
+Composant sidebar pour afficher et modifier les détails d'une réservation avec informations client, services et notes.
+
+## Props Interface
+
+\`\`\`typescript
+interface BookingDetailsSideBarProps {
+  booking: BookingData;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+}
+
+interface BookingData {
+  status: string;
   customer: {
     firstname: string;
     lastname: string;
@@ -86,23 +85,23 @@ const meta: Meta<typeof BookingDetails> = {
     phoneNumber: string;
   };
   appointment: {
-    totalDuration: number; // en minutes
-    totalPrice: number; // en euros
-    id: string; // identifiant de la réservation
-    comment: string; // commentaire du client
-    datetime: string; // format ISO datetime (ex: "2025-07-28T10:00:00+02:00")
+    totalDuration: number;
+    totalPrice: number;
+    id: string;
+    comment: string;
+    datetime: string;
     services: Array<{
       serviceName: string;
-      format: string; // "solo" | "duo" | etc.
-      price: number; // en euros
-      duration: number; // en minutes
+      format: string;
+      price: number;
+      duration: number;
       beneficiary: {
         firstname: string;
         lastname: string;
         email: string;
       };
-      preference: string; // "woman" | "man" | etc.
-      room: string; // nom de la salle
+      preference: string;
+      room: string;
       options: Array<{
         name: string;
         price: number;
@@ -110,31 +109,32 @@ const meta: Meta<typeof BookingDetails> = {
     }>;
   };
   information: {
-    createdAt: string; // date de création au format ISO datetime
-    canal: string; // canal de réservation
-    paiment: string; // moyen de paiement
+    createdAt: string;
+    canal: string;
+    paiment: string;
   };
-  notes: string; // notes sur la prestation
-}`
-        }
-      }
+  notes: string;
+}
+\`\`\`
+        `,
+      },
+    },
+  },
+  tags: ["autodocs"],
+  argTypes: {
+    booking: {
+      description: "Données complètes de la réservation avec client, appointment et informations",
+      control: false,
     },
     isOpen: {
       description: "État d'ouverture/fermeture de la sidebar",
       control: { type: "boolean" },
-      table: {
-        type: { summary: "boolean" },
-        defaultValue: { summary: "false" }
-      }
+      type: "boolean",
     },
     setIsOpen: {
       description: "Fonction callback pour contrôler l'état d'ouverture de la sidebar",
       control: false,
-      table: {
-        type: { summary: "(isOpen: boolean) => void" }
-      },
-      action: "setIsOpen"
-    }
+    },
   },
 };
 

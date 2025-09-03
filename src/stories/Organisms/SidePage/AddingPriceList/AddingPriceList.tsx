@@ -1,5 +1,5 @@
 import { ArrowLeft, CircleAlert } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "src/stories/Atoms/Buttons/Button/Button";
 import DayPicker from "src/stories/Atoms/Buttons/DayPicker/DayPicker";
 import { IconButton } from "src/stories/Atoms/Buttons/IconButton/IconButton";
@@ -8,9 +8,7 @@ import { Dropdown } from "src/stories/Atoms/Inputs/Dropdown/Dropdown";
 import ToggleSwitch from "src/stories/Atoms/Inputs/ToggleSwitch/ToggleSwitch";
 import { CardSelect } from "src/stories/Molecules/Filters/CardSelect/CardSelect";
 import { TimeSlotsList } from "src/stories/Molecules/TimeSlotsList/TimeSlotsList";
-import {
-  PriceListDataType,
-} from "../PriceListSideBar/PriceListSideBar";
+import { PriceListDataType } from "../PriceListSideBar/PriceListSideBar";
 import { useForm } from "react-hook-form";
 import { formatDateShort } from "src/utils/formatDate";
 
@@ -64,21 +62,31 @@ export const AddingPriceList = ({
   data,
   isOpen,
 }: PriceListSideBarProps) => {
+
+  const getFirstAvailableDay = () => {
+    const availableDay = data.opening.days.find(day => !day.disabled);
+    return availableDay ? availableDay.name : "lundi";
+  };
+
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [selectedDay, setSelectedDay] = useState<string>(getFirstAvailableDay());
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(null);
   const [applyAllYear, setApplyAllYear] = useState<boolean>(data.applyAllYear);
-  const [annualRecurrence, setAnnualRecurrence] = useState<boolean>(data.annualRecurrence);
+  const [annualRecurrence, setAnnualRecurrence] = useState<boolean>(
+    data.annualRecurrence
+  );
 
-  
   const allCategoriesId = data.categories.map((category) => category.id);
   const allServicesId = data.categories.flatMap((category) =>
-    category.services.filter((service) => !service.service.disabled).map((s) => s.id)
+    category.services
+      .filter((service) => !service.service.disabled)
+      .map((s) => s.id)
   );
 
   const isAllSelected =
-  allCategoriesId.every((id) => selectedCategories.includes(id)) &&
-  allServicesId.every((id) => selectedServices.includes(id));
-  
+    allCategoriesId.every((id) => selectedCategories.includes(id)) &&
+    allServicesId.every((id) => selectedServices.includes(id));
 
   const { watch, register } = useForm({
     defaultValues: {
@@ -90,6 +98,21 @@ export const AddingPriceList = ({
       typology: data.markupTypology.id,
     },
   });
+
+  const getDisabledSlotsForSelectedDay = () => {
+    return data.opening.disabledSlotsByDay?.[selectedDay] || [];
+  };
+
+  const handleTimeSlotSelect = (timeSlot: string | null) => {
+    if (!timeSlot) return;
+
+    setSelectedTimeSlot((prev) => {
+      if (prev === timeSlot) {
+        return null;
+      }
+      return timeSlot;
+    });
+  };
 
   const handleMainToggle = (categoryId: string) => {
     setSelectedCategories((prev) =>
@@ -118,13 +141,17 @@ export const AddingPriceList = ({
   };
 
   const handleApplyAllYear = () => {
-    setApplyAllYear(!applyAllYear)
-  }
+    setApplyAllYear(!applyAllYear);
+  };
 
   const handleAnnualReccurence = () => {
-    setAnnualRecurrence(!annualRecurrence)
-  }
+    setAnnualRecurrence(!annualRecurrence);
+  };
 
+  const handleSelectDay = (day: { name: string; disabled: boolean }) => {
+    setSelectedDay(day.name);
+    setSelectedTimeSlot(null);
+  };
 
   return (
     <>
@@ -263,21 +290,37 @@ export const AddingPriceList = ({
               À quel moment la majoration sera-t-elle appliquée ?{" "}
             </p>
             <div className="flex flex-row justify-between my-4">
-              {[
-                "Lundi",
-                "Mardi",
-                "Mecredi",
-                "Jeudi",
-                "Vendredi",
-                "Samedi",
-                "Dimanche",
-              ].map((day) => (
-                <DayPicker day={day} onClick={() => ""} key={day} />
+              {data.opening.days.map((day) => (
+                <DayPicker
+                  day={day.name}
+                  onClick={() => handleSelectDay(day)}
+                  key={day.name}
+                  isSelected={selectedDay === day.name}
+                  disabled={day.disabled}
+                />
               ))}
             </div>
             <div className=" flex flex-row flex-1 gap-x-4">
-              <TimeSlotsList timeSlots={morningsSlots} />
-              <TimeSlotsList timeSlots={eveningSlots} />
+              <TimeSlotsList
+                timeSlots={morningsSlots}
+                selectedTime={
+                  selectedTimeSlot && morningsSlots.includes(selectedTimeSlot)
+                    ? selectedTimeSlot
+                    : null
+                }
+                onTimeSlotSelect={handleTimeSlotSelect}
+                disabledTimes={getDisabledSlotsForSelectedDay()}
+              />
+              <TimeSlotsList
+                timeSlots={eveningSlots}
+                selectedTime={
+                  selectedTimeSlot && eveningSlots.includes(selectedTimeSlot)
+                    ? selectedTimeSlot
+                    : null
+                }
+                onTimeSlotSelect={handleTimeSlotSelect}
+                disabledTimes={getDisabledSlotsForSelectedDay()}
+              />
             </div>
           </article>
         </section>

@@ -204,28 +204,27 @@ const meta: Meta<typeof CustomerDetailsSideBar> = {
     layout: "fullscreen",
     docs: {
       description: {
-        component:
-          "Composant sidebar pour afficher les détails d'un client avec ses informations personnelles, statistiques, adresse et notes.",
-      },
-    },
-  },
-  tags: ["autodocs"],
-  argTypes: {
-    customerData: {
-      description: "Données complètes du client",
-      control: { type: "object" },
-      table: {
-        type: {
-          summary: "CustomerDetailsData",
-          detail: `{
+        component: `
+Composant sidebar pour afficher les détails d'un client avec ses informations personnelles, statistiques, adresse et notes.
+
+## Props Interface
+
+\`\`\`typescript
+interface CustomerDetailsSideBarProps {
+  customerData: CustomerDetailsData;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+}
+
+interface CustomerDetailsData {
   customer: {
     firstname: string;
     lastname: string;
     email: string;
     phoneNumber: string;
-    status: string; // "vip" | "nouveau" | etc.
-    gender: string; // "femme" | "homme"
-    birthday: string; // format ISO date
+    status: string;
+    gender: string;
+    birthday: string;
     address: {
       street: string;
       zipcode: string;
@@ -237,14 +236,14 @@ const meta: Meta<typeof CustomerDetailsSideBar> = {
     bookingsNumber: number;
     visitNumber: number;
   };
-  note: string; // Notes sur le client (optionnel)
+  note: string;
   appointments: Array<{
     totalDuration: number;
     totalPrice: number;
     id: string;
     comment: string;
     status: "pending" | "confirmed" | "cancelled" | "completed";
-    datetime: string; // format ISO datetime
+    datetime: string;
     services: Array<{
       serviceName: string;
       format: string;
@@ -269,26 +268,26 @@ const meta: Meta<typeof CustomerDetailsSideBar> = {
     paiment: string;
   };
   notes: string;
-}`,
-        },
+}
+\`\`\`
+        `,
       },
+    },
+  },
+  tags: ["autodocs"],
+  argTypes: {
+    customerData: {
+      description: "Données complètes du client avec informations personnelles, stats et rendez-vous",
+      control: false,
     },
     isOpen: {
       description: "État d'ouverture/fermeture de la sidebar",
       control: { type: "boolean" },
-      table: {
-        type: { summary: "boolean" },
-        defaultValue: { summary: "false" },
-      },
+      type: "boolean",
     },
     setIsOpen: {
-      description:
-        "Fonction callback pour contrôler l'état d'ouverture de la sidebar",
+      description: "Fonction callback pour contrôler l'état d'ouverture de la sidebar",
       control: false,
-      table: {
-        type: { summary: "(isOpen: boolean) => void" },
-      },
-      action: "setIsOpen",
     },
   },
 };

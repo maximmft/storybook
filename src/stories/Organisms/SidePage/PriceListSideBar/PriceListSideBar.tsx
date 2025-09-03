@@ -24,26 +24,46 @@ export type CategoryType = {
   mainToggleValue: boolean;
 };
 
-export type PriceListDataType = {
+export interface DayConfig {
+  name: string;
+  disabled: boolean;
+}
+
+export interface PriceListDataType {
   title: string;
   startDate: string;
   endDate: string;
-  markupTypology: {
-    id: string,
-    label: string,
-  };
   applyAllYear: boolean;
   annualRecurrence: boolean;
+  markupTypology: {
+    id: string;
+    label: string;
+  };
   markupRate: number;
   opening: {
-    days: string[];
+    days: DayConfig[];
     hours: {
       opening: string;
       ending: string;
     };
+    disabledSlotsByDay?: Record<string, string[]>; 
   };
-  categories: CategoryType[];
-};
+  categories: Array<{
+    id: string;
+    title: string;
+    mainToggleValue: boolean;
+    services: Array<{
+      id: string;
+      service: {
+        duration: string;
+        format: string;
+        name: string;
+        price: string;
+        disabled: boolean;
+      };
+    }>;
+  }>;
+}
 
 export interface PriceListSideBarProps {
   isOpen: boolean;
@@ -181,7 +201,7 @@ export const PriceListSideBar = ({
                 {data.opening.days.map((day, index) => {
                   return (
                     <div className="flex flex-row">
-                      <p className="font-light">{day}</p>
+                      <p className="font-light">{day.name}</p>
                       {index < data.opening.days.length - 1 && (
                         <p className="text-greyscale-400 mx-2">•</p>
                       )}
