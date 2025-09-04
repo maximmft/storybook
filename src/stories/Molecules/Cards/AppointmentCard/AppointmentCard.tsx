@@ -1,5 +1,5 @@
 import { TrendUpIcon } from "@phosphor-icons/react/dist/ssr";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, User, User2, Users } from "lucide-react";
 import { Button } from "src/stories/Atoms/Buttons/Button/Button";
 import Tag from "src/stories/Atoms/Informations/Tag/Tag";
 import { formatDateShort, formatTime } from "src/utils/formatDate";
@@ -13,7 +13,6 @@ export interface Customer {
 
 export interface Service {
   serviceName: string;
-  format: string;
   price: number;
   duration: number;
   beneficiary: {
@@ -35,6 +34,7 @@ export interface Appointment {
   id: string;
   comment: string;
   datetime: string;
+  format: string;
   services: Service[];
   status?: "pending" | "confirmed" | "cancelled" | "completed";
 }
@@ -67,20 +67,21 @@ export const AppointmentCard = ({
     totalDuration,
     totalPrice,
     services,
+    format,
     status = "pending",
   } = appointment;
 
   const serviceNames = services.map((service) => service.serviceName);
+
   const rooms = Array.from(new Set(services.map((service) => service.room)));
   const options = services.flatMap((service) =>
     service.options.map((option) => option.name)
   );
-  
 
   const displayServiceSummary = (
     services: string[],
     options: string[],
-    rooms?: string[],
+    rooms?: string[]
   ) => {
     return (
       <div
@@ -100,18 +101,21 @@ export const AppointmentCard = ({
           ))}
         </div>
 
-       {rooms && <div className="flex flex-row flex-wrap">
-          <span className="shrink-0 mr-3">Salles</span>
-          {rooms.map((room, index) => {            
-            return (
-            <span key={`room-${index}`} className="font-light">
-              {room}
-              {index < rooms.length - 1 && (
-                <span className="text-greyscale-500 mx-[6px]">•</span>
-              )}
-            </span>
-          )})}
-        </div>}
+        {rooms && (
+          <div className="flex flex-row flex-wrap">
+            <span className="shrink-0 mr-3">Salles</span>
+            {rooms.map((room, index) => {
+              return (
+                <span key={`room-${index}`} className="font-light">
+                  {room}
+                  {index < rooms.length - 1 && (
+                    <span className="text-greyscale-500 mx-[6px]">•</span>
+                  )}
+                </span>
+              );
+            })}
+          </div>
+        )}
 
         <div className="flex flex-row flex-wrap">
           <span className="shrink-0 mr-3">Options</span>
@@ -173,6 +177,14 @@ export const AppointmentCard = ({
             </div>
 
             <div className="flex flex-row items-center text-[20px]">
+              {format.toLowerCase() === "solo" ? (
+                <User2 size={16} className="mb-1" />
+              ) : (
+                <Users size={16}  className="mb-1" />
+              )}
+
+              <p className="capitalize ml-1">{format}</p>
+              <span className="text-greyscale-500 mx-2">•</span>
               <p>{totalDuration}min</p>
               <span className="text-greyscale-500 mx-2">•</span>
               <p className="flex flex-row items-center gap-1">
@@ -189,7 +201,7 @@ export const AppointmentCard = ({
             <div>
               <Button
                 label="Traiter la demande"
-                variant="tertiary"
+                variant="primary"
                 size="small"
                 icon={ArrowRight}
               />

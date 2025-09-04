@@ -15,10 +15,10 @@ const mockAppointmentData: AppointmentData = {
     comment: "Lorem ipsum dolor sit amet consectetur.",
     datetime: "2025-07-28T10:00:00+02:00", 
     status: "pending",
+    format: "solo",
     services: [
       {
         serviceName: "Teint parfait",
-        format: "solo",
         price: 150,
         duration: 90,
         beneficiary: {
@@ -32,7 +32,6 @@ const mockAppointmentData: AppointmentData = {
       },
       {
         serviceName: "Beauté des mains",
-        format: "solo",
         price: 50,
         duration: 30,
         beneficiary: {
@@ -46,7 +45,6 @@ const mockAppointmentData: AppointmentData = {
       },
       {
         serviceName: "Massage",
-        format: "solo",
         price: 50,
         duration: 30,
         beneficiary: {
@@ -75,11 +73,11 @@ const mockAppointmentWithOptions: AppointmentData = {
     id: "#ID09847694",
     comment: "Rdv avec options spéciales.",
     datetime: "2025-07-28T10:00:00+02:00",  
+    format: "solo",
     status: "confirmed",
     services: [
       {
         serviceName: "Teint parfait",
-        format: "solo",
         price: 100,
         duration: 60,
         beneficiary: {
@@ -96,7 +94,6 @@ const mockAppointmentWithOptions: AppointmentData = {
       },
       {
         serviceName: "Massage",
-        format: "solo",
         price: 50,
         duration: 60,
         beneficiary: {
@@ -122,6 +119,7 @@ const mockCompletedAppointment: AppointmentData = {
   appointment: {
     totalDuration: 90,
     totalPrice: 150,
+    format: "solo",
     id: "#ID09847695",
     comment: "Soin terminé avec succès.",
     datetime: "2025-07-25T14:30:00+02:00",
@@ -129,7 +127,6 @@ const mockCompletedAppointment: AppointmentData = {
     services: [
       {
         serviceName: "Soin du visage",
-        format: "solo",
         price: 150,
         duration: 90,
         beneficiary: {
