@@ -8,7 +8,6 @@ import {
   Pencil,
   Phone,
 } from "lucide-react";
-import { useState } from "react";
 import { Button } from "src/stories/Atoms/Buttons/Button/Button";
 import CustomAccordion from "src/stories/Atoms/Buttons/CustomAccordion/CustomAccordion";
 import CustomTabs from "src/stories/Atoms/Buttons/CustomTabs/CustomTabs";
@@ -66,7 +65,7 @@ export interface Appointment {
   comment: string;
   status?: "pending" | "confirmed" | "cancelled" | "completed";
   datetime: string;
-  format: string; // ← Propriété manquante ajoutée
+  format: string; 
   services: Service[];
 }
 
@@ -96,7 +95,6 @@ export const CustomerDetailsSideBar = ({
   setIsOpen,
   isOpen,
 }: CustomerDetailsSideBarProps) => {
-  const [editMode, setEditMode] = useState(false);
 
   const { customer, stats, note, appointments } = customerData;
 
@@ -306,7 +304,6 @@ export const CustomerDetailsSideBar = ({
         <div className="pt-8 px-8 flex flex-row-reverse items-center gap-4 shadow-[0_-16px_28px_-20px_rgba(0,0,0,0.1)]">
           <Button label="Modifier" icon={Pencil} />
           <Button
-            onClick={() => setEditMode(true)}
             label="Annuler"
             variant="secondary"
           />

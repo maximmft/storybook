@@ -1,5 +1,5 @@
 import { TrendUpIcon } from "@phosphor-icons/react/dist/ssr";
-import { ArrowRight, User, User2, Users } from "lucide-react";
+import { ArrowRight, User2, Users } from "lucide-react";
 import { Button } from "src/stories/Atoms/Buttons/Button/Button";
 import Tag from "src/stories/Atoms/Informations/Tag/Tag";
 import { formatDateShort, formatTime } from "src/utils/formatDate";
