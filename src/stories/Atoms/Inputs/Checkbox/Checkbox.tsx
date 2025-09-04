@@ -2,6 +2,7 @@ import * as React from "react";
 import { Checkbox as MuiCheckbox, Typography, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Check } from "lucide-react";
+import { UseFormRegisterReturn } from "react-hook-form";
 
 type CheckboxProps = {
  checked: boolean;
@@ -10,6 +11,7 @@ type CheckboxProps = {
  labelPosition?: "left" | "right";
  size?: "small" | "medium";
  indeterminate?: boolean;
+ register?: UseFormRegisterReturn;
  onCheckChange?: (checked: boolean) => void;
  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -79,6 +81,7 @@ export const Checkbox = ({
  checked = false,
  disabled = false,
  label,
+ register,
  onCheckChange,
  onChange,
  labelPosition = "right",
@@ -120,6 +123,7 @@ export const Checkbox = ({
        checked={checked}
        disabled={disabled}
        indeterminate={indeterminate}
+       {...register}
        onChange={handleChange}
        disableRipple
        size="small"

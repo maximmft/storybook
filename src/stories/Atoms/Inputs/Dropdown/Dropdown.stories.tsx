@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Dropdown } from "./Dropdown.tsx";
 import { UserIcon, HomeIcon, MailIcon, SettingsIcon } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
 const basicOptions = [
   { id: "1", label: "Option 1" },
@@ -29,6 +31,36 @@ const checkboxOptions = [
   { id: "4", label: "Vue", variant: "checkbox" as const, disabled: true },
 ];
 
+// Wrapper component pour utiliser react-hook-form
+const DropdownWrapper = ({ 
+  options, 
+  placeholder, 
+  multiSelect = false, 
+  defaultValue = "", 
+  ...props 
+}: any) => {
+  const { register, watch } = useForm({
+    defaultValues: {
+      testField: defaultValue,
+    },
+  });
+
+
+
+  return (
+    <div className="w-80">
+      <Dropdown
+        {...props}
+        options={options}
+        placeholder={placeholder}
+        multiSelect={multiSelect}
+        register={register("testField")}
+        fieldName="testField"
+        watch={watch}
+      />
+    </div>
+  );
+};
 
 const meta: Meta<typeof Dropdown> = {
   title: "Atoms/Inputs/Dropdown",
@@ -57,7 +89,6 @@ const meta: Meta<typeof Dropdown> = {
       control: { type: "select" },
       options: ["small", "medium", "large"],
     },
-  
     fieldName: {
       control: { type: "text" },
       description: "Nom du champ pour react-hook-form",
@@ -69,51 +100,153 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  args: {
-    options: basicOptions,
-    placeholder: "Choisir une option",
-    onSelectionChange: (selected) => console.log("Selection:", selected),
-  },
+  render: (args) => (
+    <DropdownWrapper
+      {...args}
+      options={basicOptions}
+      placeholder="Choisir une option"
+      label="Sélection simple"
+    />
+  ),
+};
+
+export const WithPreselectedValue: Story = {
+  render: (args) => (
+    <DropdownWrapper
+      {...args}
+      options={basicOptions}
+      placeholder="Choisir une option"
+      label="Avec valeur pré-sélectionnée"
+      defaultValue="2"
+    />
+  ),
 };
 
 export const WithLeftIcons: Story = {
-  args: {
-    options: optionsWithLeftIcons,
-    placeholder: "Sélectionner avec icônes à gauche",
-    onSelectionChange: (selected) => console.log("Selection:", selected),
-  },
+  render: (args) => (
+    <DropdownWrapper
+      {...args}
+      options={optionsWithLeftIcons}
+      placeholder="Sélectionner avec icônes à gauche"
+      label="Avec icônes à gauche"
+    />
+  ),
 };
 
 export const WithRightIcons: Story = {
-  args: {
-    options: optionsWithRightIcons,
-    placeholder: "Sélectionner avec icônes à droite",
-    onSelectionChange: (selected) => console.log("Selection:", selected),
-  },
+  render: (args) => (
+    <DropdownWrapper
+      {...args}
+      options={optionsWithRightIcons}
+      placeholder="Sélectionner avec icônes à droite"
+      label="Avec icônes à droite"
+    />
+  ),
 };
 
 export const MultiSelect: Story = {
-  args: {
-    options: checkboxOptions,
-    placeholder: "Sélection multiple",
-    multiSelect: true,
-    onSelectionChange: (selected) => console.log("Multiple selection:", selected),
-  },
+  render: (args) => (
+    <DropdownWrapper
+      {...args}
+      options={checkboxOptions}
+      placeholder="Sélection multiple"
+      label="Sélection multiple"
+      multiSelect={true}
+      defaultValue={[]}
+    />
+  ),
+};
+
+export const MultiSelectWithPreselection: Story = {
+  render: (args) => (
+    <DropdownWrapper
+      {...args}
+      options={checkboxOptions}
+      placeholder="Sélection multiple"
+      label="Multi-sélection pré-remplie"
+      multiSelect={true}
+      defaultValue={["1", "3"]}
+    />
+  ),
 };
 
 export const MultiSelectWithIcons: Story = {
-  args: {
-    options: optionsWithLeftIcons.map(opt => ({ ...opt, variant: "checkbox" as const })),
-    placeholder: "Multi-sélection avec icônes",
-    multiSelect: true,
-    onSelectionChange: (selected) => console.log("Multiple selection:", selected),
-  },
+  render: (args) => (
+    <DropdownWrapper
+      {...args}
+      options={optionsWithLeftIcons.map(opt => ({ ...opt, variant: "checkbox" as const }))}
+      placeholder="Multi-sélection avec icônes"
+      label="Multi-sélection avec icônes"
+      multiSelect={true}
+      defaultValue={[]}
+    />
+  ),
 };
 
 export const Disabled: Story = {
-  args: {
-    options: basicOptions,
-    placeholder: "Dropdown désactivé",
-    disabled: true,
+  render: (args) => (
+    <DropdownWrapper
+      {...args}
+      options={basicOptions}
+      placeholder="Dropdown désactivé"
+      label="Dropdown désactivé"
+      disabled={true}
+    />
+  ),
+};
+
+export const WithError: Story = {
+  render: (args) => (
+    <DropdownWrapper
+      {...args}
+      options={basicOptions}
+      placeholder="Choisir une option"
+      label="Avec erreur"
+      error={true}
+      required={true}
+    />
+  ),
+};
+
+export const SmallSize: Story = {
+  render: (args) => (
+    <DropdownWrapper
+      {...args}
+      options={basicOptions}
+      placeholder="Petite taille"
+      label="Taille small"
+      size="small"
+    />
+  ),
+};
+
+export const LargeSize: Story = {
+  render: (args) => (
+    <DropdownWrapper
+      {...args}
+      options={basicOptions}
+      placeholder="Grande taille"
+      label="Taille large"
+      size="large"
+    />
+  ),
+};
+
+export const WithManyOptions: Story = {
+  render: (args) => {
+    const manyOptions = Array.from({ length: 20 }, (_, i) => ({
+      id: `${i + 1}`,
+      label: `Option très longue numéro ${i + 1} avec beaucoup de texte`,
+    }));
+
+    return (
+      <DropdownWrapper
+        {...args}
+        options={manyOptions}
+        placeholder="Beaucoup d'options"
+        label="Avec beaucoup d'options"
+        maxHeight={150}
+      />
+    );
   },
 };

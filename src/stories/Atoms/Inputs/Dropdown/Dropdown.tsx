@@ -19,7 +19,6 @@ type DropdownPropsType = {
   placeholder?: string;
   disabled?: boolean;
   error?: boolean;
-  onSelectionChange?: (selectedOptions: DropdownOption[]) => void;
   multiSelect?: boolean;
   maxHeight?: number;
   size?: "small" | "medium" | "large";
@@ -35,7 +34,6 @@ const fontSize = {
   large: "16px",
 };
 
-
 export const Dropdown = ({
   label = "Label",
   options = [],
@@ -44,7 +42,6 @@ export const Dropdown = ({
   error = false,
   size = "medium",
   required = false,
-  onSelectionChange,
   multiSelect = false,
   maxHeight = 200,
   register,
@@ -52,7 +49,6 @@ export const Dropdown = ({
   watch,
 }: DropdownPropsType) => {
   const [isOpen, setIsOpen] = React.useState(false);
-
   const dropdownRef = React.useRef<HTMLDivElement>(null);
 
   const fieldValue = watch && fieldName ? watch(fieldName) : undefined;
@@ -73,26 +69,26 @@ export const Dropdown = ({
 
   const selectedOptions = getSelectedOptionsFromValue;
 
-  const handleOptionClick = (option: DropdownOption) => {
-    let newSelection: DropdownOption[];
+  const handleOptionClick = React.useCallback((option: DropdownOption) => {
+    if (option.disabled) return;
+
     let newValue: string | string[];
 
     if (multiSelect) {
       const isSelected = selectedOptions.some(
         (selected) => selected.id === option.id
       );
-      newSelection = isSelected
+      const newSelection = isSelected
         ? selectedOptions.filter((selected) => selected.id !== option.id)
         : [...selectedOptions, option];
       newValue = newSelection.map((opt) => opt.id);
     } else {
-      newSelection = [option];
       newValue = option.id;
+      // Fermer le dropdown pour single select
       setIsOpen(false);
     }
 
-    onSelectionChange?.(newSelection);
-
+    // Mettre à jour le formulaire via react-hook-form uniquement
     if (register?.onChange) {
       register.onChange({
         target: {
@@ -101,7 +97,7 @@ export const Dropdown = ({
         },
       });
     }
-  };
+  }, [selectedOptions, multiSelect, register]);
 
   const getDisplayText = () => {
     if (selectedOptions.length === 0) return placeholder;
@@ -146,6 +142,20 @@ export const Dropdown = ({
     return `w-4 h-4 transition-transform ml-auto ${rotationStyle} ${colorStyle}`.trim();
   };
 
+  // Fermer le dropdown si on clique à l'extérieur
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [isOpen]);
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
       <Typography
@@ -153,7 +163,6 @@ export const Dropdown = ({
         sx={{
           color: error ? "#F03538" : disabled ? "#D4D0CB" : "#2D2A27",
           fontWeight: 400,
-
           fontSize: fontSize[size],
         }}
       >
@@ -162,67 +171,54 @@ export const Dropdown = ({
       </Typography>
 
       <div className="relative inline-block w-full" ref={dropdownRef}>
-      {register && (
-    <input
-      {...register}
-      type="hidden"
-      value={multiSelect ? JSON.stringify(fieldValue || []) : (fieldValue || '')}
-    />
-  )}
+        {register && (
+          <input
+            {...register}
+            type="hidden"
+            value={multiSelect ? JSON.stringify(fieldValue || []) : (fieldValue || '')}
+          />
+        )}
         <button
           type="button"
           onClick={() => !disabled && setIsOpen(!isOpen)}
           disabled={disabled}
-          className={`h-12 px-3 w-full  flex items-center justify-between border rounded-lg bg-white font-light text-[14px] leading-[20px] ${getButtonStateStyles()} ${getButtonOpenStyles()}`}
+          className={`h-12 px-3 w-full flex items-center justify-between border rounded-lg bg-white font-light text-[14px] leading-[20px] ${getButtonStateStyles()} ${getButtonOpenStyles()}`}
         >
           <span className={getTextStyles()}>{getDisplayText()}</span>
           <ChevronDown className={getChevronStyles()} />
         </button>
 
         {isOpen && (
-          <>
-            <div
-              className="fixed inset-0 z-40 bg-transparent"
-              onClick={() => setIsOpen(false)}
-            />
-            <div
-              className="absolute z-[99999] w-full mt-1 bg-white border border-[#E3DFDA] rounded-lg shadow-lg"
-              style={{ maxHeight: `${maxHeight}px`, overflowY: "auto" }}
-            >
-              {options.length === 0 ? (
-                <div className="px-3 py-2 text-[#A29D98] text-sm font-light">
-                  Aucune option disponible
-                </div>
-              ) : (
-                options.map((option) => {
-                  const isSelected = selectedOptions.some(
-                    (selected) => selected.id === option.id
-                  );
+          <div
+            className="absolute z-[99999] w-full mt-1 bg-white border border-[#E3DFDA] rounded-lg shadow-lg"
+            style={{ maxHeight: `${maxHeight}px`, overflowY: "auto" }}
+          >
+            {options.length === 0 ? (
+              <div className="px-3 py-2 text-[#A29D98] text-sm font-light">
+                Aucune option disponible
+              </div>
+            ) : (
+              options.map((option) => {
+                const isSelected = selectedOptions.some(
+                  (selected) => selected.id === option.id
+                );
 
-                  return (
-                    <DropdownItem
-                      key={option.id}
-                      label={option.label}
-                      icon={option.icon}
-                      iconPosition={option.iconPosition}
-                      disabled={option.disabled}
-                      isActive={!multiSelect && isSelected}
-                      variant={
-                        option.variant || (multiSelect ? "checkbox" : "default")
-                      }
-                      checked={multiSelect ? isSelected : undefined}
-                      onClick={() => handleOptionClick(option)}
-                      onCheckChange={
-                        multiSelect
-                          ? () => handleOptionClick(option)
-                          : undefined
-                      }
-                    />
-                  );
-                })
-              )}
-            </div>
-          </>
+                return (
+                  <DropdownItem
+                    key={option.id}
+                    label={option.label}
+                    icon={option.icon}
+                    iconPosition={option.iconPosition}
+                    disabled={option.disabled}
+                    isActive={!multiSelect && isSelected}
+                    variant={option.variant || (multiSelect ? "checkbox" : "default")}
+                    checked={multiSelect ? isSelected : undefined}
+                    onClick={() => handleOptionClick(option)}
+                  />
+                );
+              })
+            )}
+          </div>
         )}
       </div>
     </Box>

@@ -2,6 +2,7 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import Radio, { RadioProps } from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { UseFormRegisterReturn } from "react-hook-form";
 
 const BpIcon = styled("span")(() => ({
   borderRadius: "50%",
@@ -89,6 +90,7 @@ type RadioButtonPropsType = {
   id: string;
   label: string;
   checked: boolean;
+  register?: UseFormRegisterReturn;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
   size?: "small" | "medium" | "large";
@@ -99,6 +101,7 @@ export default function RadioButton({
   label,
   checked,
   onChange,
+  register,
   value,
   size = "small",
 }: RadioButtonPropsType) {
@@ -110,6 +113,7 @@ export default function RadioButton({
       label={label}
       checked={checked}
       size={size}
+      {...register}
     />
   );
 }
