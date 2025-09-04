@@ -1,5 +1,5 @@
 import { CaretDownIcon } from "@phosphor-icons/react";
-import { ArrowRight, Mail, Pencil, Phone, X } from "lucide-react";
+import { ArrowRight, Mail, Pencil, Phone, User2, Users, X } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "src/stories/Atoms/Buttons/Button/Button";
@@ -45,6 +45,7 @@ export interface Appointment {
   id: string;
   comment: string;
   datetime: string;
+  format: string;
   services: Service[];
 }
 
@@ -95,9 +96,14 @@ export const BookingDetails = ({
         }`}
       >
         <div className="flex flex-row items-center justify-between mb-1">
-          <div className="flex flex-row text-[20px] capitalize items-center gap-x-2">
-            {booking.customer.firstname} {booking.customer.lastname}
-            <Tag status={booking.status} />
+          <div className="flex flex-col">
+            <div className="flex flex-row text-[20px] capitalize items-center gap-x-2">
+              {booking.customer.firstname} {booking.customer.lastname}
+              <Tag status={booking.status} />
+            </div>
+            <p className="text-greyscale-700 font-light my-0.5">
+              {booking.appointment.id}
+            </p>
           </div>
           <IconButton
             icon={X}
@@ -105,29 +111,48 @@ export const BookingDetails = ({
             onClick={() => setIsOpen(false)}
           />
         </div>
-        <div className="flex flex-row text-[16px]">
-          {formatDateShort(booking.appointment.datetime)}
-          <span className="text-greyscale-500 mx-2">•</span>
 
-          {formatTime(booking.appointment.datetime)}
-        </div>
-        <div className="flex flex-col mb-8">
-          <p className="text-greyscale-700 font-light my-0.5">
-            {booking.appointment.id}
-          </p>
-          <div className="flex flex-row gap-x-4">
-            <div className="flex flex-row gap-x-2 text-greyscale-800">
-              <p className="font-medium">Durée totale</p>
-              <p className="font-light">
-                {booking.appointment.totalDuration} min
-              </p>
-            </div>
-            <div className="flex flex-row gap-x-2 text-greyscale-800">
-              <p className="font-medium">Prix total</p>
-              <p className="font-light">{booking.appointment.totalPrice} €</p>
+        <div className="p-4 bg-greyscale-100 space-y-1 rounded-lg mb-6">
+          <div className="flex flex-row items-center justify-between">
+            <p className="text-[14px]">Date et heure</p>
+            <div className="flex flex-row text-[16px]">
+              {formatDateShort(booking.appointment.datetime)}
+              <span className="text-greyscale-500 mx-2">•</span>
+
+              {formatTime(booking.appointment.datetime)}
             </div>
           </div>
+
+          <div className="flex flex-row justify-between  gap-x-2 text-greyscale-800">
+            <p className="font-medium text-[12px]">Type</p>
+            <div className="flex flex-row items-center gap-x-1">
+              {booking.appointment.format !== "solo" ? (
+                <Users size={12} />
+              ) : (
+                <User2 size={12} />
+              )}
+
+              <p className="font-light capitalize  text-[14px]">
+                {booking.appointment.format}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-row justify-between gap-x-2 text-greyscale-800">
+            <p className="font-medium text-[12px]">Durée totale</p>
+            <p className="font-light text-[14px]">
+              {booking.appointment.totalDuration} min
+            </p>
+          </div>
+
+          <div className="flex justify-between flex-row gap-x-2 text-greyscale-800">
+            <p className="font-medium text-[12px]">Prix total</p>
+            <p className="font-light  text-[14px]">
+              {booking.appointment.totalPrice} €
+            </p>
+          </div>
         </div>
+
         <section className="flex flex-col gap-4 overflow-scroll pr-6 mb-8 ">
           {!editMode && (
             <section className="flex flex-col border border-greyscale-400 rounded-lg p-4 gap-2">

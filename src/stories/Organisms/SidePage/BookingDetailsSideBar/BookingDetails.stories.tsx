@@ -14,6 +14,7 @@ const mockBookingData = {
   appointment: {
     totalDuration: 90,
     totalPrice: 250,
+    format: "solo",
     id: "#ID09847693",
     datetime: "2025-07-28T10:00:00+02:00",
     comment:

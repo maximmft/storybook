@@ -170,6 +170,18 @@ export const CustomTable = ({
     setIsSettingsOpen(true);
   };
 
+  const handleWatch = (e: React.MouseEvent, index: number) => {
+    e.stopPropagation();
+  };
+
+  const handleCopy = (e: React.MouseEvent, index: number) => {
+    e.stopPropagation();
+  };
+
+  const handleDelete = (e: React.MouseEvent, index: number) => {
+    e.stopPropagation();
+  };
+
   const startIndex = page * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
   const paginatedRows = rows.slice(startIndex, endIndex);
@@ -301,18 +313,32 @@ export const CustomTable = ({
                     </TableCell>
                   )}
                   {isSettingsOpen && realIndex === selectedIndexRow && (
-                    <div className="absolute inset-y-0 right-0 flex items-center mr-2 gap-2">
+                    <div 
+                      className="absolute inset-y-0 right-0 flex items-center mr-2 gap-2"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       {watchable && (
                         <Button
                           label={watchButtonlabel}
                           icon={Eye}
                           iconPosition={watchButtonIconDirection}
+                          onClick={() => ""}
                         />
                       )}
                       {copyable && (
-                        <IconButton icon={Copy} variant="secondary" />
+                        <IconButton 
+                          icon={Copy} 
+                          variant="secondary" 
+                          onClick={() =>  ""}
+                        />
                       )}
-                      {deletable && <IconButton icon={Trash} variant="alert" />}
+                      {deletable && (
+                        <IconButton 
+                          icon={Trash} 
+                          variant="alert" 
+                          onClick={() => ""}
+                        />
+                      )}
                     </div>
                   )}
                 </TableRow>
