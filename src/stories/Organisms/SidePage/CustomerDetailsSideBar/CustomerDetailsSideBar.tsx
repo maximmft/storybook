@@ -66,6 +66,7 @@ export interface Appointment {
   comment: string;
   status?: "pending" | "confirmed" | "cancelled" | "completed";
   datetime: string;
+  format: string; // ← Propriété manquante ajoutée
   services: Service[];
 }
 

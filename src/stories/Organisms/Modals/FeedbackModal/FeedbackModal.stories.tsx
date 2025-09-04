@@ -7,9 +7,10 @@ import { AppointmentCard } from "src/stories/Molecules/Cards/AppointmentCard/App
 import { useForm } from "react-hook-form";
 
 const options = [
-  { id: "1", label: "Option" },
-  { id: "2", label: "Option2" },
-  { id: "3", label: "Option3" },
+  { id: "1", label: "Client indisponible" },
+  { id: "2", label: "Changement de planning" },
+  { id: "3", label: "Problème technique" },
+  { id: "4", label: "Autre raison" },
 ];
 
 const AppointmentContent = () => {
@@ -29,10 +30,10 @@ const AppointmentContent = () => {
           comment: "Nouvelle réservation", 
           datetime: "2025-07-28T10:00:00+02:00", 
           status: "pending" as const,
+          format: "solo",
           services: [
             {
               serviceName: "Teint parfait",
-              format: "solo",
               price: 150,
               duration: 90,
               beneficiary: {
@@ -46,7 +47,6 @@ const AppointmentContent = () => {
             },
             {
               serviceName: "Beauté des mains",
-              format: "solo",
               price: 50,
               duration: 30,
               beneficiary: {
@@ -60,7 +60,6 @@ const AppointmentContent = () => {
             },
             {
               serviceName: "Massage",
-              format: "solo",
               price: 50,
               duration: 30,
               beneficiary: {
@@ -82,22 +81,24 @@ const AppointmentContent = () => {
 };
 
 const FormContent = () => {
-  const { register, watch } = useForm();
+  const { register, watch } = useForm({
+    defaultValues: {
+      cancellationReason: "", 
+    },
+  });
 
   return (
-    <>
-      <div className="space-y-6">
-        <Dropdown
-          label="Motif d'annulation"
-          required
-          placeholder="Placeholder"
-          options={options}
-          register={register("cancellationReason")}
-          fieldName="cancellationReason"
-          watch={watch}
-        />
-      </div>
-    </>
+    <div className="space-y-6">
+      <Dropdown
+        label="Motif d'annulation"
+        required
+        placeholder="Sélectionner un motif"
+        options={options}
+        register={register("cancellationReason")}
+        fieldName="cancellationReason"
+        watch={watch}
+      />
+    </div>
   );
 };
 
@@ -185,6 +186,7 @@ const meta: Meta<typeof FeedbackModal> = {
     },
   },
 };
+
 export default meta;
 type Story = StoryObj<typeof FeedbackModal>;
 
@@ -226,7 +228,7 @@ export const Cancellation: Story = {
     docs: {
       description: {
         story:
-          "Version desktop de la modale avec état contrôlé depuis la story.",
+          "Modale d'annulation avec formulaire incluant un dropdown pour sélectionner le motif d'annulation.",
       },
     },
   },
@@ -267,7 +269,7 @@ export const Modify: Story = {
     docs: {
       description: {
         story:
-          "Version desktop de la modale avec état contrôlé depuis la story.",
+          "Modale de confirmation de modification avec boutons d'action.",
       },
     },
   },
@@ -317,7 +319,7 @@ export const Appointment: Story = {
     docs: {
       description: {
         story:
-          "Version desktop de la modale avec état contrôlé depuis la story.",
+          "Modale de validation de rendez-vous avec affichage de l'AppointmentCard.",
       },
     },
   },

@@ -30,6 +30,7 @@ const mockCustomerData = {
       totalPrice: 250,
       id: "#ID09847693",
       status: "confirmed" as const,
+      format: "solo", 
       comment:
         "Lorem ipsum dolor sit amet consectetur. Nunc at tellus sagittis nunc tincidunt at odio massa.",
       datetime: "2025-07-28T10:00:00+02:00",
@@ -83,6 +84,7 @@ const mockCustomerData = {
       totalPrice: 180,
       id: "#ID09847694",
       status: "confirmed" as const,
+      format: "solo", 
       comment: "Rendez-vous de suivi pour les soins du visage.",
       datetime: "2025-10-15T14:30:00+02:00",
       services: [
@@ -121,6 +123,7 @@ const mockCustomerData = {
       totalPrice: 85,
       id: "#ID09847695",
       status: "completed" as const,
+      format: "solo", 
       comment: "Service bien réalisé, cliente satisfaite.",
       datetime: "2025-06-15T16:00:00+02:00",
       services: [
@@ -145,6 +148,7 @@ const mockCustomerData = {
       totalPrice: 45,
       id: "#ID09847696",
       status: "completed" as const,
+      format: "solo", 
       comment: "Soin rapide avant un événement spécial.",
       datetime: "2025-05-12T09:00:00+02:00",
       services: [
@@ -169,6 +173,7 @@ const mockCustomerData = {
       totalPrice: 85,
       id: "#ID09847697",
       status: "cancelled" as const,
+      format: "solo", 
       comment: "Annulé par la cliente pour raisons personnelles.",
       datetime: "2025-03-12T12:00:00+02:00",
       services: [
@@ -244,6 +249,7 @@ interface CustomerDetailsData {
     comment: string;
     status: "pending" | "confirmed" | "cancelled" | "completed";
     datetime: string;
+    format: string;
     services: Array<{
       serviceName: string;
       format: string;

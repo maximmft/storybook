@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Dropdown } from "./Dropdown.tsx";
 import { UserIcon, HomeIcon, MailIcon, SettingsIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
 
 const basicOptions = [
   { id: "1", label: "Option 1" },
@@ -31,7 +30,6 @@ const checkboxOptions = [
   { id: "4", label: "Vue", variant: "checkbox" as const, disabled: true },
 ];
 
-// Wrapper component pour utiliser react-hook-form
 const DropdownWrapper = ({ 
   options, 
   placeholder, 
