@@ -315,9 +315,7 @@ export const Desktop: Story = {
               variant="primary"
             />
           </div>
-          <p className="mt-4 text-sm text-gray-600">
-            Cliquez sur le bouton pour ouvrir la sidebar des détails client
-          </p>
+        
         </div>
         <CustomerDetailsSideBar
           customerData={mockCustomerData}

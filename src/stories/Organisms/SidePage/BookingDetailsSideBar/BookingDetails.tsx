@@ -6,6 +6,7 @@ import { Button } from "src/stories/Atoms/Buttons/Button/Button";
 import { IconButton } from "src/stories/Atoms/Buttons/IconButton/IconButton";
 import Tag from "src/stories/Atoms/Informations/Tag/Tag";
 import { ClassicInput } from "src/stories/Atoms/Inputs/ClassicInput/ClassicInput";
+import { DatePicker } from "src/stories/Atoms/Inputs/DatePicker/DatePicker";
 import { TextArea } from "src/stories/Atoms/Inputs/TextArea/TextArea";
 import ToggleSwitch from "src/stories/Atoms/Inputs/ToggleSwitch/ToggleSwitch";
 import Separator from "src/stories/Atoms/Separator/Separator";
@@ -209,13 +210,12 @@ export const BookingDetails = ({
 
           {editMode && (
             <div className="flex flex-col gap-2">
-              <ClassicInput
-                label="Date"
+          
+              <DatePicker  label="Date"
                 required
                 register={register("date")}
                 fieldName="date"
-                watch={watch}
-              />
+                watch={watch}/>
               <ClassicInput
                 label="Heure"
                 required
