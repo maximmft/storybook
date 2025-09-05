@@ -93,8 +93,8 @@ export const BookingDetails = ({
         onClick={() => setIsOpen(false)}
       />
       <main
-        className={`fixed left-0 top-0 p-8 bg-white w-[483px] flex flex-col h-screen transition-transform duration-200 z-50 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed right-0 top-0 p-8 bg-white w-[483px] rounded-l-lg flex flex-col h-screen transition-transform duration-200 z-50 ${
+          isOpen ? "-translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="flex flex-row items-center justify-between mb-1">

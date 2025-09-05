@@ -25,9 +25,9 @@ const meta: Meta<typeof TimeSlotsList> = {
       control: "object",
       description: "Liste des créneaux horaires disponibles",
     },
-    selectedTime: {
+    selectedTimes: {
       control: "text",
-      description: "Créneau horaire sélectionné",
+      description: "Créneaux horaire sélectionnés",
     },
     disabled: {
       control: "boolean",
@@ -50,7 +50,7 @@ type Story = StoryObj<typeof TimeSlotsList>;
 export const Default: Story = {
   args: {
     timeSlots: timeSlots,
-    selectedTime: null,
+    selectedTimes: [],
     disabled: false,
     disabledTimes: [],
   },
@@ -64,7 +64,7 @@ export const Default: Story = {
 export const WithSelectedTime: Story = {
   args: {
     ...Default.args,
-    selectedTime: "10:00",
+    selectedTimes: ["10:00"],
   },
   render: (args) => (
     <div className="w-[159px]">

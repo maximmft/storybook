@@ -2,24 +2,22 @@ import TimeSlot from "src/stories/Atoms/Buttons/TimeSlot/TimeSlot";
 
 interface TimeSlotsListProps {
   timeSlots: string[];
-  selectedTime?: string | null;
+  selectedTimes?: string[] | null;
   onTimeSlotSelect?: (time: string | null) => void;
   disabled?: boolean;
   disabledTimes?: string[];
 }
 
-export const TimeSlotsList = ({ 
+export const TimeSlotsList = ({
   timeSlots,
-  selectedTime = null,
+  selectedTimes = [],
   onTimeSlotSelect,
   disabled = false,
-  disabledTimes = []
+  disabledTimes = [],
 }: TimeSlotsListProps) => {
   const handleTimeSlotClick = (time: string) => {
     if (disabled || disabledTimes.includes(time)) return;
-        
-    const newSelectedTime = selectedTime === time ? null : time;
-    onTimeSlotSelect?.(newSelectedTime);
+    onTimeSlotSelect?.(time);
   };
 
   const isTimeSlotDisabled = (time: string) => {
@@ -34,7 +32,7 @@ export const TimeSlotsList = ({
           time={time}
           onClick={() => handleTimeSlotClick(time)}
           disabled={isTimeSlotDisabled(time)}
-          isSelected={selectedTime === time}
+          isSelected={selectedTimes?.includes(time)}
         />
       ))}
     </div>

@@ -1,5 +1,6 @@
 import {
   ArrowLeft,
+  ArrowRight,
   Cake,
   CalendarCheck,
   ChartLine,
@@ -200,15 +201,15 @@ export const CustomerDetailsSideBar = ({
         onClick={() => setIsOpen(false)}
       />
       <main
-        className={`fixed left-0 top-0 p-8 bg-white w-[483px] flex flex-col h-screen transition-transform duration-200 z-50 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed right-0 top-0 p-8 bg-white w-[483px] rounded-l-lg flex flex-col h-screen transition-transform duration-200 z-50 ${
+          isOpen ? "-translate-x-0" : "translate-x-full"
         } ${isEditing ? "justify-between" : ""}`}
       >
         {isEditing ? (
           <div>
             <div className="flex flex-row items-center mb-6">
               <IconButton
-                icon={ArrowLeft}
+                icon={ArrowRight}
                 variant="tertiary"
                 onClick={() => setIsOpen(false)}
               />

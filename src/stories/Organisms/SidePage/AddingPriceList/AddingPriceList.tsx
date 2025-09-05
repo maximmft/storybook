@@ -63,16 +63,17 @@ export const AddingPriceList = ({
   data,
   isOpen,
 }: PriceListSideBarProps) => {
-
   const getFirstAvailableDay = () => {
-    const availableDay = data.opening.days.find(day => !day.disabled);
+    const availableDay = data.opening.days.find((day) => !day.disabled);
     return availableDay ? availableDay.name : "lundi";
   };
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
-  const [selectedDay, setSelectedDay] = useState<string>(getFirstAvailableDay());
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(null);
+  const [selectedDay, setSelectedDay] = useState<string>(
+    getFirstAvailableDay()
+  );
+  const [selectedTimeSlots, setSelectedTimeSlots] = useState<string[]>([]);
   const [applyAllYear, setApplyAllYear] = useState<boolean>(data.applyAllYear);
   const [annualRecurrence, setAnnualRecurrence] = useState<boolean>(
     data.annualRecurrence
@@ -107,11 +108,12 @@ export const AddingPriceList = ({
   const handleTimeSlotSelect = (timeSlot: string | null) => {
     if (!timeSlot) return;
 
-    setSelectedTimeSlot((prev) => {
-      if (prev === timeSlot) {
-        return null;
+    setSelectedTimeSlots((prev) => {
+      if (prev.includes(timeSlot)) {
+        return prev.filter((slot) => slot !== timeSlot);
+      } else {
+        return [...prev, timeSlot];
       }
-      return timeSlot;
     });
   };
 
@@ -151,7 +153,7 @@ export const AddingPriceList = ({
 
   const handleSelectDay = (day: { name: string; disabled: boolean }) => {
     setSelectedDay(day.name);
-    setSelectedTimeSlot(null);
+    setSelectedTimeSlots([]);
   };
 
   return (
@@ -163,8 +165,8 @@ export const AddingPriceList = ({
         onClick={() => setIsOpen(false)}
       />
       <main
-        className={`fixed left-0 top-0 p-8 bg-white flex flex-col h-screen transition-transform duration-200 z-[100000] ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed right-0 top-0 p-8 bg-white flex rounded-l-xl flex-col h-screen transition-transform duration-200 z-[100] ${
+          isOpen ? "-translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="flex flex-row items-center mb-6">
@@ -191,12 +193,13 @@ export const AddingPriceList = ({
                 />
               </div>
               <div className="flex-1">
-              
-                <DatePicker   label="Date d'application"
+                <DatePicker
+                  label="Date d'application"
                   required
                   register={register("startDate")}
                   fieldName="startDate"
-                  watch={watch}/>
+                  watch={watch}
+                />
               </div>
             </div>
             <div className="space-y-4">
@@ -303,21 +306,13 @@ export const AddingPriceList = ({
             <div className=" flex flex-row flex-1 gap-x-4">
               <TimeSlotsList
                 timeSlots={morningsSlots}
-                selectedTime={
-                  selectedTimeSlot && morningsSlots.includes(selectedTimeSlot)
-                    ? selectedTimeSlot
-                    : null
-                }
+                selectedTimes={selectedTimeSlots}
                 onTimeSlotSelect={handleTimeSlotSelect}
                 disabledTimes={getDisabledSlotsForSelectedDay()}
               />
               <TimeSlotsList
                 timeSlots={eveningSlots}
-                selectedTime={
-                  selectedTimeSlot && eveningSlots.includes(selectedTimeSlot)
-                    ? selectedTimeSlot
-                    : null
-                }
+                selectedTimes={selectedTimeSlots}
                 onTimeSlotSelect={handleTimeSlotSelect}
                 disabledTimes={getDisabledSlotsForSelectedDay()}
               />
@@ -330,7 +325,11 @@ export const AddingPriceList = ({
             <Button label="Créer la grille" />
           </div>
           <div className="w-[186px]">
-            <Button label="Annuler" variant="secondary" onClick={()=> setIsOpen(false)}/>
+            <Button
+              label="Annuler"
+              variant="secondary"
+              onClick={() => setIsOpen(false)}
+            />
           </div>
         </div>
       </main>

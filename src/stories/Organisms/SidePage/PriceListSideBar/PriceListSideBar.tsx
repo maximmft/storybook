@@ -1,4 +1,4 @@
-import { ArrowLeft, Calendar, CircleAlert, Pencil, Clock } from "lucide-react";
+import { ArrowLeft, Calendar, CircleAlert, Pencil, Clock, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { Button } from "src/stories/Atoms/Buttons/Button/Button";
 import { IconButton } from "src/stories/Atoms/Buttons/IconButton/IconButton";
@@ -104,8 +104,8 @@ export const PriceListSideBar = ({
         onClick={() => setIsOpen(false)}
       />
       <main
-        className={`fixed left-0 top-0 p-8 bg-white w-[483px] flex flex-col h-screen transition-transform duration-200 z-50 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed right-0 top-0 p-8 bg-white w-[483px] rounded-l-lg flex flex-col h-screen transition-transform duration-200 z-50 ${
+          isOpen ? "-translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="flex flex-row items-center mb-6">
