@@ -240,7 +240,7 @@ export const BookingDetails = ({
               <h1 className="text-[16px]"> Informations complémentaires</h1>
               <div className="flex flex-row gap-x-2 text-[12px] text-greyscale-800">
                 <p className="font-medium">Commande passé le </p>
-                <p className="font-light">{booking.information.createdAt}</p>
+                <p className="font-light">{formatDateShort(booking.information.createdAt)}</p>
               </div>
               <div className="flex flex-row gap-x-2 text-[12px] text-greyscale-800">
                 <p className="font-medium">Canal :</p>

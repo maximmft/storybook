@@ -160,7 +160,7 @@ export default function CustomAccordion({
       <div
         ref={accordionRef}
         style={{ maxHeight: accordionHeight }}
-        className={`transition-all duration-300 ease-in-out overflow-hidden ${contentClassname}`}
+        className={`transition-all duration-300 ease-in-out ${isOpen ? "" :"overflow-hidden"} ${contentClassname}`}
       >
         <div className={getContentPaddingClasses()}>{children}</div>
       </div>
