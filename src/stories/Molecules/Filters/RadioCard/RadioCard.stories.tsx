@@ -3,18 +3,18 @@ import { StarIcon, SettingsIcon } from "lucide-react";
 import { SealIcon } from "@phosphor-icons/react";
 import type { DropdownOption } from "src/stories/Atoms/Inputs/Dropdown/Dropdown";
 import { Meta, StoryObj } from "@storybook/react-webpack5";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 type DefaultFormData = {
+  selectedRadio: string; 
   cosmeticBrand: string;
 };
 
 type MultipleFormData = {
   selectedRadio: string;
   cosmeticBrand: string;
-  beautySoin: string;
-  massageType: string;
+  beauty: string; 
+  massage: string; 
 };
 
 const meta: Meta<typeof RadioCard> = {
@@ -94,65 +94,89 @@ export const Default: Story = {
     ],
   },
   render: (args) => {
-    const [selectedValue, setSelectedValue] = useState("");
-
-    const {register, watch} = useForm<DefaultFormData>();
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSelectedValue(event.target.value);
-    };
+    const { register, watch } = useForm<DefaultFormData>();
     
+    const selectedRadio = watch("selectedRadio");
 
     return (
       <form>
-
-      <RadioCard
-        {...args}
-        onChange={handleChange}
-        RadioButtonChecked={selectedValue === args.id}
-        dropdownRegister={register('cosmeticBrand')}
-        dropdownFieldName="cosmeticBrand"
-        watch={watch}
-        
+        <RadioCard
+          {...args}
+          radioValue={args.id} 
+          radioRegister={register("selectedRadio")} 
+          RadioButtonChecked={selectedRadio === args.id}
+          dropdownRegister={register('cosmeticBrand')}
+          dropdownFieldName="cosmeticBrand"
+          watch={watch}
+          showDropdown
         />
-        </form>
+      </form>
     );
   },
 };
 
 export const Multiple: Story = {
   render: () => {
-    const [selectedValue, setSelectedValue] = useState("");
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSelectedValue(event.target.value);
-    };
-
-    const {register, watch} = useForm<MultipleFormData>();
-
+    const { register, watch } = useForm<MultipleFormData>();
+    
+    const selectedRadio = watch("selectedRadio");
 
     return (
-      <div className="flex flex-row gap-6">
-        {radioCardsData.map(
-          ({ id, title, labelDropdown, labelRadio, optionsDropdown, fieldName }) => (
-            <RadioCard
-              key={id}
-              id={id}
-              title={title}
-              labelDropdown={labelDropdown}
-              labelRadio={labelRadio}
-              onChange={handleChange}
-              RadioButtonChecked={selectedValue === id}
-              optionsDropdown={optionsDropdown}
-              dropdownMultiSelect={false}
-              dropdownPlaceholder={`Sélectionnez ${labelDropdown.toLowerCase()}`}
-              dropdownRegister={register(fieldName as keyof MultipleFormData)}
-              dropdownFieldName={fieldName as keyof MultipleFormData}
-              watch={watch}
-            />
-          )
-        )}
-      </div>
+      <form>
+        <div className="flex flex-row gap-6">
+          {radioCardsData.map(
+            ({ id, title, labelDropdown, labelRadio, optionsDropdown, fieldName }) => (
+              <RadioCard
+                key={id}
+                id={id}
+                title={title}
+                labelDropdown={labelDropdown}
+                labelRadio={labelRadio}
+                radioValue={id} 
+                radioRegister={register("selectedRadio")} 
+                RadioButtonChecked={selectedRadio === id}
+                optionsDropdown={optionsDropdown}
+                dropdownMultiSelect={false}
+                dropdownPlaceholder={`Sélectionnez ${labelDropdown.toLowerCase()}`}
+                dropdownRegister={register(fieldName as keyof MultipleFormData)}
+                dropdownFieldName={fieldName as keyof MultipleFormData}
+                watch={watch}
+                showDropdown
+              />
+            )
+          )}
+        </div>
+      </form>
+    );
+  },
+};
+
+export const MultipleWithoutDropDown: Story = {
+  render: () => {
+    const { register, watch } = useForm<MultipleFormData>();
+    
+    const selectedRadio = watch("selectedRadio");
+
+    return (
+      <form>
+        <div className="flex flex-row gap-6">
+          {radioCardsData.map(
+            ({ id, title, labelRadio }) => (
+              <RadioCard
+                key={id}
+                id={id}
+                title={title}
+                labelRadio={labelRadio}
+                radioValue={id} // Valeur du radio
+                radioRegister={register("selectedRadio")} // Register pour le radio
+                RadioButtonChecked={selectedRadio === id}
+                watch={watch}
+                showDropdown={false}
+              />
+            )
+          )}
+        </div>
+      </form>
     );
   },
 };

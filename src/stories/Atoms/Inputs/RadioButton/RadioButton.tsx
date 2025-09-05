@@ -46,7 +46,7 @@ const fontSize = {
 };
 
 const lineHeight = {
-  small: 16, 
+  small: 16,
   medium: 16,
   large: 16,
 };
@@ -55,23 +55,23 @@ const StyledFormControlLabel = styled(FormControlLabel)<{
   checked?: boolean;
   size?: "small" | "medium" | "large";
 }>(({ checked, size = "small" }) => ({
-  margin: 0, 
-  alignItems: "center", 
+  margin: 0,
+  alignItems: "center",
   "& .MuiFormControlLabel-label": {
     fontSize: fontSize[size] ?? 12,
     fontWeight: checked ? 400 : 300,
     color: "#2D2A27",
-    lineHeight: `${lineHeight[size]}px`, 
+    lineHeight: `${lineHeight[size]}px`,
     display: "flex",
-    alignItems: "center", 
+    alignItems: "center",
   },
   "&:hover .MuiFormControlLabel-label": {
     fontWeight: 400,
     cursor: "pointer",
   },
   "& .MuiRadio-root": {
-    padding: 0, 
-    marginRight: 8, 
+    padding: 0,
+    marginRight: 8,
   },
 }));
 
@@ -89,7 +89,7 @@ function BpRadio(props: RadioProps) {
 type RadioButtonPropsType = {
   id: string;
   label: string;
-  checked: boolean;
+  checked?: boolean; 
   register?: UseFormRegisterReturn;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
@@ -108,12 +108,17 @@ export default function RadioButton({
   return (
     <StyledFormControlLabel
       control={
-        <BpRadio id={id} checked={checked} onChange={onChange} value={value} />
+        <BpRadio 
+          id={id} 
+          checked={checked} 
+          onChange={onChange} 
+          value={value}
+          {...register} 
+        />
       }
       label={label}
       checked={checked}
       size={size}
-      {...register}
     />
   );
 }

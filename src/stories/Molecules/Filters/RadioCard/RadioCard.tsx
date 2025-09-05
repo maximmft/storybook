@@ -3,19 +3,28 @@ import {
   DropdownOption,
 } from "src/stories/Atoms/Inputs/Dropdown/Dropdown";
 import RadioButton from "src/stories/Atoms/Inputs/RadioButton/RadioButton";
-import { UseFormRegisterReturn, UseFormWatch, FieldPath, FieldValues } from "react-hook-form";
+import { 
+  UseFormRegisterReturn, 
+  UseFormWatch, 
+  FieldPath, 
+  FieldValues 
+} from "react-hook-form";
 
 type RadioCardPropsType<T extends FieldValues = FieldValues> = {
   id: string;
   title: string;
-  optionsDropdown: DropdownOption[];
+  optionsDropdown?: DropdownOption[];
   labelRadio: string;
-  dropdownMultiSelect: boolean;
-  dropdownPlaceholder: string;
-  labelDropdown: string;
+  dropdownMultiSelect?: boolean;
+  dropdownPlaceholder?: string;
+  showDropdown: boolean;
+  labelDropdown?: string;
   RadioButtonChecked: boolean;
+
+  radioValue: string; 
+  radioRegister?: UseFormRegisterReturn; 
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  dropdownRegister?: UseFormRegisterReturn;
+    dropdownRegister?: UseFormRegisterReturn;
   dropdownFieldName?: FieldPath<T>;
   watch?: UseFormWatch<T>;
   onDropdownChange?: (selectedOptions: DropdownOption[]) => void;
@@ -27,19 +36,18 @@ export const RadioCard = <T extends FieldValues = FieldValues>({
   optionsDropdown,
   labelRadio,
   dropdownMultiSelect,
+  showDropdown = false,
   dropdownPlaceholder,
   labelDropdown,
   onChange,
   RadioButtonChecked,
+  radioValue,
+  radioRegister,
   dropdownRegister,
   dropdownFieldName,
   watch,
   onDropdownChange,
 }: RadioCardPropsType<T>) => {
-
-
-  console.log("dropdownFieldName",dropdownFieldName);
-
   return (
     <div
       className={`border ${
@@ -52,24 +60,29 @@ export const RadioCard = <T extends FieldValues = FieldValues>({
         key={id}
         id={id}
         label={labelRadio}
-        value={id}
+        value={radioValue}
         checked={RadioButtonChecked}
         size="large"
         onChange={onChange}
+        register={radioRegister} 
       />
+      
       <p className="text-greyscale-600 text-[12px] font-light">{title}</p>
-      <Dropdown
-        label={labelDropdown}
-        size="medium"
-        placeholder={dropdownPlaceholder}
-        options={optionsDropdown}
-        multiSelect={dropdownMultiSelect}
-        required
-        register={dropdownRegister}
-        fieldName={dropdownFieldName}
-        watch={watch}
-        onSelectionChange={onDropdownChange}
-      />
+      
+      {showDropdown && (
+        <Dropdown
+          label={labelDropdown || ""}
+          size="medium"
+          placeholder={dropdownPlaceholder}
+          options={optionsDropdown || []}
+          multiSelect={dropdownMultiSelect}
+          required
+          register={dropdownRegister}
+          fieldName={dropdownFieldName}
+          watch={watch}
+          onSelectionChange={onDropdownChange}
+        />
+      )}
     </div>
   );
 };
