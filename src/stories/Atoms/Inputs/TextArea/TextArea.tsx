@@ -1,8 +1,7 @@
 "use client";
-
 import { useState, ChangeEvent, useEffect } from "react";
 import TextField from "@mui/material/TextField";
-import { FieldError, UseFormRegisterReturn } from "react-hook-form";
+import { FieldError, UseFormRegisterReturn, UseFormWatch } from "react-hook-form";
 import { Typography, Box } from "@mui/material";
 
 interface TextAreaProps {
@@ -13,6 +12,11 @@ interface TextAreaProps {
   label?: string;
   value?: string;
   disabled?: boolean;
+  fieldName?: string;
+  watch?: UseFormWatch<any>;
+  required?: boolean;
+  maxLength?: number;
+  minLength?: number;
 }
 
 export const TextArea = ({
@@ -23,14 +27,32 @@ export const TextArea = ({
   label,
   disabled = false,
   value = "",
+  fieldName,
+  watch,
+  required = false,
+  maxLength,
+  minLength,
 }: TextAreaProps) => {
-  const [text, setText] = useState(value);
-  const inputId = id || register?.name || label;
-  const hasValue = text.length > 0;
+  const watchedValue = watch && fieldName ? watch(fieldName) : undefined;
+  const [localText, setLocalText] = useState(value);
+  
+  const currentValue = watchedValue !== undefined ? watchedValue : localText;
+  
+  const inputId = id || register?.name || fieldName || label;
+  const hasValue = currentValue && currentValue.length > 0;
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    register?.onChange?.(event);
-    setText(event.target.value);
+    const newValue = event.target.value;
+    
+    if (maxLength && newValue.length > maxLength) {
+      return;
+    }
+    
+    if (register?.onChange) {
+      register.onChange(event);
+    } else {
+      setLocalText(newValue);
+    }
   };
 
   const getErrorMessage = () => {
@@ -40,33 +62,74 @@ export const TextArea = ({
   };
 
   useEffect(() => {
-    if (register?.name) {
-      setText(value || "");
+    if (!watch && value !== undefined) {
+      setLocalText(value);
     }
-  }, [value, register?.name]);
+  }, [value, watch]);
+
+  const getValidationRules = () => {
+    const rules: any = {};
+    
+    if (required) {
+      rules.required = "Ce champ est requis";
+    }
+    
+    if (minLength) {
+      rules.minLength = {
+        value: minLength,
+        message: `Minimum ${minLength} caractères requis`
+      };
+    }
+    
+    if (maxLength) {
+      rules.maxLength = {
+        value: maxLength,
+        message: `Maximum ${maxLength} caractères autorisés`
+      };
+    }
+    
+    return rules;
+  };
+
+  const remainingChars = maxLength ? maxLength - (currentValue?.length || 0) : null;
 
   return (
     <div className="relative flex flex-col w-full">
       <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-        <Typography
-          variant="body2"
-          sx={{
-            color: error ? "#F03538" : disabled ? "#D4D0CB" : "#2D2A27",
-            fontWeight: 400,
-            fontSize: "12px",
-          }}
-        >
-          {label}
-        </Typography>
+        <div className="flex justify-between items-center">
+          <Typography
+            variant="body2"
+            sx={{
+              color: error ? "#F03538" : disabled ? "#D4D0CB" : "#2D2A27",
+              fontWeight: 400,
+              fontSize: "14px",
+            }}
+          >
+            {label}
+            {required && <span style={{ color: "#F03538" }}> *</span>}
+          </Typography>
+          
+          {maxLength && (
+            <Typography
+              variant="caption"
+              sx={{
+                fontSize: "10px",
+                color: remainingChars && remainingChars < 10 ? "#F03538" : "#696663",
+              }}
+            >
+              {currentValue?.length || 0}/{maxLength}
+            </Typography>
+          )}
+        </div>
 
         <TextField
-          {...register}
+          {...(register ? { ...register, ...getValidationRules() } : {})}
           fullWidth
           id={inputId}
           placeholder={placeholder}
           multiline
           disabled={disabled}
-          value={text}
+          value={currentValue || ""}
           onChange={handleChange}
           variant="outlined"
           error={!!error}
@@ -114,6 +177,7 @@ export const TextArea = ({
               marginLeft: 0,
               marginTop: "3px",
               fontWeight: 200,
+              
               color: error ? "#F03538" : "#696663",
               "&.Mui-disabled": {
                 color: "#D4D0CB",

@@ -14,11 +14,12 @@ const mockBookingData = {
   appointment: {
     totalDuration: 90,
     totalPrice: 250,
+    commission: 10,
     format: "solo",
     id: "#ID09847693",
     datetime: "2025-07-28T10:00:00+02:00",
     comment:
-      "Lorem ipsum dolor sit amet consectetur. Nunc at tellus sagittis nunc tincidunt at odio massa. Sapien adipiscing duis facilisis",
+      "Lorem ipsum dolor sit amet consectetur. Nunc at tellus sagittis nunc tincidunt at odio massa. Sapien adipiscing duis facilisis.",
     services: [
       {
         serviceName: "Teint parfait",

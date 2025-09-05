@@ -42,6 +42,7 @@ export interface Service {
 export interface Appointment {
   totalDuration: number;
   totalPrice: number;
+  commission: number;
   id: string;
   comment: string;
   datetime: string;
@@ -151,6 +152,15 @@ export const BookingDetails = ({
               {booking.appointment.totalPrice} €
             </p>
           </div>
+
+          <div className="flex justify-between flex-row gap-x-2 text-greyscale-800">
+            <p className="font-medium text-[12px]">Revenu net de commission</p>
+            <p className="font-light  text-[14px]">
+              {booking.appointment.totalPrice *
+                (1 - booking.appointment.commission / 100)}{" "}
+              €{" "}
+            </p>
+          </div>
         </div>
 
         <section className="flex flex-col gap-4 overflow-scroll pr-6 mb-8 ">
@@ -240,7 +250,9 @@ export const BookingDetails = ({
               <h1 className="text-[16px]"> Informations complémentaires</h1>
               <div className="flex flex-row gap-x-2 text-[12px] text-greyscale-800">
                 <p className="font-medium">Commande passé le </p>
-                <p className="font-light">{formatDateShort(booking.information.createdAt)}</p>
+                <p className="font-light">
+                  {formatDateShort(booking.information.createdAt)}
+                </p>
               </div>
               <div className="flex flex-row gap-x-2 text-[12px] text-greyscale-800">
                 <p className="font-medium">Canal :</p>
