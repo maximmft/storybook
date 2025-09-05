@@ -11,6 +11,7 @@ import { TimeSlotsList } from "src/stories/Molecules/TimeSlotsList/TimeSlotsList
 import { PriceListDataType } from "../PriceListSideBar/PriceListSideBar";
 import { useForm } from "react-hook-form";
 import { formatDateShort } from "src/utils/formatDate";
+import { DatePicker } from "src/stories/Atoms/Inputs/DatePicker/DatePicker";
 
 export interface PriceListSideBarProps {
   isOpen: boolean;
@@ -190,13 +191,12 @@ export const AddingPriceList = ({
                 />
               </div>
               <div className="flex-1">
-                <ClassicInput
-                  label="Date d'application"
+              
+                <DatePicker   label="Date d'application"
                   required
                   register={register("startDate")}
                   fieldName="startDate"
-                  watch={watch}
-                />
+                  watch={watch}/>
               </div>
             </div>
             <div className="space-y-4">
