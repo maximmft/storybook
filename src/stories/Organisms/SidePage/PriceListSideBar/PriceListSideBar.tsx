@@ -195,19 +195,23 @@ export const PriceListSideBar = ({
               <h1 className="text-[18px] mb-4">
                 4. Choix du jour et des horaires
               </h1>
-              <div className="flex flex-row text-[14px]">
-                <Calendar size={18} />
-                <p className="mx-2">Jours</p>
-                {data.opening.days.map((day, index) => {
-                  return (
-                    <div className="flex flex-row">
-                      <p className="font-light">{day.name}</p>
-                      {index < data.opening.days.length - 1 && (
-                        <p className="text-greyscale-400 mx-2">•</p>
-                      )}
-                    </div>
-                  );
-                })}
+              <div className="flex text-[14px] items-start">
+                <div className="flex items-center">
+                  <Calendar size={18} />
+                  <p className="mx-2">Jours</p>
+                </div>
+                <div className="flex flex-wrap items-center">
+                  {data.opening.days.map((day, index) => {
+                    return (
+                      <div className="flex items-center" key={day.name}>
+                        <p className="font-light">{day.name}</p>
+                        {index < data.opening.days.length - 1 && (
+                          <p className="text-greyscale-400 mx-2">•</p>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
               <div className="flex flex-row text-[14px]">
                 <Clock size={18} />
