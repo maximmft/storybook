@@ -314,7 +314,9 @@ export const CustomerDetailsSideBar = ({
                           </div>
                           <div className="flex flex-col">
                             <p className="text-[20px]">{stat.value}</p>
-                            <p className="text-[14px] font-light">{stat.label}</p>
+                            <p className="text-[14px] font-light">
+                              {stat.label}
+                            </p>
                           </div>
                         </div>
                       );
@@ -325,7 +327,9 @@ export const CustomerDetailsSideBar = ({
 
               {note && (
                 <section className="flex flex-col border border-greyscale-400 rounded-lg p-4 gap-2">
-                  <h1 className="text-[16px] font-light">Notes sur le client</h1>
+                  <h1 className="text-[16px] font-light">
+                    Notes sur le client
+                  </h1>
                   <p className="text-[12px] text-greyscale-900 font-light">
                     {note}
                   </p>
@@ -380,7 +384,11 @@ export const CustomerDetailsSideBar = ({
                 icon={Pencil}
                 onClick={() => setIsEditing(true)}
               />
-              <Button label="Annuler" variant="secondary" />
+              <Button
+                label="Annuler"
+                variant="secondary"
+                onClick={() => setIsOpen(false)}
+              />
             </>
           )}
         </div>
