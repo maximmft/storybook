@@ -3,8 +3,9 @@ import {
   DropdownOption,
 } from "src/stories/Atoms/Inputs/Dropdown/Dropdown";
 import RadioButton from "src/stories/Atoms/Inputs/RadioButton/RadioButton";
+import { UseFormRegisterReturn, UseFormWatch, FieldPath, FieldValues } from "react-hook-form";
 
-type RadioCardPropsType = {
+type RadioCardPropsType<T extends FieldValues = FieldValues> = {
   id: string;
   title: string;
   optionsDropdown: DropdownOption[];
@@ -14,9 +15,13 @@ type RadioCardPropsType = {
   labelDropdown: string;
   RadioButtonChecked: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  dropdownRegister?: UseFormRegisterReturn;
+  dropdownFieldName?: FieldPath<T>;
+  watch?: UseFormWatch<T>;
+  onDropdownChange?: (selectedOptions: DropdownOption[]) => void;
 };
 
-export const RadioCard = ({
+export const RadioCard = <T extends FieldValues = FieldValues>({
   id,
   title,
   optionsDropdown,
@@ -26,7 +31,15 @@ export const RadioCard = ({
   labelDropdown,
   onChange,
   RadioButtonChecked,
-}: RadioCardPropsType) => {
+  dropdownRegister,
+  dropdownFieldName,
+  watch,
+  onDropdownChange,
+}: RadioCardPropsType<T>) => {
+
+
+  console.log("dropdownFieldName",dropdownFieldName);
+
   return (
     <div
       className={`border ${
@@ -52,6 +65,10 @@ export const RadioCard = ({
         options={optionsDropdown}
         multiSelect={dropdownMultiSelect}
         required
+        register={dropdownRegister}
+        fieldName={dropdownFieldName}
+        watch={watch}
+        onSelectionChange={onDropdownChange}
       />
     </div>
   );

@@ -4,6 +4,18 @@ import { SealIcon } from "@phosphor-icons/react";
 import type { DropdownOption } from "src/stories/Atoms/Inputs/Dropdown/Dropdown";
 import { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+
+type DefaultFormData = {
+  cosmeticBrand: string;
+};
+
+type MultipleFormData = {
+  selectedRadio: string;
+  cosmeticBrand: string;
+  beautySoin: string;
+  massageType: string;
+};
 
 const meta: Meta<typeof RadioCard> = {
   title: "Molecules/Filters/RadioCard",
@@ -31,6 +43,7 @@ const radioCardsData = [
     title: "Choisissez une marque de cosmétique",
     labelDropdown: "Marques",
     labelRadio: "Option Cosmétique",
+    fieldName: "cosmeticBrand",
     optionsDropdown: [
       { id: "1", label: "Shiseido", icon: StarIcon, iconPosition: "left" },
       { id: "2", label: "La Mer", icon: SealIcon, iconPosition: "left" },
@@ -41,6 +54,7 @@ const radioCardsData = [
     title: "Choisissez votre soin beauté",
     labelDropdown: "Soins beauté",
     labelRadio: "Option Beauté",
+    fieldName: "beauty",
     optionsDropdown: [
       { id: "1", label: "Soin", icon: StarIcon, iconPosition: "left" },
       { id: "2", label: "Masque", icon: SettingsIcon, iconPosition: "left" },
@@ -51,6 +65,7 @@ const radioCardsData = [
     title: "Choisissez un massage",
     labelDropdown: "Massages",
     labelRadio: "Option Massages",
+    fieldName: "massage",
     optionsDropdown: [
       { id: "1", label: "Régénérant", icon: SealIcon, iconPosition: "left" },
       { id: "2", label: "Profond", icon: StarIcon, iconPosition: "left" },
@@ -81,16 +96,26 @@ export const Default: Story = {
   render: (args) => {
     const [selectedValue, setSelectedValue] = useState("");
 
+    const {register, watch} = useForm<DefaultFormData>();
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setSelectedValue(event.target.value);
     };
+    
 
     return (
+      <form>
+
       <RadioCard
         {...args}
         onChange={handleChange}
         RadioButtonChecked={selectedValue === args.id}
-      />
+        dropdownRegister={register('cosmeticBrand')}
+        dropdownFieldName="cosmeticBrand"
+        watch={watch}
+        
+        />
+        </form>
     );
   },
 };
@@ -103,10 +128,13 @@ export const Multiple: Story = {
       setSelectedValue(event.target.value);
     };
 
+    const {register, watch} = useForm<MultipleFormData>();
+
+
     return (
       <div className="flex flex-row gap-6">
         {radioCardsData.map(
-          ({ id, title, labelDropdown, labelRadio, optionsDropdown }) => (
+          ({ id, title, labelDropdown, labelRadio, optionsDropdown, fieldName }) => (
             <RadioCard
               key={id}
               id={id}
@@ -118,6 +146,9 @@ export const Multiple: Story = {
               optionsDropdown={optionsDropdown}
               dropdownMultiSelect={false}
               dropdownPlaceholder={`Sélectionnez ${labelDropdown.toLowerCase()}`}
+              dropdownRegister={register(fieldName as keyof MultipleFormData)}
+              dropdownFieldName={fieldName as keyof MultipleFormData}
+              watch={watch}
             />
           )
         )}

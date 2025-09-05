@@ -330,7 +330,7 @@ export const AddingPriceList = ({
             <Button label="Créer la grille" />
           </div>
           <div className="w-[186px]">
-            <Button label="Annuler" variant="secondary" />
+            <Button label="Annuler" variant="secondary" onClick={()=> setIsOpen(false)}/>
           </div>
         </div>
       </main>

@@ -351,56 +351,22 @@ export const EmptyData: Story = {
 };
 
 export const WeekendOnly: Story = {
-  args: {
-    isOpen: false,
-    data: WeekendOnlyData,
-    setIsOpen: () => {},
-  },
-  render: (args) => (
-    <div className="w-screen h-screen bg-gray-50">
-      <div className="w-[250px] p-10">
-        <Button
-          onClick={() => args.setIsOpen(true)}
-          label="Ouvrir la grille"
-          variant="primary"
-        />
-      </div>
-      <AddingPriceList {...args} />
-    </div>
-  ),
+  render: () => <AddingPriceListWrapper data={WeekendOnlyData} />,
   parameters: {
     docs: {
       description: {
-        story:
-          "Version weekend uniquement avec lundi-vendredi désactivés et créneaux horaires spécifiques au weekend.",
+        story: "Version weekend uniquement avec lundi-vendredi désactivés et créneaux horaires spécifiques au weekend.",
       },
     },
   },
 };
 
 export const AllDaysOpen: Story = {
-  args: {
-    isOpen: false,
-    data: AllDaysOpenData,
-    setIsOpen: () => {},
-  },
-  render: (args) => (
-    <div className="w-screen h-screen bg-gray-50">
-      <div className="w-[250px] p-10">
-        <Button
-          onClick={() => args.setIsOpen(true)}
-          label="Ouvrir la grille"
-          variant="primary"
-        />
-      </div>
-      <AddingPriceList {...args} />
-    </div>
-  ),
+  render: () => <AddingPriceListWrapper data={AllDaysOpenData} />,
   parameters: {
     docs: {
       description: {
-        story:
-          "Version 7j/7 avec tous les jours ouverts et créneaux horaires uniformes.",
+        story: "Version 7j/7 avec tous les jours ouverts et créneaux horaires uniformes.",
       },
     },
   },
