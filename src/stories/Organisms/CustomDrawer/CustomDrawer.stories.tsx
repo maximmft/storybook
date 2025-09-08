@@ -114,7 +114,7 @@ export const WithFooter: Story = {
   },
 };
 
-export const WithHeaderExtra: Story = {
+export const WithHeaderTag: Story = {
   render: DrawerTemplate,
   args: {
     isOpen: false,

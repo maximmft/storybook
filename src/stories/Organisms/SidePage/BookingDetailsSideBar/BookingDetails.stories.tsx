@@ -56,7 +56,7 @@ const mockBookingData = {
     canal: "Relax massage",
     paiment: "Bon cadeau",
   },
-  notes: "",
+  notes: "Voici une note",
 };
 
 const meta: Meta<typeof BookingDetails> = {

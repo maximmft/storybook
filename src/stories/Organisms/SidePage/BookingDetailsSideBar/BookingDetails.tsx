@@ -81,6 +81,7 @@ export const BookingDetails = ({
     defaultValues: {
       date: formatDateShort(booking.appointment.datetime),
       time: formatTime(booking.appointment.datetime),
+      notes: booking.notes
     },
   });
 
@@ -210,12 +211,13 @@ export const BookingDetails = ({
 
           {editMode && (
             <div className="flex flex-col gap-2">
-          
-              <DatePicker  label="Date"
+              <DatePicker
+                label="Date"
                 required
                 register={register("date")}
                 fieldName="date"
-                watch={watch}/>
+                watch={watch}
+              />
               <ClassicInput
                 label="Heure"
                 required
@@ -276,6 +278,9 @@ export const BookingDetails = ({
             <TextArea
               label="Notes sur la prestation"
               placeholder="Aucune note pour le moment"
+              register={register("notes")}
+              fieldName="notes"
+              watch={watch}
             />
           )}
         </section>

@@ -100,10 +100,12 @@ export const DropdownTag = ({
     const newSelection = selectedOptions.filter(
       (selected) => selected.id !== optionId
     );
-    
-    const newValue = multiSelect 
+
+    const newValue = multiSelect
       ? newSelection.map((opt) => opt.id)
-      : (newSelection.length > 0 ? newSelection[0].id : '');
+      : newSelection.length > 0
+      ? newSelection[0].id
+      : "";
 
     onSelectionChange?.(newSelection);
 
@@ -119,26 +121,18 @@ export const DropdownTag = ({
 
   const hasSelection = selectedOptions.length > 0;
 
-  const getSizeStyles = () => {
-    return size === "small" 
-      ? { height: "40px", fontSize: "12px", padding: "py-[10px]" }
-      : { height: "48px", fontSize: "12px", padding: "py-[14px]" };
-  };
-
   const getContainerStateStyles = () => {
-    const sizeStyles = getSizeStyles();
-    
     if (disabled) {
-      return `text-[#D4D0CB] cursor-not-allowed bg-[#F7F5F3] border-[#F7F5F3] h-[${sizeStyles.height}] text-[${sizeStyles.fontSize}]`;
+      return `text-[#D4D0CB] cursor-not-allowed bg-[#F7F5F3] border-[#F7F5F3] h-12 text-sm`;
     }
 
     if (error) {
-      return `border-[#F03538] text-[#251F19] h-[${sizeStyles.height}] text-[${sizeStyles.fontSize}]`;
+      return `border-[#F03538] text-[#251F19] h-12 text-sm`;
     }
 
     return hasSelection
-      ? `text-[#251F19] border-[#696663] h-[${sizeStyles.height}] text-[${sizeStyles.fontSize}]`
-      : `text-[#A29D98] border-[#E3DFDA] h-[${sizeStyles.height}] text-[${sizeStyles.fontSize}]`;
+      ? `text-[#251F19] border-[#696663] h-12 text-sm`
+      : `text-[#A29D98] border-[#E3DFDA] h-12 text-sm`;
   };
 
   const getContainerInteractionStyles = () => {
@@ -155,12 +149,8 @@ export const DropdownTag = ({
     const baseStyles = error
       ? "bg-[#F7F5F3] text-[#F03538]"
       : "bg-[#F7F5F3] text-[#3C3A37]";
-    
-    const sizeStyles = size === "small" 
-      ? "p-[6px]" 
-      : "p-[8px]"; 
-    
-    return `${baseStyles} ${sizeStyles}`;
+
+    return `${baseStyles} p-[5px]`;
   };
 
   const getChevronStyles = () => {
@@ -173,8 +163,6 @@ export const DropdownTag = ({
 
     return `${baseStyles} ${rotationStyle} ${colorStyle}`.trim();
   };
-
-  const containerPadding = getSizeStyles().padding;
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
@@ -189,26 +177,28 @@ export const DropdownTag = ({
         {label} {required && <span className="text-[#F03538]">*</span>}
       </Typography>
 
-      <div className="relative inline-block w-[220px]" ref={dropdownRef}>
+      <div className="relative inline-block max-w-[220px]" ref={dropdownRef}>
         {register && (
           <input
             {...register}
             type="hidden"
-            value={multiSelect ? JSON.stringify(fieldValue || []) : (fieldValue || '')}
+            value={
+              multiSelect ? JSON.stringify(fieldValue || []) : fieldValue || ""
+            }
           />
         )}
-        
+
         <div
           onClick={() => !disabled && setIsOpen(!isOpen)}
           className={`w-full flex items-center cursor-pointer overflow-hidden border rounded-[8px] font-light text-greyscale-800 ${getContainerStateStyles()} ${getContainerInteractionStyles()} ${getContainerOpenStyles()}`}
         >
-          <div className={`flex gap-1 flex-1 min-w-0 overflow-x-auto scrollbar-hide pl-3 ${containerPadding}`}>
+          <div className="flex gap-1 flex-1 min-w-0 overflow-x-auto thin-scrollbar pl-3">
             {selectedOptions.map((selected) => (
               <div
                 key={selected.id}
                 className={`flex items-center gap-1 rounded-[8px] flex-shrink-0 whitespace-nowrap ${getTagVariantStyles()}`}
               >
-                <span>{selected.label}</span>
+                <span className="text-[12px]">{selected.label}</span>
                 {!disabled && (
                   <button
                     onClick={(e) => removeTag(selected.id, e)}
