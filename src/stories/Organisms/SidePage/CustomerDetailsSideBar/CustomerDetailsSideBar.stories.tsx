@@ -74,7 +74,7 @@ const mockCustomerData = {
             email: "sophie.dupont@gmail.com",
           },
           preference: "woman",
-          room: "Salle de massage",
+          room: "Salle de beauté",
           options: [],
         },
       ],

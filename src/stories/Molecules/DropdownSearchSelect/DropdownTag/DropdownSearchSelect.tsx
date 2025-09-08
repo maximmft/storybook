@@ -100,7 +100,9 @@ export const DropdownSearchSelect = ({
     }
     return hasSelection
       ? "text-[#251F19] border-[#696663]"
-      : "text-[#A29D98] border-[#E3DFDA]";
+      : isOpen
+      ? "text-[#A29D98] border-[#2D2A27]"
+      : "";
   };
 
   const getContainerInteractionStyles = () => {
@@ -184,7 +186,7 @@ export const DropdownSearchSelect = ({
               onClick={() => setIsOpen(false)}
             />
             <div
-              className="absolute z-50 w-full mt-1 bg-white border border-[#E3DFDA] rounded-[8px] shadow-lg"
+              className="absolute z-50 w-full mt-1 bg-white border border-[#2D2A27] rounded-[8px] shadow-lg"
               style={{ maxHeight: `${maxHeight}px`, overflowY: "auto" }}
             >
               <div className="p-2">

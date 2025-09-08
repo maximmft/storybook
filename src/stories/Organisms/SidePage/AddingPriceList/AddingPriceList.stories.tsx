@@ -4,9 +4,8 @@ import { useState } from "react";
 import { Button } from "src/stories/Atoms/Buttons/Button/Button";
 
 const PriceListMockData = {
-  title: "Grille tarifaire semaine",
-  startDate: "2025-01-01T00:00:00.000Z",
-  endDate: "2025-01-01T23:59:59.999Z",
+  title: "Grille de soldes",
+  gridPeriod: ['1', '2', '12'],
   applyAllYear: true,
   annualRecurrence: true,
   markupTypology: { id: "1", label: "En pourcentage (%)" },
@@ -152,8 +151,7 @@ const PriceListMockData = {
 
 const EmptyPriceListData = {
   title: "",
-  startDate: "",
-  endDate: "",
+  gridPeriod: "",
   applyAllYear: false,
   annualRecurrence: false,
   markupTypology: { id: "", label: "" },

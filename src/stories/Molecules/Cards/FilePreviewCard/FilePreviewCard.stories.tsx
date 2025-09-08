@@ -85,3 +85,34 @@ export const SmallFile: Story = {
     );
   },
 };
+
+export const PdfFile: Story = {
+  args: {
+    name: "document.pdf",
+    image_url: "", 
+    size: "2.4mb",
+  },
+  render: (args) => {
+    return (
+      <div className="w-[400px] p-4">
+        <FilePreviewCard {...args} />
+      </div>
+    );
+  },
+};
+
+export const PdfFileDownloadable: Story = {
+  args: {
+    name: "document.pdf",
+    image_url: "", 
+    size: "2.4mb",
+    downloadable: true
+  },
+  render: (args) => {
+    return (
+      <div className="w-[400px] p-4">
+        <FilePreviewCard {...args} />
+      </div>
+    );
+  },
+};

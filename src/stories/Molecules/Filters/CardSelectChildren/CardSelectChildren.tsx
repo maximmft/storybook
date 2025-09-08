@@ -39,12 +39,12 @@ export const CardSelectChildren = ({
   if (direction === "horizontal") {
     return (
       <div
-        className={`${getStyle()} w-full border rounded-[8px] gap-4 p-4 flex flex-row items-center justify-between ${
+        className={`${getStyle()} w-full border rounded-[8px] p-4 flex flex-row items-center justify-between ${
           disabled ? "cursor-not-allowed" : ""
         }`}
       >
-        <div className="flex flex-row items-center">
-          <div className="w-fit">
+        <div className="flex flex-row items-center flex-1 min-w-0 gap-1">
+          <div className="max-w-[200px] flex-shrink-0">
             <ToggleSwitch
               label={service.name}
               value={toggleValue}
@@ -59,10 +59,10 @@ export const CardSelectChildren = ({
           <CircleAlert
             color={disabled ? "#D4D0CB" : "#A29D98"}
             size={16}
-            className="ml-1 shrink-0"
+            className="flex-shrink-0"
           />
           <div
-            className={`flex flex-row text-[12px] gap-1 ml-3 ${
+            className={`flex flex-row text-[12px] gap-1 ml-2 flex-shrink-0 ${
               disabled ? "text-greyscale-400" : "text-greyscale-800"
             }`}
           >
@@ -74,7 +74,9 @@ export const CardSelectChildren = ({
           </div>
         </div>
         {editable && (
-          <IconButton icon={PencilIcon} variant="secondary" disabled={disabled} />
+          <div className="flex-shrink-0 ml-2">
+            <IconButton icon={PencilIcon} variant="secondary" disabled={disabled} />
+          </div>
         )}
       </div>
     );
@@ -87,8 +89,8 @@ export const CardSelectChildren = ({
       }`}
     >
       <div className="flex flex-row items-center justify-between">
-        <div className="flex flex-row items-center">
-          <div className="w-fit">
+        <div className="flex flex-row items-center gap-1 flex-1 min-w-0">
+          <div className="w-[200px] flex-shrink-0">
             <ToggleSwitch
               label={service.name}
               value={toggleValue}
@@ -103,11 +105,13 @@ export const CardSelectChildren = ({
           <CircleAlert
             color={disabled ? "#D4D0CB" : "#A29D98"}
             size={16}
-            className="ml-1 shrink-0"
+            className="flex-shrink-0"
           />
         </div>
         {editable && (
-          <IconButton icon={PencilIcon} variant="secondary" disabled={disabled} />
+          <div className="flex-shrink-0">
+            <IconButton icon={PencilIcon} variant="secondary" disabled={disabled} />
+          </div>
         )}
       </div>
 

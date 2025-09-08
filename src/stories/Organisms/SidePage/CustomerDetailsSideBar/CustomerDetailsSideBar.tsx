@@ -19,6 +19,7 @@ import Tag from "src/stories/Atoms/Informations/Tag/Tag";
 import { Dropdown } from "src/stories/Atoms/Inputs/Dropdown/Dropdown";
 import { TextArea } from "src/stories/Atoms/Inputs/TextArea/TextArea";
 import { AppointmentCard } from "src/stories/Molecules/Cards/AppointmentCard/AppointmentCard";
+import { CustomDrawer } from "../../CustomDrawer/CustomDrawer";
 
 export interface Address {
   street: string;
@@ -192,208 +193,176 @@ export const CustomerDetailsSideBar = ({
     );
   };
 
-  return (
-    <>
-      <div
-        className={`fixed inset-0 bg-black transition-opacity duration-200 ${
-          isOpen ? "opacity-15" : "opacity-0 pointer-events-none"
-        }`}
-        onClick={() => setIsOpen(false)}
-      />
-      <main
-        className={`fixed right-0 top-0 p-8 bg-white w-[483px] rounded-l-lg flex flex-col h-screen transition-transform duration-200 z-50 ${
-          isOpen ? "-translate-x-0" : "translate-x-full"
-        } ${isEditing ? "justify-between" : ""}`}
-      >
+  const footer = () => {
+    return (
+      <>
         {isEditing ? (
-          <div>
-            <div className="flex flex-row items-center mb-6">
-              <IconButton
-                icon={ArrowRight}
-                variant="tertiary"
-                onClick={() => setIsOpen(false)}
-              />
-              <p className="text-[20px] font-light">Détail du client</p>
-            </div>
-            <div className="flex flex-col items-center justify-between mb-6">
-              <div className="flex flex-row text-[24px] font-light capitalize items-center gap-x-2">
-                {customer.firstname} {customer.lastname}
-                <Tag status={customer.status} />
-              </div>
-              <p className="text-[14px] text-grayscale-800 capitalize font-light">
-                {customer.gender}
-              </p>
-            </div>
-            <section className="flex flex-col gap-y-6">
-              <Dropdown
-                label="Typologie de client"
-                required
-                options={typologyCustomer}
-                register={register("typology")}
-                fieldName="typology"
-                watch={watch}
-              />
-              <TextArea
-                label="Notes sur le client"
-                register={register("notes")}
-                fieldName="notes"
-                watch={watch}
-              />
-            </section>
-          </div>
+          <>
+            <Button label="Enregistrer" onClick={() => ""} />
+            <Button
+              label="Annuler"
+              variant="secondary"
+              onClick={() => setIsEditing(false)}
+            />
+          </>
         ) : (
           <>
-            <div className="flex flex-row items-center mb-6">
-              <IconButton
-                icon={ArrowLeft}
-                variant="tertiary"
-                onClick={() => setIsOpen(false)}
-              />
-              <p className="text-[20px] font-light">Détail du client</p>
-            </div>
-            <div className="flex flex-col items-center justify-between mb-6">
-              <div className="flex flex-row text-[24px] font-light capitalize items-center gap-x-2">
-                {customer.firstname} {customer.lastname}
-                <Tag status={customer.status} />
-              </div>
-              <p className="text-[14px] text-grayscale-800 capitalize font-light">
-                {customer.gender}
-              </p>
-            </div>
-            <section className="flex flex-col gap-4 overflow-scroll pr-4 mb-8">
-              <section className="flex flex-col border border-greyscale-400 rounded-lg p-4 gap-2">
-                {customerInfosArray.map((info, index) => {
-                  const IconComponent = info.icon;
-                  return (
-                    <div className={containenrInfoStyle} key={index}>
-                      <IconComponent
-                        size={16}
-                        strokeWidth={2.5}
-                        color="#3c3a37"
-                      />
-                      <p className={textInfoStyle}>{info.value}</p>
-                    </div>
-                  );
-                })}
-                <div className="flex flex-row items-start gap-2">
-                  <Home
-                    size={16}
-                    color="#3c3a37"
-                    strokeWidth={2.5}
-                    className="mt-0.5"
-                  />
-                  <div className="flex flex-col">
-                    <p className={textInfoStyle}>{customer.address.street}</p>
-                    <p className={textInfoStyle}>
-                      {customer.address.zipcode} {customer.address.city}
-                    </p>
-                    <p className={textInfoStyle}>{customer.address.country}</p>
-                  </div>
-                </div>
-              </section>
-
-              <section className="flex flex-col border border-greyscale-400 rounded-lg gap-2">
-                <CustomAccordion
-                  title="Statistiques"
-                  initiallyOpen
-                  showIconBorder={false}
-                >
-                  <div className="flex flex-col justify-between items-center gap-2">
-                    {statsArray.map((stat, index) => {
-                      const IconComponent = stat.icon;
-                      return (
-                        <div
-                          key={index}
-                          className="p-3 w-full flex flex-row border border-greyscale-400 rounded-lg gap-x-3"
-                        >
-                          <div className="bg-greyscale-200 p-3 rounded-lg">
-                            <IconComponent
-                              size={32}
-                              color="#3c3a37"
-                              strokeWidth={2}
-                            />
-                          </div>
-                          <div className="flex flex-col">
-                            <p className="text-[20px]">{stat.value}</p>
-                            <p className="text-[14px] font-light">
-                              {stat.label}
-                            </p>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </CustomAccordion>
-              </section>
-
-              {note && (
-                <section className="flex flex-col border border-greyscale-400 rounded-lg p-4 gap-2">
-                  <h1 className="text-[16px] font-light">
-                    Notes sur le client
-                  </h1>
-                  <p className="text-[12px] text-greyscale-900 font-light">
-                    {note}
-                  </p>
-                </section>
-              )}
-
-              <section className="flex flex-col border border-greyscale-400 rounded-lg gap-2">
-                <CustomAccordion
-                  title="Réservations"
-                  initiallyOpen
-                  showIconBorder={false}
-                >
-                  <CustomTabs
-                    defaultValue={0}
-                    variant="standard"
-                    tabs={[
-                      {
-                        content: displayAppointmentsCard(upcomingAppointments),
-                        label: `À venir (${upcomingAppointments.length})`,
-                      },
-                      {
-                        content: displayAppointmentsCard(pastAppointments),
-                        label: `Passées (${pastAppointments.length})`,
-                      },
-                      {
-                        content: displayAppointmentsCard(cancelledAppointments),
-                        label: `Annulées (${cancelledAppointments.length})`,
-                      },
-                    ]}
-                  ></CustomTabs>
-                  <div className="flex flex-col justify-between items-center gap-2"></div>
-                </CustomAccordion>
-              </section>
-            </section>
+            <Button
+              label="Modifier"
+              icon={Pencil}
+              onClick={() => setIsEditing(true)}
+            />
+            <Button
+              label="Annuler"
+              variant="secondary"
+              onClick={() => setIsOpen(false)}
+            />
           </>
         )}
+      </>
+    );
+  };
 
-        <div className="pt-8 px-8 flex flex-row-reverse items-center gap-4 shadow-[0_-16px_28px_-20px_rgba(0,0,0,0.1)]">
-          {isEditing ? (
-            <>
-              <Button label="Enregistrer" onClick={() => ""} />
-              <Button
-                label="Annuler"
-                variant="secondary"
-                onClick={() => setIsEditing(false)}
-              />
-            </>
-          ) : (
-            <>
-              <Button
-                label="Modifier"
-                icon={Pencil}
-                onClick={() => setIsEditing(true)}
-              />
-              <Button
-                label="Annuler"
-                variant="secondary"
-                onClick={() => setIsOpen(false)}
-              />
-            </>
-          )}
+  return (
+    <CustomDrawer
+      title={"Détail du client"}
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      footer={footer()}
+    >
+      <div className="flex flex-col items-center justify-between mb-6">
+        <div className="flex flex-row text-[24px] font-light capitalize items-center gap-x-2">
+          {customer.firstname} {customer.lastname}
+          <Tag status={customer.status} />
         </div>
-      </main>
-    </>
+        <p className="text-[14px] text-grayscale-800 capitalize font-light">
+          {customer.gender}
+        </p>
+      </div>
+      {isEditing ? (
+        <div>
+          <section className="flex flex-col gap-y-6">
+            <Dropdown
+              label="Typologie de client"
+              required
+              options={typologyCustomer}
+              register={register("typology")}
+              fieldName="typology"
+              watch={watch}
+            />
+            <TextArea
+              label="Notes sur le client"
+              register={register("notes")}
+              fieldName="notes"
+              watch={watch}
+            />
+          </section>
+        </div>
+      ) : (
+        <>
+          <section className="flex flex-col gap-4 overflow-scroll pr-4 mb-8">
+            <section className="flex flex-col border border-greyscale-400 rounded-lg p-4 gap-2">
+              {customerInfosArray.map((info, index) => {
+                const IconComponent = info.icon;
+                return (
+                  <div className={containenrInfoStyle} key={index}>
+                    <IconComponent
+                      size={16}
+                      strokeWidth={2.5}
+                      color="#3c3a37"
+                    />
+                    <p className={textInfoStyle}>{info.value}</p>
+                  </div>
+                );
+              })}
+              <div className="flex flex-row items-start gap-2">
+                <Home
+                  size={16}
+                  color="#3c3a37"
+                  strokeWidth={2.5}
+                  className="mt-0.5"
+                />
+                <div className="flex flex-col">
+                  <p className={textInfoStyle}>{customer.address.street}</p>
+                  <p className={textInfoStyle}>
+                    {customer.address.zipcode} {customer.address.city}
+                  </p>
+                  <p className={textInfoStyle}>{customer.address.country}</p>
+                </div>
+              </div>
+            </section>
+
+            <section className="flex flex-col border border-greyscale-400 rounded-lg gap-2">
+              <CustomAccordion
+                title="Statistiques"
+                initiallyOpen
+                showIconBorder={false}
+              >
+                <div className="flex flex-col justify-between items-center gap-2">
+                  {statsArray.map((stat, index) => {
+                    const IconComponent = stat.icon;
+                    return (
+                      <div
+                        key={index}
+                        className="p-3 w-full flex flex-row border border-greyscale-400 rounded-lg gap-x-3"
+                      >
+                        <div className="bg-greyscale-200 p-3 rounded-lg">
+                          <IconComponent
+                            size={32}
+                            color="#3c3a37"
+                            strokeWidth={2}
+                          />
+                        </div>
+                        <div className="flex flex-col">
+                          <p className="text-[20px]">{stat.value}</p>
+                          <p className="text-[14px] font-light">{stat.label}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </CustomAccordion>
+            </section>
+
+            {note && (
+              <section className="flex flex-col border border-greyscale-400 rounded-lg p-4 gap-2">
+                <h1 className="text-[16px] font-light">Notes sur le client</h1>
+                <p className="text-[12px] text-greyscale-900 font-light">
+                  {note}
+                </p>
+              </section>
+            )}
+
+            <section className="flex flex-col border border-greyscale-400 rounded-lg gap-2">
+              <CustomAccordion
+                title="Réservations"
+                initiallyOpen
+                showIconBorder={false}
+              >
+                <CustomTabs
+                  defaultValue={0}
+                  variant="standard"
+                  tabs={[
+                    {
+                      content: displayAppointmentsCard(upcomingAppointments),
+                      label: `À venir (${upcomingAppointments.length})`,
+                    },
+                    {
+                      content: displayAppointmentsCard(pastAppointments),
+                      label: `Passées (${pastAppointments.length})`,
+                    },
+                    {
+                      content: displayAppointmentsCard(cancelledAppointments),
+                      label: `Annulées (${cancelledAppointments.length})`,
+                    },
+                  ]}
+                ></CustomTabs>
+                <div className="flex flex-col justify-between items-center gap-2"></div>
+              </CustomAccordion>
+            </section>
+          </section>
+        </>
+      )}
+    </CustomDrawer>
   );
 };

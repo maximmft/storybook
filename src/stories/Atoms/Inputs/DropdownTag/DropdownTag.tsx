@@ -2,7 +2,7 @@ import * as React from "react";
 import { ChevronDown, X } from "lucide-react";
 import { DropdownItem } from "../../Buttons/DropdownItem/DropdownItem";
 import { Box, Typography } from "@mui/material";
-import { useState, useRef } from "react";
+import { UseFormRegisterReturn, UseFormWatch } from "react-hook-form";
 
 type DropdownOption = {
   id: string;
@@ -18,10 +18,15 @@ type DropdownTagProps = {
   options: DropdownOption[];
   placeholder?: string;
   disabled?: boolean;
+  required?: boolean;
   error?: boolean;
   onSelectionChange?: (selectedOptions: DropdownOption[]) => void;
   multiSelect?: boolean;
   maxHeight?: number;
+  register?: UseFormRegisterReturn;
+  fieldName?: string;
+  watch?: UseFormWatch<any>;
+  size?: "small" | "medium";
 };
 
 export const DropdownTag = ({
@@ -30,16 +35,39 @@ export const DropdownTag = ({
   placeholder = "Placeholder",
   disabled = false,
   error = false,
+  required = false,
   onSelectionChange,
   multiSelect = true,
   maxHeight = 200,
+  register,
+  fieldName,
+  watch,
+  size = "medium",
 }: DropdownTagProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOptions, setSelectedOptions] = useState<DropdownOption[]>([]);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const dropdownRef = React.useRef<HTMLDivElement>(null);
+
+  const fieldValue = watch && fieldName ? watch(fieldName) : undefined;
+
+  const getSelectedOptionsFromValue = React.useMemo(() => {
+    if (!fieldValue) return [];
+
+    if (multiSelect) {
+      const valueArray = Array.isArray(fieldValue) ? fieldValue : [fieldValue];
+      return options.filter((option) => valueArray.includes(option.id));
+    } else {
+      const singleValue = Array.isArray(fieldValue)
+        ? fieldValue[0]
+        : fieldValue;
+      return options.filter((option) => option.id === singleValue);
+    }
+  }, [fieldValue, options, multiSelect]);
+
+  const selectedOptions = getSelectedOptionsFromValue;
 
   const handleOptionClick = (option: DropdownOption) => {
     let newSelection: DropdownOption[];
+    let newValue: string | string[];
 
     if (multiSelect) {
       const isSelected = selectedOptions.some(
@@ -48,13 +76,23 @@ export const DropdownTag = ({
       newSelection = isSelected
         ? selectedOptions.filter((selected) => selected.id !== option.id)
         : [...selectedOptions, option];
+      newValue = newSelection.map((opt) => opt.id);
     } else {
       newSelection = [option];
+      newValue = option.id;
       setIsOpen(false);
     }
 
-    setSelectedOptions(newSelection);
     onSelectionChange?.(newSelection);
+
+    if (register?.onChange) {
+      register.onChange({
+        target: {
+          name: register.name,
+          value: newValue,
+        },
+      });
+    }
   };
 
   const removeTag = (optionId: string, e: React.MouseEvent) => {
@@ -62,24 +100,45 @@ export const DropdownTag = ({
     const newSelection = selectedOptions.filter(
       (selected) => selected.id !== optionId
     );
-    setSelectedOptions(newSelection);
+    
+    const newValue = multiSelect 
+      ? newSelection.map((opt) => opt.id)
+      : (newSelection.length > 0 ? newSelection[0].id : '');
+
     onSelectionChange?.(newSelection);
+
+    if (register?.onChange) {
+      register.onChange({
+        target: {
+          name: register.name,
+          value: newValue,
+        },
+      });
+    }
   };
 
   const hasSelection = selectedOptions.length > 0;
 
+  const getSizeStyles = () => {
+    return size === "small" 
+      ? { height: "40px", fontSize: "12px", padding: "py-[10px]" }
+      : { height: "48px", fontSize: "12px", padding: "py-[14px]" };
+  };
+
   const getContainerStateStyles = () => {
+    const sizeStyles = getSizeStyles();
+    
     if (disabled) {
-      return "text-[#D4D0CB] cursor-not-allowed bg-[#F7F5F3] border-[#F7F5F3]";
+      return `text-[#D4D0CB] cursor-not-allowed bg-[#F7F5F3] border-[#F7F5F3] h-[${sizeStyles.height}] text-[${sizeStyles.fontSize}]`;
     }
 
     if (error) {
-      return "border-[#F03538] text-[#251F19]";
+      return `border-[#F03538] text-[#251F19] h-[${sizeStyles.height}] text-[${sizeStyles.fontSize}]`;
     }
 
     return hasSelection
-      ? "text-[#251F19] border-[#696663]"
-      : "text-[#A29D98] border-[#E3DFDA]";
+      ? `text-[#251F19] border-[#696663] h-[${sizeStyles.height}] text-[${sizeStyles.fontSize}]`
+      : `text-[#A29D98] border-[#E3DFDA] h-[${sizeStyles.height}] text-[${sizeStyles.fontSize}]`;
   };
 
   const getContainerInteractionStyles = () => {
@@ -93,9 +152,15 @@ export const DropdownTag = ({
   };
 
   const getTagVariantStyles = () => {
-    return error
+    const baseStyles = error
       ? "bg-[#F7F5F3] text-[#F03538]"
       : "bg-[#F7F5F3] text-[#3C3A37]";
+    
+    const sizeStyles = size === "small" 
+      ? "p-[6px]" 
+      : "p-[8px]"; 
+    
+    return `${baseStyles} ${sizeStyles}`;
   };
 
   const getChevronStyles = () => {
@@ -109,6 +174,8 @@ export const DropdownTag = ({
     return `${baseStyles} ${rotationStyle} ${colorStyle}`.trim();
   };
 
+  const containerPadding = getSizeStyles().padding;
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
       <Typography
@@ -116,22 +183,30 @@ export const DropdownTag = ({
         sx={{
           color: error ? "#F03538" : disabled ? "#D4D0CB" : "#2D2A27",
           fontWeight: 400,
-          fontSize: "12px",
+          fontSize: "14px",
         }}
       >
-        {label}
+        {label} {required && <span className="text-[#F03538]">*</span>}
       </Typography>
 
       <div className="relative inline-block w-[220px]" ref={dropdownRef}>
+        {register && (
+          <input
+            {...register}
+            type="hidden"
+            value={multiSelect ? JSON.stringify(fieldValue || []) : (fieldValue || '')}
+          />
+        )}
+        
         <div
           onClick={() => !disabled && setIsOpen(!isOpen)}
-          className={`h-[40px] w-full flex items-center cursor-pointer overflow-hidden border rounded-[8px] font-light text-[12px] text-greyscale-800 ${getContainerStateStyles()} ${getContainerInteractionStyles()} ${getContainerOpenStyles()}`}
+          className={`w-full flex items-center cursor-pointer overflow-hidden border rounded-[8px] font-light text-greyscale-800 ${getContainerStateStyles()} ${getContainerInteractionStyles()} ${getContainerOpenStyles()}`}
         >
-          <div className="flex gap-1 flex-1 min-w-0 overflow-x-auto scrollbar-hide pl-3 py-[14px]">
+          <div className={`flex gap-1 flex-1 min-w-0 overflow-x-auto scrollbar-hide pl-3 ${containerPadding}`}>
             {selectedOptions.map((selected) => (
               <div
                 key={selected.id}
-                className={`flex items-center gap-1 rounded-[8px] p-[6px] flex-shrink-0 whitespace-nowrap ${getTagVariantStyles()}`}
+                className={`flex items-center gap-1 rounded-[8px] flex-shrink-0 whitespace-nowrap ${getTagVariantStyles()}`}
               >
                 <span>{selected.label}</span>
                 {!disabled && (

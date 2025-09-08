@@ -4,7 +4,7 @@ import ToggleSwitch from "src/stories/Atoms/Inputs/ToggleSwitch/ToggleSwitch";
 
 type ExceptionalOpening = {
   name: string;
-  recurrence: boolean;
+  recurrence?: boolean; // Optionnel
   hours: {
     start: string;
     end: string;
@@ -13,19 +13,22 @@ type ExceptionalOpening = {
     start: string;
     end: string;
   };
-  markupPrice: string;
+  markupPrice?: string; // Optionnel
 };
 
 type ExceptionnalOpeningCardPropsType = {
   day: ExceptionalOpening;
   onToggleChange?: (enabled: boolean) => void;
+  showRecurrence?: boolean; // Nouvelle prop pour contrôler l'affichage
+  showMarkupPrice?: boolean; // Nouvelle prop pour contrôler l'affichage
 };
 
 export const ExceptionnalOpeningCard = ({
   day,
   onToggleChange,
+  showRecurrence = true, // Par défaut affiché
+  showMarkupPrice = true, // Par défaut affiché
 }: ExceptionnalOpeningCardPropsType) => {
-
   const fieldRowClasses = "flex items-center gap-2 text-[14px]";
   const iconClasses = "shrink-0";
   const labelClasses = "text-greyscale-700 font-medium";
@@ -56,22 +59,26 @@ export const ExceptionnalOpeningCard = ({
           </span>
         </div>
 
-        <div className={fieldRowClasses}>
-          <RotateCcw color="#696663" size={16} className={iconClasses} />
-          <span className={labelClasses}>Récurrence annuelle</span>
-          <ToggleSwitch
-            value={day.recurrence}
-            size="medium"
-            label=""
-            onChange={() => onToggleChange?.(!day.recurrence)}
-          />
-        </div>
+        {showRecurrence && (
+          <div className={fieldRowClasses}>
+            <RotateCcw color="#696663" size={16} className={iconClasses} />
+            <span className={labelClasses}>Récurrence annuelle</span>
+            <ToggleSwitch
+              value={day.recurrence || false}
+              size="medium"
+              label=""
+              onChange={() => onToggleChange?.(!day.recurrence)}
+            />
+          </div>
+        )}
 
-        <div className={fieldRowClasses}>
-          <TrendingUp color="#696663" size={16} className={iconClasses} />
-          <span className={labelClasses}>Grille de majoration</span>
-          <span className={valueClasses}>{day.markupPrice}</span>
-        </div>
+        {showMarkupPrice && day.markupPrice && (
+          <div className={fieldRowClasses}>
+            <TrendingUp color="#696663" size={16} className={iconClasses} />
+            <span className={labelClasses}>Grille de majoration</span>
+            <span className={valueClasses}>{day.markupPrice}</span>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,12 +1,6 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import {
-  Box,
-  Typography,
-  FormGroup,
-  Switch,
-  SwitchProps,
-} from "@mui/material";
+import { Box, Typography, FormGroup, Switch, SwitchProps } from "@mui/material";
 import { UseFormRegisterReturn } from "react-hook-form";
 
 type CustomSwitchPropsType = {
@@ -16,7 +10,7 @@ type CustomSwitchPropsType = {
   disabled?: boolean;
   error?: boolean;
   onChange?: () => void;
-  
+
   size?: "small" | "medium" | "large" | "extralarge";
   direction?: "left" | "right";
   justify?: "space-between" | "start";
@@ -53,9 +47,18 @@ const SWITCH_CONFIG = {
   },
 };
 
-const IOSSwitch = (config: { width: number; height: number; thumb: number; trackTranslate: number }) =>
+const IOSSwitch = (config: {
+  width: number;
+  height: number;
+  thumb: number;
+  trackTranslate: number;
+}) =>
   styled((props: SwitchProps) => (
-    <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
+    <Switch
+      focusVisibleClassName=".Mui-focusVisible"
+      disableRipple
+      {...props}
+    />
   ))(() => ({
     width: `${config.width}px`,
     height: `${config.height}px`,
@@ -112,15 +115,15 @@ export default function ToggleSwitch({
   const fontWeight = value ? 500 : 300;
   const fontColor = error ? "#E01F22" : disabled ? "#E3DFDA" : "#3C3A37";
   const StyledSwitch = IOSSwitch(switchConfig);
-  
+
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    
+
     if (!disabled && onChange) {
       onChange();
     }
   };
-  
+
   return (
     <FormGroup>
       <Box
@@ -130,18 +133,18 @@ export default function ToggleSwitch({
           justifyContent: justify,
           flexDirection: direction === "left" ? "row-reverse" : "row",
           gap: 1,
-          width: "fit-content"
-         }}
+          width: "100%",
+        }}
         onClick={handleClick}
-        >
+      >
         <Typography
           sx={{
             fontFamily: "Fustat",
             fontSize,
             fontWeight,
             color: fontColor,
-            cursor: disabled ? "not-allowed" : "pointer"
-                       }}
+            cursor: disabled ? "not-allowed" : "pointer",
+          }}
         >
           {label}
         </Typography>

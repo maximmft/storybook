@@ -11,7 +11,7 @@ import { TimeSlotsList } from "src/stories/Molecules/TimeSlotsList/TimeSlotsList
 import { PriceListDataType } from "../PriceListSideBar/PriceListSideBar";
 import { useForm } from "react-hook-form";
 import { formatDateShort } from "src/utils/formatDate";
-import { DatePicker } from "src/stories/Atoms/Inputs/DatePicker/DatePicker";
+import { DropdownTag } from "src/stories/Atoms/Inputs/DropdownTag/DropdownTag";
 
 export interface PriceListSideBarProps {
   isOpen: boolean;
@@ -58,6 +58,57 @@ const eveningSlots = [
   "00:00",
 ];
 
+const dateOptions = [
+  {
+    id: "1",
+    label: "Janvier"
+  },
+  {
+    id: "2", 
+    label: "Février"
+  },
+  {
+    id: "3",
+    label: "Mars"
+  },
+  {
+    id: "4",
+    label: "Avril"
+  },
+  {
+    id: "5",
+    label: "Mai"
+  },
+  {
+    id: "6",
+    label: "Juin"
+  },
+  {
+    id: "7",
+    label: "Juillet"
+  },
+  {
+    id: "8",
+    label: "Août"
+  },
+  {
+    id: "9",
+    label: "Septembre"
+  },
+  {
+    id: "10",
+    label: "Octobre"
+  },
+  {
+    id: "11",
+    label: "Novembre"
+  },
+  {
+    id: "12",
+    label: "Décembre"
+  }
+];
+
 export const AddingPriceList = ({
   setIsOpen,
   data,
@@ -93,7 +144,7 @@ export const AddingPriceList = ({
   const { watch, register } = useForm({
     defaultValues: {
       title: data.title,
-      startDate: formatDateShort(data.startDate),
+      gridPeriod: data.gridPeriod,
       applyAllYear: data.applyAllYear,
       annualRecurrence: data.annualRecurrence,
       markupRate: data.markupRate,
@@ -193,13 +244,15 @@ export const AddingPriceList = ({
                 />
               </div>
               <div className="flex-1">
-                <DatePicker
-                  label="Date d'application"
+                <DropdownTag  label="Période d'application de la grille"
                   required
-                  register={register("startDate")}
-                  fieldName="startDate"
+                  register={register("gridPeriod")}
+                  fieldName="gridPeriod"
                   watch={watch}
-                />
+                  options={dateOptions}
+                  placeholder="Sélectionner une période"/>
+                  
+                 
               </div>
             </div>
             <div className="space-y-4">
