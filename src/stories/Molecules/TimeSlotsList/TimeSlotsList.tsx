@@ -15,6 +15,7 @@ export const TimeSlotsList = ({
   disabled = false,
   disabledTimes = [],
 }: TimeSlotsListProps) => {
+  
   const handleTimeSlotClick = (time: string) => {
     if (disabled || disabledTimes.includes(time)) return;
     onTimeSlotSelect?.(time);
@@ -26,7 +27,7 @@ export const TimeSlotsList = ({
 
   return (
     <div className="w-full flex flex-col flex-wrap border border-greyscale-400 p-2 rounded-lg">
-      {timeSlots.map((time, index) => (
+      {timeSlots.map((time) => (
         <TimeSlot
           key={time}
           time={time}

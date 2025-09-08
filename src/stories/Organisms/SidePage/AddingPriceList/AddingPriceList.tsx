@@ -10,7 +10,6 @@ import { CardSelect } from "src/stories/Molecules/Filters/CardSelect/CardSelect"
 import { TimeSlotsList } from "src/stories/Molecules/TimeSlotsList/TimeSlotsList";
 import { PriceListDataType } from "../PriceListSideBar/PriceListSideBar";
 import { useForm } from "react-hook-form";
-import { formatDateShort } from "src/utils/formatDate";
 import { DropdownTag } from "src/stories/Atoms/Inputs/DropdownTag/DropdownTag";
 
 export interface PriceListSideBarProps {

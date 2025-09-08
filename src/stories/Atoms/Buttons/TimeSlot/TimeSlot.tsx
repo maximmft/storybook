@@ -12,6 +12,7 @@ export default function TimeSlot({
   disabled = false,
   isSelected = false,
 }: TimeSlotPropsType) {
+
   return (
     <button
       onClick={onClick}
