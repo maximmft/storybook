@@ -42,7 +42,6 @@ export const DropdownTag = ({
   register,
   fieldName,
   watch,
-  size = "medium",
 }: DropdownTagProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const dropdownRef = React.useRef<HTMLDivElement>(null);
