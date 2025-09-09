@@ -18,7 +18,7 @@ type CardSelectPropsType = {
   services: ServiceType[];
   mainToggleValue: boolean;
   selectedServices?: string[];
-  onMainToggleChange: (value: boolean) => void;
+  onMainToggleChange: () => void;
   onServiceToggle: (serviceId: string) => void;
   disabled?: boolean;
   disabledChildren?: boolean;
@@ -48,7 +48,7 @@ export const CardSelect = ({
   };
 
   const handleMainToggle = () => {
-    onMainToggleChange(!mainToggleValue);
+    onMainToggleChange();
   };  
 
   const displayTitle = (title: string) => {

@@ -60,52 +60,52 @@ const eveningSlots = [
 const dateOptions = [
   {
     id: "1",
-    label: "Janvier"
+    label: "Janvier",
   },
   {
-    id: "2", 
-    label: "Février"
+    id: "2",
+    label: "Février",
   },
   {
     id: "3",
-    label: "Mars"
+    label: "Mars",
   },
   {
     id: "4",
-    label: "Avril"
+    label: "Avril",
   },
   {
     id: "5",
-    label: "Mai"
+    label: "Mai",
   },
   {
     id: "6",
-    label: "Juin"
+    label: "Juin",
   },
   {
     id: "7",
-    label: "Juillet"
+    label: "Juillet",
   },
   {
     id: "8",
-    label: "Août"
+    label: "Août",
   },
   {
     id: "9",
-    label: "Septembre"
+    label: "Septembre",
   },
   {
     id: "10",
-    label: "Octobre"
+    label: "Octobre",
   },
   {
     id: "11",
-    label: "Novembre"
+    label: "Novembre",
   },
   {
     id: "12",
-    label: "Décembre"
-  }
+    label: "Décembre",
+  },
 ];
 
 export const AddingPriceList = ({
@@ -135,6 +135,13 @@ export const AddingPriceList = ({
       .filter((service) => !service.service.disabled)
       .map((s) => s.id)
   );
+
+  const getAllServicesIdByCategory = (categoryId: string) => {
+    return data.categories
+      .find((category) => category.id === categoryId)
+      ?.services.filter((service) => !service.service.disabled)
+      .map((service) => service.id);
+  };
 
   const isAllSelected =
     allCategoriesId.every((id) => selectedCategories.includes(id)) &&
@@ -168,19 +175,36 @@ export const AddingPriceList = ({
   };
 
   const handleMainToggle = (categoryId: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(categoryId)
-        ? prev.filter((id) => id !== categoryId)
-        : [...prev, categoryId]
-    );
+    const isMainToggleActive = selectedCategories.includes(categoryId);
+    const allServicesIdByCategory = getAllServicesIdByCategory(categoryId);
+    if (allServicesIdByCategory && !isMainToggleActive) {
+      setSelectedServices([...allServicesIdByCategory, ...selectedServices]);
+      setSelectedCategories((prev) => [...prev, categoryId]);
+    } else if (isMainToggleActive) {
+      setSelectedServices((prev) =>
+        prev.filter(
+          (servicesIds) => !allServicesIdByCategory?.includes(servicesIds)
+        )
+      );
+      setSelectedCategories((prev) => prev.filter((id) => id !== categoryId));
+    }
   };
 
-  const handleServicesToggle = (serviceId: string) => {
+  const handleServicesToggle = (serviceId: string, categoryId: string) => {
+    const allServicesIdByCategory = getAllServicesIdByCategory(categoryId);
+
+    const newSelectedServices = selectedServices.includes(serviceId)
+    ? selectedServices.filter((id) => id !== serviceId)
+    : [...selectedServices, serviceId];
+
+    const areAllServicesSelected = allServicesIdByCategory?.every((serviceId) => newSelectedServices.includes(serviceId))
     setSelectedServices((prev) =>
       prev.includes(serviceId)
         ? prev.filter((id) => id !== serviceId)
         : [...prev, serviceId]
     );
+    if (areAllServicesSelected)
+    setSelectedCategories((prev) => [...prev, categoryId])
   };
 
   const handleSelectAllMain = () => {
@@ -243,15 +267,15 @@ export const AddingPriceList = ({
                 />
               </div>
               <div className="flex-1">
-                <DropdownTag  label="Période d'application de la grille"
+                <DropdownTag
+                  label="Période d'application de la grille"
                   required
                   register={register("gridPeriod")}
                   fieldName="gridPeriod"
                   watch={watch}
                   options={dateOptions}
-                  placeholder="Sélectionner une période"/>
-                  
-                 
+                  placeholder="Sélectionner une période"
+                />
               </div>
             </div>
             <div className="space-y-4">
@@ -325,7 +349,7 @@ export const AddingPriceList = ({
                       services={category.services}
                       onMainToggleChange={() => handleMainToggle(category.id)}
                       mainToggleValue={selectedCategories.includes(category.id)}
-                      onServiceToggle={handleServicesToggle}
+                      onServiceToggle={(serviceId) => handleServicesToggle(serviceId, category.id)} 
                       selectedServices={selectedServices}
                       accordionSize="small"
                       editableChildren={true}

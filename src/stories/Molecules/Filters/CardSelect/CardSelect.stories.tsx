@@ -28,7 +28,7 @@ const mockServices = [
       price: "200",
       duration: "90",
       name: "Massage thérapeutique premium",
-      disabled: true
+      disabled: true,
     },
   },
 ];
@@ -40,7 +40,8 @@ const meta: Meta<typeof CardSelect> = {
     layout: "centered",
     docs: {
       description: {
-        component: "Composant de sélection de cartes avec services et options de filtrage (contrôlé).",
+        component:
+          "Composant de sélection de cartes avec services et options de filtrage (contrôlé).",
       },
     },
   },
@@ -72,16 +73,27 @@ type Story = StoryObj<typeof CardSelect>;
 
 export const Default: Story = {
   render: (args) => {
-    const [mainToggleValue, setMainToggleValue] = useState<boolean>(false);
     const [selectedServices, setSelectedServices] = useState<string[]>([]);
 
-    const handleMainToggleChange = (value: boolean) => {
-      setMainToggleValue(value);
+    const allServicesId = mockServices
+      .filter((service) => !service.service.disabled)
+      .map((service) => service.id);
+
+    const isAllSelected = allServicesId.every((id) =>
+      selectedServices.includes(id)
+    );
+
+    const handleMainToggleChange = () => {
+      if (isAllSelected) {
+        setSelectedServices([]);
+      } else setSelectedServices([...allServicesId]);
     };
 
     const handleServiceToggle = (serviceId: string) => {
       if (selectedServices.includes(serviceId)) {
-        setSelectedServices(selectedServices.filter((value) => value !== serviceId));
+        setSelectedServices(
+          selectedServices.filter((value) => value !== serviceId)
+        );
       } else {
         setSelectedServices([...selectedServices, serviceId]);
       }
@@ -90,7 +102,7 @@ export const Default: Story = {
     return (
       <CardSelect
         {...args}
-        mainToggleValue={mainToggleValue}
+        mainToggleValue={isAllSelected}
         selectedServices={selectedServices}
         onMainToggleChange={handleMainToggleChange}
         onServiceToggle={handleServiceToggle}
@@ -105,16 +117,27 @@ export const Default: Story = {
 
 export const NonEditable: Story = {
   render: (args) => {
-    const [mainToggleValue, setMainToggleValue] = useState<boolean>(false);
     const [selectedServices, setSelectedServices] = useState<string[]>([]);
 
-    const handleMainToggleChange = (value: boolean) => {
-      setMainToggleValue(value);
+    const allServicesId = mockServices
+      .filter((service) => !service.service.disabled)
+      .map((service) => service.id);
+
+    const isAllSelected = allServicesId.every((id) =>
+      selectedServices.includes(id)
+    );
+
+    const handleMainToggleChange = () => {
+      if (isAllSelected) {
+        setSelectedServices([]);
+      } else setSelectedServices([...allServicesId]);
     };
 
     const handleServiceToggle = (serviceId: string) => {
       if (selectedServices.includes(serviceId)) {
-        setSelectedServices(selectedServices.filter((value) => value !== serviceId));
+        setSelectedServices(
+          selectedServices.filter((value) => value !== serviceId)
+        );
       } else {
         setSelectedServices([...selectedServices, serviceId]);
       }
@@ -123,7 +146,7 @@ export const NonEditable: Story = {
     return (
       <CardSelect
         {...args}
-        mainToggleValue={mainToggleValue}
+        mainToggleValue={isAllSelected}
         selectedServices={selectedServices}
         onMainToggleChange={handleMainToggleChange}
         onServiceToggle={handleServiceToggle}

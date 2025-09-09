@@ -177,19 +177,3 @@ export const LongContent: Story = {
     ),
   },
 };
-
-export const NoTitle: Story = {
-  render: DrawerTemplate,
-  args: {
-    isOpen: false,
-    children: (
-      <div className="space-y-4">
-        <p>Ce drawer n'a pas de titre...</p>
-        <div className="p-4 border border-gray-200 rounded-lg">
-          <h3 className="text-lg font-semibold mb-2">Sans titre</h3>
-          <p>Le drawer peut fonctionner sans titre si nécessaire.</p>
-        </div>
-      </div>
-    ),
-  },
-};
