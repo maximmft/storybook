@@ -85,21 +85,47 @@ export const PriceListSideBar = ({
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
 
-  const handleMainToggle = (categoryId: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(categoryId)
-        ? prev.filter((id) => id !== categoryId)
-        : [...prev, categoryId]
-    );
+  const getAllServicesIdByCategory = (categoryId: string) => {
+    return data.categories
+      .find((category) => category.id === categoryId)
+      ?.services.filter((service) => !service.service.disabled)
+      .map((service) => service.id);
   };
 
-  const handleServicesToggle = (serviceId: string) => {
+
+  const handleMainToggle = (categoryId: string) => {
+    const isMainToggleActive = selectedCategories.includes(categoryId);
+    const allServicesIdByCategory = getAllServicesIdByCategory(categoryId);
+    if (allServicesIdByCategory && !isMainToggleActive) {
+      setSelectedServices([...allServicesIdByCategory, ...selectedServices]);
+      setSelectedCategories((prev) => [...prev, categoryId]);
+    } else if (isMainToggleActive) {
+      setSelectedServices((prev) =>
+        prev.filter(
+          (servicesIds) => !allServicesIdByCategory?.includes(servicesIds)
+        )
+      );
+      setSelectedCategories((prev) => prev.filter((id) => id !== categoryId));
+    }
+  };
+
+  const handleServicesToggle = (serviceId: string, categoryId: string) => {
+    const allServicesIdByCategory = getAllServicesIdByCategory(categoryId);
+
+    const newSelectedServices = selectedServices.includes(serviceId)
+    ? selectedServices.filter((id) => id !== serviceId)
+    : [...selectedServices, serviceId];
+
+    const areAllServicesSelected = allServicesIdByCategory?.every((serviceId) => newSelectedServices.includes(serviceId))
     setSelectedServices((prev) =>
       prev.includes(serviceId)
         ? prev.filter((id) => id !== serviceId)
         : [...prev, serviceId]
     );
+    if (areAllServicesSelected)
+    setSelectedCategories((prev) => [...prev, categoryId])
   };
+
 
   const footer = () => {
     return (
@@ -189,7 +215,7 @@ export const PriceListSideBar = ({
                     services={category.services}
                     onMainToggleChange={() => handleMainToggle(category.id)}
                     mainToggleValue={selectedCategories.includes(category.id)}
-                    onServiceToggle={handleServicesToggle}
+                    onServiceToggle={(serviceId) => handleServicesToggle(serviceId, category.id)}
                     selectedServices={selectedServices}
                     accordionSize="small"
                     editableChildren={false}

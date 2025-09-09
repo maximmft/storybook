@@ -1,6 +1,4 @@
 import {
-  ArrowLeft,
-  ArrowRight,
   Cake,
   CalendarCheck,
   ChartLine,
@@ -14,7 +12,6 @@ import { useForm } from "react-hook-form";
 import { Button } from "src/stories/Atoms/Buttons/Button/Button";
 import CustomAccordion from "src/stories/Atoms/Buttons/CustomAccordion/CustomAccordion";
 import CustomTabs from "src/stories/Atoms/Buttons/CustomTabs/CustomTabs";
-import { IconButton } from "src/stories/Atoms/Buttons/IconButton/IconButton";
 import Tag from "src/stories/Atoms/Informations/Tag/Tag";
 import { Dropdown } from "src/stories/Atoms/Inputs/Dropdown/Dropdown";
 import { TextArea } from "src/stories/Atoms/Inputs/TextArea/TextArea";
