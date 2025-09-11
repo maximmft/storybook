@@ -229,22 +229,3 @@ export const LargeSize: Story = {
     />
   ),
 };
-
-export const WithManyOptions: Story = {
-  render: (args) => {
-    const manyOptions = Array.from({ length: 20 }, (_, i) => ({
-      id: `${i + 1}`,
-      label: `Option très longue numéro ${i + 1} avec beaucoup de texte`,
-    }));
-
-    return (
-      <DropdownWrapper
-        {...args}
-        options={manyOptions}
-        placeholder="Beaucoup d'options"
-        label="Avec beaucoup d'options"
-        maxHeight={150}
-      />
-    );
-  },
-};

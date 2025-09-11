@@ -1,5 +1,3 @@
-
-
 /** @type { import('@storybook/react-webpack5').StorybookConfig } */
 const config = {
   "stories": [
@@ -19,4 +17,5 @@ const config = {
     "../public"
   ]
 };
+
 export default config;

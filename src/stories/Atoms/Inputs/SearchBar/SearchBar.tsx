@@ -111,6 +111,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarPropsType>(
                   onClick={handleClear}
                   disabled={disabled}
                   size="small"
+                  aria-label="clear-search"
                   sx={{
                     color: getIconColor(),
                     padding: "4px",

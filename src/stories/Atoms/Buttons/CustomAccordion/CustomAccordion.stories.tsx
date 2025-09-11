@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Grid } from "lucide-react";
 import CustomAccordion from "./CustomAccordion";
+import { Checkbox } from "../../Inputs/Checkbox/Checkbox";
 
 const meta: Meta<typeof CustomAccordion> = {
   title: "Atoms/Buttons/CustomAccordion",
@@ -62,18 +63,18 @@ export const InitiallyOpen: Story = {
     initiallyOpen: true,
     icon: <Grid size={14}/>,
     children: (
-      <div className=" space-y-4">
+      <div className="space-y-4">
         <div className="flex items-center justify-between">
           <span className="text-gray-700">Nana</span>
-          <input type="checkbox" className="rounded" defaultChecked />
+          <Checkbox checked={true} />
         </div>
         <div className="flex items-center justify-between">
           <span className="text-gray-700">Tata</span>
-          <input type="checkbox" className="rounded" />
+          <Checkbox checked={false} />
         </div>
         <div className="flex items-center justify-between">
           <span className="text-gray-700">Lala</span>
-          <input type="checkbox" className="rounded" defaultChecked />
+          <Checkbox checked={true} />
         </div>
       </div>
     )

@@ -78,63 +78,50 @@ const StyledCheckbox = styled(MuiCheckbox)(({ disabled }) => ({
 }));
 
 export const Checkbox = ({
- checked = false,
- disabled = false,
- label,
- register,
- onCheckChange,
- onChange,
- labelPosition = "right",
- size = "medium",
- indeterminate = false,
+  checked = false,
+  disabled = false,
+  label,
+  register,
+  labelPosition = "right",
+  size = "medium",
+  indeterminate = false,
 }: CheckboxProps) => {
- const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-   if (!disabled) {
-     if (onChange) {
-       onChange(event);
-     } else if (onCheckChange) {
-       onCheckChange(event.target.checked);
-     }
-   }
- };
+  const fontSize = size === "small" ? "14px" : "16px";
+  const fontWeight = checked ? 400 : 300;
+  const fontColor = disabled ? "#E3DFDA" : "#3C3A37";
 
- const fontSize = size === "small" ? "14px" : "16px";
- const fontWeight = checked ? 400 : 300;
- const fontColor = disabled ? "#E3DFDA" : "#3C3A37";
-
- return (
-   <Box
-     sx={{
-       display: "flex",
-       alignItems: "center",
-       flexDirection: labelPosition === "left" ? "row-reverse" : "row",
-       gap: label ? "8px" : 0,
-     }}
-   >
-     {label && (
-       <Typography
-         variant="body2"
-         sx={{ fontSize, fontWeight, color: fontColor }}
-       >
-         {label}
-       </Typography>
-     )}
-     <StyledCheckbox
-       checked={checked}
-       disabled={disabled}
-       indeterminate={indeterminate}
-       {...register}
-       onChange={handleChange}
-       disableRipple
-       size="small"
-       icon={<UncheckedIcon />}
-       checkedIcon={
-         <CheckedIcon>
-           <Check size={12} strokeWidth={3} />
-         </CheckedIcon>
-       }
-       indeterminateIcon={<IndeterminateIcon />}
-     />
-   </Box>
- );
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        flexDirection: labelPosition === "left" ? "row-reverse" : "row",
+        gap: label ? "8px" : 0,
+      }}
+    >
+      {label && (
+        <Typography
+          variant="body2"
+          sx={{ fontSize, fontWeight, color: fontColor }}
+        >
+          {label}
+        </Typography>
+      )}
+      <StyledCheckbox
+        checked={checked}
+        disabled={disabled}
+        indeterminate={indeterminate}
+        {...register} 
+        disableRipple
+        size="small"
+        icon={<UncheckedIcon />}
+        checkedIcon={
+          <CheckedIcon>
+            <Check size={12} strokeWidth={3} />
+          </CheckedIcon>
+        }
+        indeterminateIcon={<IndeterminateIcon />}
+      />
+    </Box>
+  );
 };
