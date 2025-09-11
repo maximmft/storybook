@@ -1,19 +1,18 @@
 "use client";
-import { useState, ChangeEvent, useEffect } from "react";
+import { ChangeEvent } from "react";
 import TextField from "@mui/material/TextField";
 import { FieldError, UseFormRegisterReturn, UseFormWatch } from "react-hook-form";
 import { Typography, Box } from "@mui/material";
 
 interface TextAreaProps {
   placeholder?: string;
-  register?: UseFormRegisterReturn;
+  register: UseFormRegisterReturn;
   error?: FieldError | string;
   id?: string;
   label?: string;
-  value?: string;
   disabled?: boolean;
-  fieldName?: string;
-  watch?: UseFormWatch<any>;
+  fieldName: string;
+  watch: UseFormWatch<any>;
   required?: boolean;
   maxLength?: number;
   minLength?: number;
@@ -26,19 +25,16 @@ export const TextArea = ({
   error,
   label,
   disabled = false,
-  value = "",
   fieldName,
   watch,
   required = false,
   maxLength,
   minLength,
 }: TextAreaProps) => {
-  const watchedValue = watch && fieldName ? watch(fieldName) : undefined;
-  const [localText, setLocalText] = useState(value);
+  const watchedValue = watch(fieldName);
+  const currentValue = watchedValue || "";
   
-  const currentValue = watchedValue !== undefined ? watchedValue : localText;
-  
-  const inputId = id || register?.name || fieldName || label;
+  const inputId = id || register.name || fieldName || label;
   const hasValue = currentValue && currentValue.length > 0;
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -48,47 +44,13 @@ export const TextArea = ({
       return;
     }
     
-    if (register?.onChange) {
-      register.onChange(event);
-    } else {
-      setLocalText(newValue);
-    }
+    register.onChange(event);
   };
 
   const getErrorMessage = () => {
     if (!error) return "";
     if (typeof error === "string") return error;
     return error.message;
-  };
-
-  useEffect(() => {
-    if (!watch && value !== undefined) {
-      setLocalText(value);
-    }
-  }, [value, watch]);
-
-  const getValidationRules = () => {
-    const rules: any = {};
-    
-    if (required) {
-      rules.required = "Ce champ est requis";
-    }
-    
-    if (minLength) {
-      rules.minLength = {
-        value: minLength,
-        message: `Minimum ${minLength} caractères requis`
-      };
-    }
-    
-    if (maxLength) {
-      rules.maxLength = {
-        value: maxLength,
-        message: `Maximum ${maxLength} caractères autorisés`
-      };
-    }
-    
-    return rules;
   };
 
   const remainingChars = maxLength ? maxLength - (currentValue?.length || 0) : null;
@@ -123,13 +85,13 @@ export const TextArea = ({
         </div>
 
         <TextField
-          {...(register ? { ...register, ...getValidationRules() } : {})}
+          {...register}
           fullWidth
           id={inputId}
           placeholder={placeholder}
           multiline
           disabled={disabled}
-          value={currentValue || ""}
+          value={currentValue}
           onChange={handleChange}
           variant="outlined"
           error={!!error}
@@ -177,7 +139,6 @@ export const TextArea = ({
               marginLeft: 0,
               marginTop: "3px",
               fontWeight: 200,
-              
               color: error ? "#F03538" : "#696663",
               "&.Mui-disabled": {
                 color: "#D4D0CB",
