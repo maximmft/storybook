@@ -1,4 +1,4 @@
-import { test, describe, vi, expect } from "vitest";
+import { test, describe, expect } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { Dropdown } from "./Dropdown";
 import { useForm } from "react-hook-form";

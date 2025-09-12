@@ -1,11 +1,11 @@
-import { test, describe, vi, expect } from "vitest";
+import { test, describe, expect } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import RadioButton from "./RadioButton";
 
 const TestComponent = () => {
-  const { register, watch, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm();
   const [formData, setFormData] = useState(null);
 
   const onSubmit = (data: any) => {
